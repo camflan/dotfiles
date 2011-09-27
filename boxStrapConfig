@@ -1,0 +1,3 @@
+#this is our config file for cbfbootstrap
+recurse=false
+exclude=["hosts",]

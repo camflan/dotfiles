@@ -1,0 +1,12 @@
+Host camflan
+    Hostname camronflanders.com
+    User serveradmin%camronflanders.com
+
+Host tunnel
+    Hostname camronflanders.com
+    User serveradmin%camronflanders.com
+    DynamicForward 5555
+
+Host appletv
+    Hostname 192.168.2.200
+    User frontrow

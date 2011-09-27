@@ -1,0 +1,6 @@
+#venvwrapper
+export WORKON_HOME=~/.venvs
+source ~/.virtualenvwrapper_bashrc
+
+export LSCOLORS=DxGxcxdxCxegedabagacad
+

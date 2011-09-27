@@ -1,0 +1,28 @@
+[user]
+	email = camron.flanders@gmail.com
+	name = Camron Flanders
+[github]
+	user = camflan
+	token = 897b6a6109e0de41cdb13f391ba62ea2
+[core]
+    excludesfile = "/Users/camflan/.gitignore"
+[branch]
+	autosetupmerge = true
+[push]
+	default = matching
+
+[color]
+    ui = auto
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan

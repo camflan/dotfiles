@@ -11,7 +11,7 @@
         "revision": "5cd37ce3933619d5a27e98e020d08bb820f56b2e"
       },
       "homebrew/core": {
-        "revision": "7327ba7074d8de05d7b5130e8ef463629035de95"
+        "revision": "086837810c673f1f282f5cad7dc22cfb0328b66a"
       },
       "superfly/tap": {
         "revision": "96c85e0e31e285af1a8306c0f485730692647559"
@@ -2849,7 +2849,7 @@
       "ventura": {
         "HOMEBREW_VERSION": "3.6.20",
         "HOMEBREW_PREFIX": "/opt/homebrew",
-        "Homebrew/homebrew-core": "7327ba7074d8de05d7b5130e8ef463629035de95",
+        "Homebrew/homebrew-core": "086837810c673f1f282f5cad7dc22cfb0328b66a",
         "CLT": "14.2.0.0.1.1668646533",
         "Xcode": "14.2",
         "macOS": "13.1"

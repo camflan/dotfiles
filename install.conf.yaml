@@ -16,6 +16,12 @@
     ~/.asdfrc: asdfrc
     ~/.default-python-packages: default-python-packages
     ~/.config/:
+      #
+      # NOTE: there's an issue when there is only a single matched file
+      # in a glob. If you get 'ambigious action requested', this is probabaly
+      # the issue
+      # https://github.com/anishathalye/dotbot/issues/315
+      #
       glob: true
       path: config/*
       exclude: [config/zsh] # handled later
@@ -39,7 +45,6 @@
 - install-brew: true
 - brewfile:
     - Brewfile
-    - brew/Brewfile
 
 # ASDF-VM
 - asdf:

@@ -1,0 +1,25 @@
+add_newline = false
+
+format = """\
+  $username\
+  $hostname\
+  $directory\
+  $git_branch\
+  $git_state\
+  $git_status\
+  $nix_shell\
+  $cmd_duration\
+  $line_break\
+  $jobs\
+  $battery\
+  $time\
+  $character\
+  """
+
+
+[character]
+success_symbol = ">:"
+error_symbol = ">:"
+
+[git_branch]
+symbol = "🌳 "

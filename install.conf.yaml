@@ -33,6 +33,7 @@
     ~/.gitignore: gitignore
     ~/.tmux.conf: tmux.conf
     ~/.vimrc: vimrc
+    ~/.zshenv: zshenv
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

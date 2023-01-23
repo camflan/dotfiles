@@ -16,9 +16,6 @@ alias gplog="git log --pretty=%B"
 
 alias dc="docker compose"
 
-alias rm="trash"
-alias rrm="/bin/rm"
-
 # bat supports paging, syntax highlighting, searching, etc
 alias cat="bat"
 
@@ -77,10 +74,16 @@ eval "$(fasd --init auto)"
 
 eval "$(starship init zsh)"
 
-# npm completions, from https://github.com/lukechilds/zsh-better-npm-completion
-source "${HOME}/conf.d/npm.zsh_completion"
-# https://github.com/BuonOmo/yarn-completion
-source "${HOME}/conf.d/yarn.zsh_completion"
+# add volta to path -- this should be AFTER homebrew
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+export CBFDOTFILES_DIR=$HOME/dotfiles
+
+# Source autocompletions for ZSH
+for cf in $CBFDOTFILES_DIR/config/zsh/completions/*.zsh_completion;
+    do source $cf;
+done
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
@@ -105,7 +108,9 @@ compinit
 source "$HOME/.cargo/env"
 . "$HOME/.cargo/env"
 
-source /Users/camron/.docker/init-zsh.sh || true # Added by Docker Desktop
+if [[ -s "${ZDOTDIR:-$HOME}/.docker/init-zsh.sh" ]]; then
+    source $HOME/.docker/init-zsh.sh || true # Added by Docker Desktop
+fi
 
 
 # cache the compdump once per day

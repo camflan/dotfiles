@@ -7,3 +7,6 @@
 [submodule "lib/dotbot-brew"]
 	path = lib/dotbot-brew
 	url = https://github.com/wren/dotbot-brew.git
+[submodule "config/zsh/zprezto"]
+	path = config/zsh/zprezto
+	url = git@github.com:sorin-ionescu/prezto.git

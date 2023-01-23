@@ -1,0 +1,31 @@
+# Dotbot configuration
+#
+
+- defaults:
+    link:
+      relink: true
+
+- clean: ["~"]
+
+- link:
+    ~/.asdfrc: asdfrc
+    ~/.default-python-packages: default-python-packages
+    ~/.config/:
+      glob: true
+      path: config/*
+      exclude: [config/zsh] # handled later
+    ~/.config/zsh/:
+      glob: true
+      path: config/zsh/*
+      prefix: "." # add a '.' to each filename
+      create: true
+    ~/.gitignore: gitignore
+    ~/.tmux.conf: tmux.conf
+    ~/.vimrc: vimrc
+
+#- create:
+#- ~/downloads
+#- ~/.vim/undo-history
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]

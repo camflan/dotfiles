@@ -1,6 +1,7 @@
 #
 # Defines environment variables.
 #
+export XDG_CONFIG_HOME=$HOME/.config
 
 export REPORTTIME=15
 

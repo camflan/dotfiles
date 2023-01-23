@@ -4,3 +4,6 @@
 [submodule "lib/dotbot-asdf"]
 	path = lib/dotbot-asdf
 	url = https://github.com/sobolevn/dotbot-asdf.git
+[submodule "lib/dotbot-brew"]
+	path = lib/dotbot-brew
+	url = https://github.com/wren/dotbot-brew.git

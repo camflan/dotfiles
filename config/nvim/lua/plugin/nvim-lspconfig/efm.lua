@@ -13,16 +13,17 @@ local isort = { formatCommand = 'isort --quiet -', formatStdin = true }
 
 local ssort = { formatCommand = 'ssort' }
 
-local eslint = {
-  lintCommand = 'eslint_d -f unix --cache --stdin --stdin-filename ${INPUT}',
-  lintIgnoreExitCode = true,
-  lintStdin = true,
-  lintFormats = {'%f:%l:%c: %m'},
-  formatCommand = 'eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}',
+-- normal prettier
+--local prettier = {
+ --formatCommand = "npx prettier --stdin-filepath ${INPUT}",
+ --formatStdin = true,
+--}
+
+-- uses prettier_d
+local prettier = {
+  formatCommand = 'prettierd "${INPUT}"',
   formatStdin = true,
 }
-
-local prettier = {formatCommand = 'npx prettier --stdin-filepath ${INPUT}', formatStdin = true}
 
 local luaformatter = {formatCommand = 'lua-format -i', formatStdin = true}
 
@@ -48,7 +49,7 @@ LSP.efm.setup {
     filetypes = vim.tbl_keys(filetype_config),
     init_options = { documentFormatting = true, codeAction = true },
     on_attach = function (client, bufnr)
-        client.resolved_capabilities.document_formatting = true
+        client.server_capabilities.document_formatting = true
 
         common.on_attach(client, bufnr)
     end,

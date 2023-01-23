@@ -10,9 +10,9 @@ function toggle_lsp_lines()
     })
 end
 
--- Set lsp_lines ON by default
+-- Set lsp_lines OFF by default
 vim.diagnostic.config({
-    virtual_text = false
+    virtual_text = true
 })
 
 vim.keymap.set(

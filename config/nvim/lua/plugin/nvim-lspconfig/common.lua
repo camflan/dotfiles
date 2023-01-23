@@ -8,6 +8,10 @@ end
 
 vim.lsp.diagnostic.set_virtual_text = set_virtual_text_custom
 
+--vim.lsp.diagnostic.config({
+    --virtual_lines = { only_current_line = true }
+--})
+
 -- customize signs
 -- vim.fn.sign_define("DiagnosticsSignError", { text= "🚨" })
 -- vim.fn.sign_define("DiagnosticsSignWarning", { text= "⚠️" })
@@ -46,11 +50,11 @@ M.on_attach = function(client, bufnr)
     -- buf_set_keymap('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', keymap_opts)
     -- buf_set_keymap('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', keymap_opts)
     -- buf_set_keymap('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', keymap_opts)
-    buf_set_keymap("n", "<leader>p", "<cmd>lua vim.lsp.buf.formatting()<CR>", keymap_opts)
+    buf_set_keymap("n", "<leader>p", "<cmd>lua vim.lsp.buf.format()<CR>", keymap_opts)
 
 
-    if client.resolved_capabilities.document_formatting then
-        vim.cmd [[autocmd! BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync(nil, 3000)]]
+    if client.server_capabilities.document_formatting then
+        vim.cmd [[autocmd! BufWritePre <buffer> lua vim.lsp.buf.format(nil, 3000)]]
     end
 end
 

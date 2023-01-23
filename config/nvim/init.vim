@@ -18,8 +18,22 @@ call plug#begin('~/.nvim-plugins')
 
 " NVIM LSP
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-compe'
+
+" LSP Completion
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
+Plug 'hrsh7th/nvim-cmp'
+
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
+
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
@@ -29,7 +43,9 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'folke/trouble.nvim'
+Plug 'folke/todo-comments.nvim'
 
+Plug 'axelvc/template-string.nvim'
 Plug 'Raimondi/delimitMate'                             " auto closes quotes/brackets/etc
 Plug 'Shougo/vimproc.vim'                               " async processing for vim
 Plug 'itchyny/lightline.vim'                            " way faster than powerline
@@ -75,12 +91,13 @@ Plug 'docunext/closetag.vim'                            " autoclose tags in html
 
 " syntax/language files
 Plug 'sheerun/vim-polyglot'                             " handles all/most of the syntax files needed
-Plug 'evanleck/vim-svelte'
 Plug 'chrisbra/csv.vim'
+Plug 'evanleck/vim-svelte'
 Plug 'groenewege/vim-less'                              " LESS support
 Plug 'neovimhaskell/haskell-vim'
-Plug 'thalesmello/lkml.vim'                             " LookML
 Plug 'pantharshit00/vim-prisma'
+Plug 'thalesmello/lkml.vim'                             " LookML
+Plug 'akinsho/git-conflict.nvim'                        " git conflicts
 
 " color themes
 Plug 'altercation/vim-colors-solarized'
@@ -146,17 +163,13 @@ if &t_Co >= 256 || has("termguicolors") || has("gui_running")
         set mouse=a
     endif
 
-    if PlugLoaded('dracula')
-        color dracula                                                   " best with Dracula terminal theme
+
+    if PlugLoaded('catppuccin')
+    else
+        if PlugLoaded('dracula')
+            color dracula                                                   " best with Dracula terminal theme
+        endif
     endif
-
-    let g:catppuccin_favour = "macchiato"
-
-    lua << EOF
-require("catppuccin").setup()
-EOF
-
-    color catppuccin
 endif
 
 let g:node_host_prog = "$HOME/.volta/bin/neovim-node-host"
@@ -233,7 +246,7 @@ set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 "set foldexpr=lsp#ui#vim#folding#foldexpr()
 "set foldtext=lsp#ui#vim#folding#foldtext()
-set foldlevel=5
+set foldlevel=7
 
 set lazyredraw                                                      "don't update the screen during macros
 

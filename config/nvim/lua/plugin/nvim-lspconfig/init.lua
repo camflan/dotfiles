@@ -1,3 +1,4 @@
+require("plugin.nvim-lspconfig.cssmodules-ls")
 require("plugin.nvim-lspconfig.efm")
 require("plugin.nvim-lspconfig.eslint")
 require("plugin.nvim-lspconfig.graphql")

@@ -4,5 +4,3 @@ Now using [dotbot](https://github.com/anishathalye/dotbot) instead of hand-rolle
 
 ## Neovim config
 Requires nvim 0.8+
-
-

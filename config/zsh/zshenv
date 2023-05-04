@@ -45,10 +45,6 @@ export PATH="$PATH:/Users/camron/.local/bin"
 # add poetry to path
 export PATH="$HOME/.poetry/bin:$PATH"
 
-# add volta to path
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
-
 # yarn globals
 export PATH="$HOME/.yarn/bin:$PATH"
 

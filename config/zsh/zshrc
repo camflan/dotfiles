@@ -120,3 +120,7 @@ for dump in ~/.zcompdump(N.mh+24); do
 done
 compinit -C
 
+# atuin (shell history)
+# https://atuin.sh/
+# https://github.com/ellie/atuin
+eval "$(atuin init zsh)"

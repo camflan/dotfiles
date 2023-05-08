@@ -31,7 +31,7 @@ local common = {
     vim.keymap.set("n", "<leader>j", "<cmd>lua vim.diagnostic.goto_next()<CR>", keymap_opts)
     vim.keymap.set("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", keymap_opts)
 
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
     if client.supports_method("textDocument/formatting") then
       vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
@@ -92,8 +92,8 @@ return {
           null_ls.builtins.diagnostics.selene.with({
             cwd = function()
               return vim.fs.dirname(
-                    vim.fs.find({ "selene.toml" }, { upward = true, path = vim.api.nvim_buf_get_name(0) })[1]
-                  ) or vim.fn.expand("~/.config/selene/") -- fallback value
+                vim.fs.find({ "selene.toml" }, { upward = true, path = vim.api.nvim_buf_get_name(0) })[1]
+              ) or vim.fn.expand("~/.config/selene/") -- fallback value
             end,
           }),
           null_ls.builtins.formatting.black,
@@ -128,7 +128,7 @@ return {
         },
       })
 
-      LSP.sumneko_lua.setup({
+      LSP.lua_ls.setup({
         capabilities = capabilities,
         on_attach = common.on_attach,
         flags = common.flags,

@@ -108,6 +108,9 @@ return {
     end,
   },
   {
+    "dmmulroy/tsc.nvim",
+  },
+  {
     "neovim/nvim-lspconfig",
     config = function()
       local LSP = require("lspconfig")

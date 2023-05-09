@@ -123,4 +123,10 @@ compinit -C
 # atuin (shell history)
 # https://atuin.sh/
 # https://github.com/ellie/atuin
+#
+# Don't let atuin auto-bind to up and ctrl-r
+# The current full UI "up" implementation is too bloated and incongruous
+export ATUIN_NOBIND="true"
 eval "$(atuin init zsh)"
+# alt+r for full atuin view
+bindkey '^[r' _atuin_search_widget

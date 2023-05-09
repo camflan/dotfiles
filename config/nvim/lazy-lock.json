@@ -42,6 +42,7 @@
   "todo-comments.nvim": { "branch": "main", "commit": "8febc60a76feefd8203077ef78b6a262ea1a41f9" },
   "tokyonight.nvim": { "branch": "main", "commit": "df13e3268a44f142999fa166572fe95a650a0b37" },
   "trouble.nvim": { "branch": "main", "commit": "d56bfc0c501ced4002a57cb60433362fb2ce9c4d" },
+  "tsc.nvim": { "branch": "main", "commit": "502f44da1f6c6248c0642c373f72b874c3a60e47" },
   "vim-abolish": { "branch": "master", "commit": "cb3dcb220262777082f63972298d57ef9e9455ec" },
   "vim-brogrammer-theme": { "branch": "main", "commit": "836a97d218d861602f4bf9536eb604d09b9c35e1" },
   "vim-characterize": { "branch": "master", "commit": "1ba0fcf208464647e2df2e9f693247a2207f22a4" },

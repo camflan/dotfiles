@@ -204,6 +204,13 @@ return {
 
           common.on_attach(client, bufnr)
         end,
+        settings = {
+          python = {
+            analysis = {
+              project = "pyproject.toml",
+            },
+          },
+        },
       })
 
       LSP.tailwindcss.setup({

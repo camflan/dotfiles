@@ -51,8 +51,14 @@
 - asdf:
     - plugin: java
       url: https://github.com/halcyon/asdf-java.git
+    - plugin: kubectl
+      url: https://github.com/asdf-community/asdf-kubectl.git
     - plugin: maven
       url: https://github.com/halcyon/asdf-maven.git
+    - plugin: nodejs
+      url: https://github.com/asdf-vm/asdf-nodejs.git
+    - plugin: pre-commit
+      url: https://github.com/jonathanmorley/asdf-pre-commit.git
     - plugin: python
       url: https://github.com/danhper/asdf-python.git
     - plugin: ruby

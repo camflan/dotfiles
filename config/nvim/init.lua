@@ -34,7 +34,7 @@ vim.opt.listchars = {
   extends = "»",
   nbsp = "␣",
   precedes = "«",
-  space = "·",
+  -- space = "·",
   tab = "▸ ",
   trail = "•",
 }
@@ -82,10 +82,8 @@ vim.keymap.set({ "n" }, "<leader>rr", "<cmd>lua require('fzf-lua').lsp_reference
 vim.keymap.set({ "n" }, "<leader>rs", "<cmd>lua require('fzf-lua').lsp_live_workspace_symbols()<CR>", { remap = false })
 vim.keymap.set({ "n" }, "<leader>C", "<cmd>lua require('fzf-lua').lsp_code_actions()<CR>", { remap = false })
 
--- -- vim.keymap.set({ "n" }, "<leader>fi", ":Telescope lsp_implementations<CR>", { remap = false })
--- vim.keymap.set({ "n" }, "<leader>fd", ":Telescope lsp_definitions<CR>", { remap = false })
--- vim.keymap.set({ "n" }, "<leader>ft", ":Telescope lsp_type_definitions<CR>", { remap = false })
--- vim.keymap.set({ "n" }, "<leader>fa", ":Telescope lsp_code_actions<CR>", { remap = false })
+-- ISwap
+vim.keymap.set("", "<Leader>s", ":ISwap<CR>", { desc = "ISwap arguments" })
 
 -- Hop
 vim.keymap.set({ "n" }, "<leader>l", ":HopLineStart<CR>", { remap = true, silent = true })

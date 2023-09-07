@@ -3,6 +3,13 @@
 return {
   "j-hui/fidget.nvim",
   tag = "legacy", -- used temporarily while fidget is rewritten
-  lazy = false,
-  config = true,
+  event = "LspAttach",
+  config = function()
+    local f = require("fidget")
+    f.setup({
+      text = {
+        spinner = "dots",
+      },
+    })
+  end,
 }

@@ -28,15 +28,17 @@ return {
     "windwp/windline.nvim",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
+      "nvim-treesitter/nvim-treesitter",
     },
     config = function()
-      -- require("wlsample.bubble2")
       local windline = require("windline")
       local helper = require("windline.helpers")
-      local sep = helper.separators
+      local b_components = require("windline.components.basic")
       local vim_components = require("windline.components.vim")
 
-      local b_components = require("windline.components.basic")
+      local ts_statusline = require("nvim-treesitter.statusline")
+
+      local sep = helper.separators
       local state = _G.WindLine.state
 
       local lsp_comps = require("windline.components.lsp")
@@ -85,9 +87,9 @@ return {
       basic.lsp_diagnos = {
         width = 90,
         hl_colors = {
-          red = { "red", "black" },
-          yellow = { "yellow", "black" },
-          blue = { "blue", "black" },
+          red = { "red", "black_light" },
+          yellow = { "yellow", "black_light" },
+          blue = { "blue", "black_light" },
         },
         text = function(bufnr)
           if lsp_comps.check_lsp(bufnr) then
@@ -103,18 +105,30 @@ return {
 
       local icon_comp = b_components.cache_file_icon({ default = "", hl_colors = { "white", "black_light" } })
 
+      local ts_statusline_width = 40
       basic.file = {
         hl_colors = {
           default = { "white", "black_light" },
+          light_text = { "white_light", "black_light" },
         },
         text = function(bufnr)
-          return {
+          local components = {
             { " ", "default" },
             icon_comp(bufnr),
             { " ", "default" },
             { b_components.cache_file_name("[No Name]", "unique"), "" },
             { b_components.file_modified("+ "), "default" },
           }
+
+          local treesitter_path = ts_statusline.statusline({ bufnr = bufnr, indicator_size = ts_statusline_width })
+
+          if treesitter_path == nil or treesitter_path == "" then
+            return components
+          end
+
+          table.insert(components, { sep.slant_left_thin, "default" })
+          table.insert(components, { treesitter_path, "light_text"})
+          return components
         end,
       }
       basic.right = {
@@ -150,10 +164,10 @@ return {
         active = {
           { " ", hl_list.Black },
           basic.logo,
+          basic.lsp_diagnos,
           basic.file,
           { vim_components.search_count(), { "red", "black_light" } },
           { sep.right_rounded, { "black_light", "black" } },
-          basic.lsp_diagnos,
           basic.divider,
           { " ", hl_list.Black },
           basic.vi_mode,

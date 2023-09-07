@@ -217,6 +217,23 @@ return {
         capabilities = capabilities,
         on_attach = common.on_attach,
         flags = common.flags,
+        settings = {
+          tailwindCSS = {
+            experimental = {
+              classRegex = {
+                "cva\\(((?:[^()]|\\([^()]*\\))*)\\)",
+                "[\"'`]([^\"'`]*).*?[\"'`]",
+                "classnames\\(([^)]*)\\)",
+                "'([^']*)'",
+                "cx\\(([^)]*)\\)",
+                "'([^']*)'",
+                "clsx\\(([^)]*)\\)",
+                "'([^']*)'",
+                -- { "cva\\(([^)]*)\\)", "'([^']*)'" },
+              },
+            },
+          },
+        },
       })
     end,
   },

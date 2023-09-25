@@ -12,13 +12,13 @@ return {
       local mason_lsp = require("mason-lspconfig")
       mason_lsp.setup({
         ensure_installed = {
+          "biome",
           "cssmodules_ls",
           "eslint",
           "graphql",
           "intelephense",
           "lua_ls",
           "pyright",
-          "rome",
           "ruff_lsp",
           "svelte",
           "tailwindcss",
@@ -31,11 +31,11 @@ return {
         -- a list of all tools you want to ensure are installed upon
         -- start; they should be the names Mason uses for each tool
         ensure_installed = {
+          "biome",
           "cspell",
           "editorconfig-checker",
           "flake8",
           "pyproject-flake8",
-          "rome",
           "ruff",
           "ruff-lsp",
           "selene",

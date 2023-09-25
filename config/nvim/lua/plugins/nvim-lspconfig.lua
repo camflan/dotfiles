@@ -189,7 +189,7 @@ return {
         on_attach = common.on_attach,
       })
 
-      LSP.rome.setup({
+      LSP.biome.setup({
         capabilities = capabilities,
         flags = common.flags,
         on_attach = common.on_attach,

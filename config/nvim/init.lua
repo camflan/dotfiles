@@ -9,6 +9,10 @@
 vim.g.node_host_prog = "$HOME/.volta/tools/image/packages/neovim/bin/neovim-node-host"
 vim.g.python3_host_prog = "$HOME/.asdf-data/shims/python3"
 
+-- let nvim set window title
+vim.opt.title = true
+vim.opt.titlestring = '%t%( %M%)%( (%{expand("%:~:.:h")})%)%( %a%)'
+
 -- spacebar as leader
 vim.g.mapleader = " "
 

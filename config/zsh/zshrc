@@ -75,8 +75,8 @@ eval "$(fasd --init auto)"
 eval "$(starship init zsh)"
 
 # add volta to path -- this should be AFTER homebrew
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
+# export VOLTA_HOME="$HOME/.volta"
+# export PATH="$VOLTA_HOME/bin:$PATH"
 
 export CBFDOTFILES_DIR=$HOME/dotfiles
 

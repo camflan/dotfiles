@@ -69,6 +69,9 @@ vim.keymap.set("i", "jj", "<C-[>", { remap = false })
 -- ; -> : for faster cmd
 vim.keymap.set({ "n", "v" }, ";", ":", { remap = false })
 
+-- Use oil for directory/file nav
+vim.keymap.set({ "n" }, "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+
 -- FZF-lua
 vim.keymap.set({ "n" }, "<leader>f", "<cmd>lua require('fzf-lua').files()<CR>", { remap = false, silent = true })
 vim.keymap.set({ "n" }, "<leader>b", "<cmd>lua require('fzf-lua').buffers()<CR>", { remap = false, silent = true })
@@ -79,12 +82,9 @@ vim.keymap.set(
   { remap = false, silent = true }
 )
 vim.keymap.set({ "n" }, "<leader>h", "<cmd>lua require('fzf-lua').help_tags()<CR>", { remap = false })
--- vim.keymap.set({ "n" }, "<leader>g", ":Telescope git_commits<CR>", { remap = false })
--- vim.keymap.set({ "n" }, "<leader>ts", ":Telescope treesitter<CR>", { remap = false })
---
 vim.keymap.set({ "n" }, "<leader>rr", "<cmd>lua require('fzf-lua').lsp_references()<CR>", { remap = false })
 vim.keymap.set({ "n" }, "<leader>rs", "<cmd>lua require('fzf-lua').lsp_live_workspace_symbols()<CR>", { remap = false })
-vim.keymap.set({ "n" }, "<leader>C", "<cmd>lua require('fzf-lua').lsp_code_actions()<CR>", { remap = false })
+vim.keymap.set({ "n" }, "<leader>c", "<cmd>lua require('fzf-lua').lsp_code_actions()<CR>", { remap = false })
 
 -- ISwap
 vim.keymap.set("", "<Leader>s", ":ISwap<CR>", { desc = "ISwap arguments" })
@@ -98,21 +98,6 @@ vim.keymap.set({ "n" }, "<leader>S", ":Spectre<CR>", { remap = false, silent = t
 
 -- Trouble
 vim.keymap.set({ "n" }, "<leader>T", ":Trouble<CR>", { remap = false, silent = true })
-
--- Telescope
--- vim.keymap.set({ "n" }, "<leader>T", ":Telescope<CR>", { remap = false })
--- vim.keymap.set({ "n" }, "<leader>f", ":Telescope find_files<CR>", { remap = false })
--- vim.keymap.set({ "n" }, "<leader>r", ":Telescope live_grep<CR>", { remap = false })
--- vim.keymap.set({ "n" }, "<leader>b", ":Telescope buffers<CR>", { remap = false })
--- vim.keymap.set({ "n" }, "<leader>h", ":Telescope help_tags<CR>", { remap = false })
--- vim.keymap.set({ "n" }, "<leader>g", ":Telescope git_commits<CR>", { remap = false })
--- vim.keymap.set({ "n" }, "<leader>ts", ":Telescope treesitter<CR>", { remap = false })
---
--- vim.keymap.set({ "n" }, "<leader>fr", ":Telescope lsp_references<CR>", { remap = false })
--- -- vim.keymap.set({ "n" }, "<leader>fi", ":Telescope lsp_implementations<CR>", { remap = false })
--- vim.keymap.set({ "n" }, "<leader>fd", ":Telescope lsp_definitions<CR>", { remap = false })
--- vim.keymap.set({ "n" }, "<leader>ft", ":Telescope lsp_type_definitions<CR>", { remap = false })
--- vim.keymap.set({ "n" }, "<leader>fa", ":Telescope lsp_code_actions<CR>", { remap = false })
 
 -- tree view style for Explore/NetRw
 vim.g.netrw_liststyle = 3

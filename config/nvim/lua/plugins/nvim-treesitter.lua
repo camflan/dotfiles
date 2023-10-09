@@ -19,6 +19,7 @@ return {
           "go",
           "hack",
           "haskell",
+          "hurl",
           "diff",
           "dockerfile",
           "cmake",

@@ -71,6 +71,7 @@ brew "tldr"
 brew "trash"
 brew "wangle"
 brew "watchman"
+brew "whalebrew"
 
 cask "1password-cli"
 cask "aerial"

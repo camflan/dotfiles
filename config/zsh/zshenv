@@ -41,6 +41,11 @@ if [[ ! -a $ASDF_DATA_DIR ]]; then
   mkdir -p $ASDF_DATA_DIR
 fi
 
+# Whalebrew
+export WHALEBREW_CONFIG_DIR=$XDG_CONFIG_HOME/whalebrew
+export WHALEBREW_INSTALL_PATH=/opt/whalebrew/bin
+export PATH="$PATH:$WHALEBREW_INSTALL_PATH"
+
 # Created by `pipx` on 2022-03-07 19:40:36
 export PATH="$PATH:/Users/camron/.local/bin"
 

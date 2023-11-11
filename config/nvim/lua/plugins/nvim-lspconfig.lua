@@ -74,35 +74,35 @@ local common = {
 
 return {
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
     config = function()
-      local null_ls = require("null-ls")
+      local none_ls = require("null-ls")
 
-      null_ls.setup({
+      none_ls.setup({
         on_attach = common.on_attach,
         sources = {
           -- need to filter out spelling in code
-          -- null_ls.builtins.code_actions.cspell,
-          -- null_ls.builtins.completion.spell,
-          -- null_ls.builtins.diagnostics.cspell,
-          null_ls.builtins.diagnostics.pyproject_flake8,
-          null_ls.builtins.diagnostics.selene.with({
+          -- none_ls.builtins.code_actions.cspell,
+          -- none_ls.builtins.completion.spell,
+          -- none_ls.builtins.diagnostics.cspell,
+          none_ls.builtins.diagnostics.pyproject_flake8,
+          none_ls.builtins.diagnostics.selene.with({
             cwd = function()
               return vim.fs.dirname(
                 vim.fs.find({ "selene.toml" }, { upward = true, path = vim.api.nvim_buf_get_name(0) })[1]
               ) or vim.fn.expand("~/.config/selene/") -- fallback value
             end,
           }),
-          null_ls.builtins.formatting.black,
-          null_ls.builtins.formatting.isort,
-          null_ls.builtins.formatting.markdownlint,
-          null_ls.builtins.formatting.prettier.with({
+          none_ls.builtins.formatting.black,
+          none_ls.builtins.formatting.isort,
+          none_ls.builtins.formatting.markdownlint,
+          none_ls.builtins.formatting.prettier.with({
             prefer_local = "node_modules/.bin",
           }),
-          null_ls.builtins.formatting.stylua,
+          none_ls.builtins.formatting.stylua,
         },
       })
     end,
@@ -112,6 +112,9 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    dependencies = {
+      "b0o/schemastore.nvim",
+    },
     config = function()
       local LSP = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -180,6 +183,15 @@ return {
           "javascriptreact",
           "typescript",
           "typescriptreact",
+        },
+      })
+
+      LSP.jsonls.setup({
+        settings = {
+          json = {
+            schemas = require("schemastore").json.schemas(),
+            validate = { enable = true },
+          },
         },
       })
 

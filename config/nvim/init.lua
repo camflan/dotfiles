@@ -61,43 +61,13 @@ vim.keymap.set({ "n", "i", "v" }, "<C-l>", "<C-W>l")
 -- search
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.keymap.set("n", "<leader>/", ":silent nohlsearch<CR>", { remap = false })
+vim.keymap.set("n", "<leader>/", ":silent nohlsearch<CR>", { desc = "Toggle search highlights", remap = false })
 
 -- jj to exit normal mode
-vim.keymap.set("i", "jj", "<C-[>", { remap = false })
+vim.keymap.set("i", "jj", "<C-[>", { desc = "ergo exit intead of esc", remap = false })
 
 -- ; -> : for faster cmd
-vim.keymap.set({ "n", "v" }, ";", ":", { remap = false })
-
--- Use oil for directory/file nav
-vim.keymap.set({ "n" }, "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-
--- FZF-lua
-vim.keymap.set({ "n" }, "<leader>f", "<cmd>lua require('fzf-lua').files()<CR>", { remap = false, silent = true })
-vim.keymap.set({ "n" }, "<leader>b", "<cmd>lua require('fzf-lua').buffers()<CR>", { remap = false, silent = true })
-vim.keymap.set(
-  { "n" },
-  "<leader>r",
-  "<cmd>lua require('fzf-lua').live_grep_native()<CR>",
-  { remap = false, silent = true }
-)
-vim.keymap.set({ "n" }, "<leader>h", "<cmd>lua require('fzf-lua').help_tags()<CR>", { remap = false })
-vim.keymap.set({ "n" }, "<leader>rr", "<cmd>lua require('fzf-lua').lsp_references()<CR>", { remap = false })
-vim.keymap.set({ "n" }, "<leader>rs", "<cmd>lua require('fzf-lua').lsp_live_workspace_symbols()<CR>", { remap = false })
-vim.keymap.set({ "n" }, "<leader>c", "<cmd>lua require('fzf-lua').lsp_code_actions()<CR>", { remap = false })
-
--- ISwap
-vim.keymap.set("", "<Leader>s", ":ISwap<CR>", { desc = "ISwap arguments" })
-
--- Hop
-vim.keymap.set({ "n" }, "<leader>l", ":HopLineStart<CR>", { remap = true, silent = true })
-vim.keymap.set({ "n" }, "<leader>w", ":HopWord<CR>", { remap = true, silent = true })
-
--- Spectre
-vim.keymap.set({ "n" }, "<leader>S", ":Spectre<CR>", { remap = false, silent = true })
-
--- Trouble
-vim.keymap.set({ "n" }, "<leader>T", ":Trouble<CR>", { remap = false, silent = true })
+vim.keymap.set({ "n", "v" }, ";", ":", { desc = "Fast access to :", remap = false })
 
 -- tree view style for Explore/NetRw
 vim.g.netrw_liststyle = 3
@@ -122,6 +92,6 @@ require("lazy").setup("plugins", {
     -- install missing plugins on startup. This doesn't increase startup time.
     missing = true,
     -- try to load one of these colorschemes when starting an installation during startup
-    colorscheme = { "catppuccin" },
+    colorscheme = { "tokyonight", "catpuccin", "solarized", "koehler" },
   },
 })

@@ -1,16 +1,24 @@
 return {
-	{
-		"akinsho/git-conflict.nvim",
-		config = function()
-			local git_conflict = require("git-conflict")
+  {
+    "akinsho/git-conflict.nvim",
+    config = function()
+      local git_conflict = require("git-conflict")
 
-			git_conflict.setup({
-				disable_diagnostics = false,
-				highlights = {
-					incoming = "DiffText",
-					current = "DiffAdd",
-				},
-			})
-		end,
-	},
+      git_conflict.setup({
+          default_mappings = {
+            ours = 'o',
+            theirs = 't',
+            none = '0',
+            both = 'b',
+            next = 'n',
+            prev = 'p',
+          },
+        disable_diagnostics = true,
+        highlights = {
+          incoming = "DiffText",
+          current = "DiffAdd",
+        },
+      })
+    end,
+  },
 }

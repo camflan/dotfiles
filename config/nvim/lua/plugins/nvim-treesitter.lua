@@ -84,6 +84,9 @@ return {
         },
       })
 
+      -- from https://github.com/pwntester/octo.nvim#-installation
+      vim.treesitter.language.register("markdown", "octo")
+
       vim.opt.foldmethod = "expr"
       vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
       vim.opt.foldlevel = 10

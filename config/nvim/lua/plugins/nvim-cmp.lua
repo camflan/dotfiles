@@ -11,7 +11,6 @@ return {
       "L3MON4D3/LuaSnip",
       "saadparwaiz1/cmp_luasnip",
     },
-    lazy = true,
     config = function()
       vim.opt.completeopt = "preview,menu,menuone,noselect"
 
@@ -38,7 +37,7 @@ return {
           { name = "nvim_lsp" },
           { name = "nvim_lsp_signature_help" },
           { name = "luasnip" }, -- For luasnip users.
-          { name = "lab.quick_data", keyword_length = 4 },
+          { name = "lab.quick_data",         keyword_length = 4 },
         }, {
           { name = "buffer" },
         }),

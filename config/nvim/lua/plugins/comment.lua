@@ -6,9 +6,17 @@ return {
 			-- this also requries configuration in nvim-treesitter.lua
 			"JoosepAlviste/nvim-ts-context-commentstring",
 		},
+		lazy = true,
+		keys = {
+			{"gc"},
+			{"gb"},
+			{"gcO"},
+			{"gco"},
+			{"gcA"},
+		},
 		config = function()
-			local comment = require('Comment')
-            local ts_commentstring = require("ts_context_commentstring.integrations.comment_nvim")
+			local comment = require("Comment")
+			local ts_commentstring = require("ts_context_commentstring.integrations.comment_nvim")
 			local pre_hook = ts_commentstring.create_pre_hook()
 
 			comment.setup({
@@ -21,9 +29,9 @@ return {
 				---LHS of toggle mappings in NORMAL mode
 				toggler = {
 					---Line-comment toggle keymap
-					line = "gcc",
+					line = "gc",
 					---Block-comment toggle keymap
-					block = "gbc",
+					block = "gb",
 				},
 				---LHS of operator-pending mappings in NORMAL and VISUAL mode
 				opleader = {

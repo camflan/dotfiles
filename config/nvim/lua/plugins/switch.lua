@@ -1,5 +1,10 @@
 return {
-	{
-		"AndrewRadev/switch.vim",
-	},
+  {
+    "AndrewRadev/switch.vim",
+    lazy = true,
+    cmd = { "Switch" },
+    keys = {
+      { "gs" },
+    },
+  },
 }

@@ -49,6 +49,8 @@
 
 # ASDF-VM
 - asdf:
+    - plugin: cloud-sql-proxy
+      url: https://github.com/pbr0ck3r/asdf-cloud-sql-proxy.git
     - plugin: java
       url: https://github.com/halcyon/asdf-java.git
     - plugin: kubectl
@@ -64,4 +66,6 @@
     - plugin: ruby
       url: https://github.com/asdf-vm/asdf-ruby.git
     - plugin: terraform
+      url: https://github.com/asdf-community/asdf-hashicorp.git
+    - plugin: vault
       url: https://github.com/asdf-community/asdf-hashicorp.git

@@ -1,6 +1,7 @@
 return {
   {
     "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
     dependencies = {
       "neovim/nvim-lspconfig",
       "hrsh7th/cmp-nvim-lsp",
@@ -37,7 +38,7 @@ return {
           { name = "nvim_lsp" },
           { name = "nvim_lsp_signature_help" },
           { name = "luasnip" }, -- For luasnip users.
-          { name = "lab.quick_data",         keyword_length = 4 },
+          { name = "lab.quick_data", keyword_length = 4 },
         }, {
           { name = "buffer" },
         }),

@@ -75,8 +75,11 @@ local common = {
 return {
   {
     "nvimtools/none-ls.nvim",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "nvim-lua/plenary.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "williamboman/mason.nvim",
     },
     config = function()
       local none_ls = require("null-ls")
@@ -109,11 +112,17 @@ return {
   },
   {
     "dmmulroy/tsc.nvim",
+    cmd = { "TSC" },
   },
   {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "b0o/schemastore.nvim",
+      "hrsh7th/nvim-cmp",
+      "folke/neodev.nvim",
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
     },
     config = function()
       local LSP = require("lspconfig")
@@ -233,10 +242,10 @@ return {
           tailwindCSS = {
             experimental = {
               classRegex = {
-                { "cva\\(((?:[^()]|\\([^()]*\\))*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]", },
-                { "classnames\\(([^)]*)\\)", "'([^']*)'", },
-                { "cx\\(([^)]*)\\)", "'([^']*)'", },
-                { "clsx\\(([^)]*)\\)", "'([^']*)'", },
+                { "cva\\(((?:[^()]|\\([^()]*\\))*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+                { "classnames\\(([^)]*)\\)", "'([^']*)'" },
+                { "cx\\(([^)]*)\\)", "'([^']*)'" },
+                { "clsx\\(([^)]*)\\)", "'([^']*)'" },
                 -- { "cva\\(([^)]*)\\)", "'([^']*)'" },
               },
             },

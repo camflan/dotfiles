@@ -5,6 +5,7 @@ return {
   -- },
   {
     "prisma/vim-prisma",
-    lazy = false,
+    ft = "prisma",
+    lazy = true,
   },
 }

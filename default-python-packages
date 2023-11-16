@@ -1,5 +1,4 @@
-black
 ipython
-isort
 neovim
 pipenv
+pipx

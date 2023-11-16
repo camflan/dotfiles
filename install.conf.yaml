@@ -49,6 +49,8 @@
 
 # ASDF-VM
 - asdf:
+    - plugin: awscli
+      url: https://github.com/MetricMike/asdf-awscli.git
     - plugin: cloud-sql-proxy
       url: https://github.com/pbr0ck3r/asdf-cloud-sql-proxy.git
     - plugin: java
@@ -61,6 +63,10 @@
       url: https://github.com/asdf-vm/asdf-nodejs.git
     - plugin: pre-commit
       url: https://github.com/jonathanmorley/asdf-pre-commit.git
+    - plugin: poetry
+      url: https://github.com/asdf-community/asdf-poetry.git
+    - plugin: postgres
+      url: https://github.com/smashedtoatoms/asdf-postgres.git
     - plugin: python
       url: https://github.com/danhper/asdf-python.git
     - plugin: ruby
@@ -69,3 +75,5 @@
       url: https://github.com/asdf-community/asdf-hashicorp.git
     - plugin: vault
       url: https://github.com/asdf-community/asdf-hashicorp.git
+    - plugin: yarn
+      url: https://github.com/twuni/asdf-yarn.git

@@ -127,7 +127,7 @@ return {
           end
 
           table.insert(components, { sep.slant_left_thin, "default" })
-          table.insert(components, { treesitter_path, "light_text"})
+          table.insert(components, { treesitter_path, "light_text" })
           return components
         end,
       }

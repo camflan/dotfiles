@@ -1,6 +1,6 @@
 -- init.lua
 -- camron flanders <me@camronflanders.com>
--- last update: January 2023:CBF
+-- last update: November 2023:CBF
 --
 -- feel free to use all or part of my init.lua to learn, modify, use. If used
 -- in an init.lua you intend to distribute, please credit appropriately.

@@ -6,7 +6,7 @@
 -- in an init.lua you intend to distribute, please credit appropriately.
 
 -- NVIM provider paths
-vim.g.node_host_prog = "$HOME/.volta/tools/image/packages/neovim/bin/neovim-node-host"
+vim.g.node_host_prog = "$HOME/.asdf-data/shims/neovim-node-host"
 vim.g.python3_host_prog = "$HOME/.asdf-data/shims/python3"
 
 -- let nvim set window title

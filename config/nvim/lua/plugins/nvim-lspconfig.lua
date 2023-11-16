@@ -78,9 +78,11 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "williamboman/mason-lspconfig.nvim",
       "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "WhoIsSethDaniel/mason-tool-installer.nvim",
     },
+    lazy = true,
     config = function()
       local none_ls = require("null-ls")
 
@@ -119,10 +121,11 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "b0o/schemastore.nvim",
-      "hrsh7th/nvim-cmp",
       "folke/neodev.nvim",
-      "williamboman/mason.nvim",
+      "hrsh7th/nvim-cmp",
+      "nvimtools/none-ls.nvim",
       "williamboman/mason-lspconfig.nvim",
+      "williamboman/mason.nvim",
     },
     config = function()
       local LSP = require("lspconfig")
@@ -139,7 +142,7 @@ return {
         end,
         flags = common.flags,
         init_options = {
-          npmLocation = "$HOME/.volta/bin/npm",
+          npmLocation = "$HOME/.asdf-data/shims/npm",
         },
       })
 
@@ -156,6 +159,12 @@ return {
             },
           },
         },
+      })
+
+      LSP.biome.setup({
+        capabilities = capabilities,
+        flags = common.flags,
+        on_attach = common.on_attach,
       })
 
       LSP.cssmodules_ls.setup({
@@ -205,12 +214,6 @@ return {
       })
 
       LSP.pyright.setup({
-        capabilities = capabilities,
-        flags = common.flags,
-        on_attach = common.on_attach,
-      })
-
-      LSP.biome.setup({
         capabilities = capabilities,
         flags = common.flags,
         on_attach = common.on_attach,

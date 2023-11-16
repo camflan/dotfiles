@@ -1,5 +1,6 @@
 return {
-	{
-		"sgur/vim-editorconfig",
-	},
+  {
+    "sgur/vim-editorconfig",
+    event = { "BufReadPre", "BufNewFile" },
+  },
 }

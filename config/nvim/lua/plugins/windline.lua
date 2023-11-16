@@ -26,6 +26,7 @@
 return {
   {
     "windwp/windline.nvim",
+    event = "VeryLazy",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
       "nvim-treesitter/nvim-treesitter",

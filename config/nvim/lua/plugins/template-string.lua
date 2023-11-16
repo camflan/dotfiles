@@ -1,6 +1,7 @@
 return {
   {
     "axelvc/template-string.nvim",
+    event = { "InsertEnter" },
     opts = {
       filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact", "python" }, -- filetypes where the plugin is active
       jsx_brackets = true, -- must add brackets to jsx attributes

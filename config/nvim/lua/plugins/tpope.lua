@@ -8,9 +8,7 @@ return {
     -- replacements with case manipulation
     "tpope/vim-abolish",
     lazy = true,
-    cmd = {
-      "S",
-    },
+    event = "CmdlineEnter",
   },
   {
     -- more char data on ga,
@@ -24,38 +22,31 @@ return {
     -- unix helpers that work on the buffer and file together. delete/move/copy/etc
     "tpope/vim-eunuch",
     lazy = true,
-    cmd = {
-      "Chmod",
-      "Delete",
-      "Mkdir",
-      "Move",
-    },
+    event = "CmdlineEnter",
   },
   {
     -- git integration
     "tpope/vim-fugitive",
+    dependencies = { "tpope/vim-rhubarb" },
+    event = "CmdlineEnter",
     lazy = true,
-    cmd = {
-      "G",
-    },
   },
   {
     -- github extension for fugitive
     "tpope/vim-rhubarb",
     lazy = true,
-    cmd = {
-      "G",
-    },
   },
   {
     -- repeat on steroids
     "tpope/vim-repeat",
-    lazy = false,
+    lazy = true,
+    event = "InsertEnter"
   },
   {
     -- support readline keys on cmdline
     "tpope/vim-rsi",
-    lazy = false,
+    lazy = true,
+    event = "CmdlineEnter"
   },
   {
     -- C-A/X to inc/dec dates, numbers, more
@@ -69,12 +60,12 @@ return {
   { --
     -- better surround support
     "tpope/vim-surround",
-    lazy = false,
+    event = { "BufReadPre", "BufNewFile" },
   },
   {
     -- handy mappings for qf, lines, etc
     "tpope/vim-unimpaired",
-    lazy = false,
+    event = { "BufReadPre", "BufNewFile" },
   },
   -- Database Interface
   { "tpope/vim-dadbod", lazy = true, cmd = "DB" },

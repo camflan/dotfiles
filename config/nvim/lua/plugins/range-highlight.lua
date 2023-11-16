@@ -1,12 +1,12 @@
 return {
-	{
-		"winston0410/range-highlight.nvim",
-		dependencies = {
-			"winston0410/cmd-parser.nvim"
-		},
-		lazy = false,
-		config = function ()
-			require'range-highlight'.setup{}
-		end
-	},
+  {
+    "winston0410/range-highlight.nvim",
+    event = { "CmdlineEnter" },
+    dependencies = {
+      "winston0410/cmd-parser.nvim",
+    },
+    config = function()
+      require("range-highlight").setup({})
+    end,
+  },
 }

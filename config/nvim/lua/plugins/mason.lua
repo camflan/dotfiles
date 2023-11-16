@@ -5,7 +5,7 @@ return {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
     },
-    lazy = false,
+    lazy = true,
     config = function()
       require("mason").setup()
 

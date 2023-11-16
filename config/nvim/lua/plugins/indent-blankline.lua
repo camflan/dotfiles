@@ -2,6 +2,7 @@ return {
   {
     "lukas-reineke/indent-blankline.nvim",
 
+    event = { "BufReadPost", "BufNewFile" },
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
     },

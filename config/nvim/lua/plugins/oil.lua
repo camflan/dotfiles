@@ -7,13 +7,13 @@ return {
         "-",
         "<CMD>Oil<CR>",
         mode = { "n" },
-        desc = "Open parent directory"
+        desc = "Open parent directory",
       },
       {
         "<leader>-",
         "<CMD>Oil --float<CR>",
         mode = { "n" },
-        desc = "Open parent directory in float"
+        desc = "Open parent directory in float",
       },
     },
     opts = {
@@ -24,7 +24,6 @@ return {
       },
       -- Send deleted files to the trash instead of permanently deleting them (:help oil-trash)
       delete_to_trash = true,
-      trash_command = "trash -F",
       view_options = {
         show_hidden = true,
         is_always_hidden = function(name)

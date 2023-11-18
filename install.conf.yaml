@@ -37,7 +37,14 @@
     ~/.zshenv: zshenv
 
 - shell:
-    - [git submodule update --init --recursive, Installing submodules]
+  # Update all of our submodules (zprezto, dotbot, dotbot plugins)
+  - command: git submodule update --init --recursive
+    description: Installing submodules
+    stderr: true
+  # install pkgx: https://docs.pkgx.sh/run-anywhere/terminals
+  - command: curl -fsS https://pkgx.sh | sh
+    stderr: true
+    description: Installing pkgx
 
 #- create:
 #- ~/downloads

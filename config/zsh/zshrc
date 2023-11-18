@@ -72,12 +72,10 @@ export LDFLAGS="-L$(brew --prefix)/lib"
 # aliased to z and zz
 eval "$(fasd --init auto)"
 
+# prompt
 eval "$(starship init zsh)"
 
-# add volta to path -- this should be AFTER homebrew
-# export VOLTA_HOME="$HOME/.volta"
-# export PATH="$VOLTA_HOME/bin:$PATH"
-
+# my DOTFILES config path
 export CBFDOTFILES_DIR=$HOME/dotfiles
 
 # Source autocompletions for ZSH
@@ -108,8 +106,9 @@ compinit
 source "$HOME/.cargo/env"
 . "$HOME/.cargo/env"
 
+# Added by Docker Desktop
 if [[ -s "${ZDOTDIR:-$HOME}/.docker/init-zsh.sh" ]]; then
-    source $HOME/.docker/init-zsh.sh || true # Added by Docker Desktop
+    source $HOME/.docker/init-zsh.sh || true
 fi
 
 

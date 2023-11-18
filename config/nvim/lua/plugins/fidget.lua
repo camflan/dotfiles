@@ -3,4 +3,10 @@
 return {
   "j-hui/fidget.nvim",
   event = "VeryLazy",
+  config = true,
+  opts = {
+      notification = {
+          override_vim_notify = true
+      }
+  }
 }

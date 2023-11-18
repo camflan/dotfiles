@@ -17,7 +17,7 @@ vim.opt.titlestring = '%t%( %M%)%( (%{expand("%:~:.:h")})%)%( %a%)'
 vim.g.mapleader = " "
 
 -- shorten key chord timeout len from 1000ms
-vim.opt.timeoutlen = 200
+vim.opt.timeoutlen = 300
 
 -- auto-read changes to files
 vim.opt.autoread = true

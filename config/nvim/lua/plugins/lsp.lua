@@ -8,6 +8,11 @@ end
 
 vim.lsp.diagnostic.set_virtual_text = set_virtual_text_custom
 
+-- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = "rounded",
+})
+
 -- local Module to hold some common items
 local common = {
   flags = {},
@@ -37,7 +42,7 @@ local common = {
       update_in_insert = false,
       severity_sort = true,
       float = {
-        border = "shadow",
+        border = "rounded",
         format = function(diagnostic)
           if diagnostic.source == "eslint" then
             return string.format(
@@ -322,10 +327,10 @@ return {
       "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     },
     config = function()
-      local LSP = require("lspconfig")
+      local lsp_config = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      LSP.tsserver.setup({
+      lsp_config.tsserver.setup({
         capabilities = capabilities,
         on_attach = function(client, bufnr)
           -- we want prettier to format files, not tsserver
@@ -340,7 +345,7 @@ return {
         },
       })
 
-      LSP.lua_ls.setup({
+      lsp_config.lua_ls.setup({
         capabilities = capabilities,
         on_attach = common.on_attach,
         flags = common.flags,
@@ -355,13 +360,13 @@ return {
         },
       })
 
-      LSP.biome.setup({
+      lsp_config.biome.setup({
         capabilities = capabilities,
         flags = common.flags,
         on_attach = common.on_attach,
       })
 
-      LSP.cssmodules_ls.setup({
+      lsp_config.cssmodules_ls.setup({
         capabilities = capabilities,
         on_attach = function(client, bufnr)
           -- avoid accepting `definitionProvider` responses from this LSP
@@ -371,7 +376,7 @@ return {
         flags = common.flags,
       })
 
-      LSP.eslint.setup({
+      lsp_config.eslint.setup({
         capabilities = capabilities,
         on_attach = function(client, bufnr)
           -- Fix on save
@@ -385,7 +390,7 @@ return {
         flags = common.flags,
       })
 
-      LSP.graphql.setup({
+      lsp_config.graphql.setup({
         capabilities = capabilities,
         on_attach = common.on_attach,
         flags = common.flags,
@@ -398,7 +403,7 @@ return {
         },
       })
 
-      LSP.jsonls.setup({
+      lsp_config.jsonls.setup({
         settings = {
           json = {
             schemas = require("schemastore").json.schemas(),
@@ -407,13 +412,13 @@ return {
         },
       })
 
-      LSP.pyright.setup({
+      lsp_config.pyright.setup({
         capabilities = capabilities,
         flags = common.flags,
         on_attach = common.on_attach,
       })
 
-      LSP.ruff_lsp.setup({
+      lsp_config.ruff_lsp.setup({
         capabilities = capabilities,
         flags = common.flags,
         on_attach = function(client, bufnr)
@@ -431,7 +436,7 @@ return {
         },
       })
 
-      LSP.tailwindcss.setup({
+      lsp_config.tailwindcss.setup({
         capabilities = capabilities,
         on_attach = common.on_attach,
         flags = common.flags,

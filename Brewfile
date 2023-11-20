@@ -72,6 +72,7 @@ brew "trash"
 brew "wangle"
 brew "watchman"
 brew "whalebrew"
+brew "pkgxdev/made/pkgx"
 
 cask "1password-cli"
 cask "aerial"

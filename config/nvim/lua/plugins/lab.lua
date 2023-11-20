@@ -1,5 +1,5 @@
 return {
-	{
+  --[[ {
 		"0x100101/lab.nvim",
 		lazy = true,
 		cmd = { "Lab" },
@@ -13,5 +13,5 @@ return {
 				enabled = false,
 			}
 		}
-	}
+	} ]]
 }

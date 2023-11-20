@@ -2,9 +2,11 @@ return {
   {
     "AndrewRadev/switch.vim",
     lazy = true,
-    cmd = { "Switch" },
-    keys = {
-      { "gs" },
-    },
+    event = "VeryLazy",
+    init = function()
+      vim.g.switch_custom_definitions = {
+        { "enabled", "disabled" },
+      }
+    end,
   },
 }

@@ -118,6 +118,14 @@ return {
             ["ctrl-l"] = actions.file_sel_to_ll,
           },
         },
+        keymap = {
+          builtin = {
+            ["<F1>"] = "toggle-help",
+          },
+          fzf = {
+            ["ctrl-q"] = "select-all+accept",
+          },
+        },
       })
     end,
   },

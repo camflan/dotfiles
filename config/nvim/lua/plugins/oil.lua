@@ -1,6 +1,7 @@
 return {
   {
     "stevearc/oil.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     lazy = true,
     keys = {
       {
@@ -36,7 +37,5 @@ return {
         end,
       },
     },
-    -- Optional dependencies
-    dependencies = { "nvim-tree/nvim-web-devicons" },
   },
 }

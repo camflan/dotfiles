@@ -4,11 +4,11 @@ return {
     build = ":TSUpdate",
     lazy = true,
     config = function()
-      -- setup for comment.nvim + nvim-ts-context-commentstring
-      -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
       local ts_configs = require("nvim-treesitter.configs")
       ts_configs.setup({
         auto_install = true,
+        sync_install = true,
+        ignore_install = {},
         ensure_installed = {
           "c",
           "graphql",
@@ -69,18 +69,12 @@ return {
           "xml",
           "yaml",
         },
-        context_commentstring = {
-          enable = true,
-          -- Put custom comment definitions here for other filetypes or filetypes that don't work well.
-          -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
-        },
         highlight = {
           enable = true,
-          -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-          -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-          -- Using this option may slow down your editor, and you may see some duplicate highlights.
-          -- Instead of true it can also be a list of languages
           additional_vim_regex_highlighting = false,
+        },
+        indent = {
+          enable = true,
         },
       })
 

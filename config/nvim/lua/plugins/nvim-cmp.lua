@@ -60,7 +60,7 @@ return {
           expandable_indicator = true,
           fields = { "kind", "abbr", "menu" },
           format = function(_, vim_item)
-            vim_item.menu = vim_item.kind
+            vim_item.menu = " " .. vim_item.kind
             vim_item.kind = (cmp_kinds[vim_item.kind] or " ")
             return vim_item
           end,
@@ -73,11 +73,11 @@ return {
           ["<Tab>"] = cmp.mapping.confirm({ select = true }),
         }),
         sources = cmp.config.sources({
-          { name = "calc" },
+          { name = "luasnip" }, -- For luasnip users.
           { name = "nvim_lsp" },
           { name = "nvim_lsp_signature_help" },
-          { name = "luasnip" }, -- For luasnip users.
-          { name = "lab.quick_data", keyword_length = 4 },
+          { name = "calc" },
+          -- { name = "lab.quick_data", keyword_length = 4 },
         }, {
           { name = "buffer" },
         }),

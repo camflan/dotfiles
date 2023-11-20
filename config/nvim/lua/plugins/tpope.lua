@@ -28,7 +28,7 @@ return {
     -- git integration
     "tpope/vim-fugitive",
     dependencies = { "tpope/vim-rhubarb" },
-    event = "CmdlineEnter",
+    event = "VeryLazy",
     lazy = true,
   },
   {
@@ -40,13 +40,13 @@ return {
     -- repeat on steroids
     "tpope/vim-repeat",
     lazy = true,
-    event = "InsertEnter"
+    event = "InsertEnter",
   },
   {
     -- support readline keys on cmdline
     "tpope/vim-rsi",
     lazy = true,
-    event = "CmdlineEnter"
+    event = "CmdlineEnter",
   },
   {
     -- C-A/X to inc/dec dates, numbers, more
@@ -68,7 +68,6 @@ return {
     event = { "BufReadPre", "BufNewFile" },
   },
   -- Database Interface
-  { "tpope/vim-dadbod", lazy = true, cmd = "DB" },
   {
     "kristijanhusak/vim-dadbod-ui",
     dependencies = {

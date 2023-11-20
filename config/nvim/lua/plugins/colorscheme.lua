@@ -2,6 +2,7 @@ return {
   -- tokyonight
   {
     "folke/tokyonight.nvim",
+    name = "tokyonight",
     lazy = false,
     priority = 1000,
     config = function()
@@ -12,15 +13,10 @@ return {
   -- github
   {
     "projekt0n/github-nvim-theme",
-    lazy = true,     -- make sure we load this during startup if it is your main colorscheme
+    enabled = false,
+    lazy = true, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
-    config = function()
-      require("github-theme").setup({
-        -- ...
-      })
-
-      -- vim.cmd("colorscheme github_dark")
-    end,
+    opts = {},
   },
 
   -- catppuccin
@@ -66,16 +62,16 @@ return {
     "srcery-colors/srcery-vim",
     lazy = true,
   },
-  { "tjammer/blayu.vim",                lazy = true },
-  { "tomasr/molokai",                   lazy = true },
-  { "mhartington/oceanic-next",         lazy = true },
+  { "tjammer/blayu.vim", lazy = true },
+  { "tomasr/molokai", lazy = true },
+  { "mhartington/oceanic-next", lazy = true },
   { "marciomazza/vim-brogrammer-theme", lazy = true },
-  { "haishanh/night-owl.vim",           lazy = true },
-  { "sts10/vim-pink-moon",              lazy = true },
-  { "fenetikm/falcon",                  lazy = true },
-  { "phanviet/vim-monokai-pro",         lazy = true },
-  { "andreypopp/vim-colors-plain",      lazy = true },
-  { "cocopon/iceberg.vim",              lazy = true },
-  { "dracula/vim",                      name = "dracula", lazy = true },
-  { "pineapplegiant/spaceduck",         lazy = true },
+  { "haishanh/night-owl.vim", lazy = true },
+  { "sts10/vim-pink-moon", lazy = true },
+  { "fenetikm/falcon", lazy = true },
+  { "phanviet/vim-monokai-pro", lazy = true },
+  { "andreypopp/vim-colors-plain", lazy = true },
+  { "cocopon/iceberg.vim", lazy = true },
+  { "dracula/vim", name = "dracula", lazy = true },
+  { "pineapplegiant/spaceduck", lazy = true },
 }

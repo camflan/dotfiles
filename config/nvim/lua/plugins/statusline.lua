@@ -26,6 +26,7 @@
 return {
   {
     "windwp/windline.nvim",
+    enabled = true,
     event = "VeryLazy",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
@@ -36,7 +37,6 @@ return {
       local helper = require("windline.helpers")
       local b_components = require("windline.components.basic")
       local vim_components = require("windline.components.vim")
-
       local ts_statusline = require("nvim-treesitter.statusline")
 
       local sep = helper.separators
@@ -215,6 +215,30 @@ return {
         always_active = true,
         show_last_status = true,
       }
+
+      -- local winbar = {
+      --   filetypes = { "winbar" },
+      --   active = {
+      --     { " " },
+      --     { "%=" },
+      --     {
+      --       "@@",
+      --       { "red", "white" },
+      --     },
+      --   },
+      --   inactive = {
+      --     { " ", { "white", "InactiveBg" } },
+      --     { "%=" },
+      --     {
+      --       function(bufnr)
+      --         local bufname = vim.api.nvim_buf_get_name(bufnr)
+      --         local path = vim.fn.fnamemodify(bufname, ":~:.")
+      --         return path
+      --       end,
+      --       { "white", "InactiveBg" },
+      --     },
+      --   },
+      -- }
 
       windline.setup({
         colors_name = function(colors)

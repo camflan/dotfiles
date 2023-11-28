@@ -291,7 +291,8 @@ return {
   -- Workspace-wide TSC
   {
     "dmmulroy/tsc.nvim",
-    cmd = { "TSC" },
+    opts = {},
+    -- cmd = { "TSC" },
   },
   -- lua dev environment config for neovim plugins
   {

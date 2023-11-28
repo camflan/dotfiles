@@ -93,5 +93,8 @@ require("lazy").setup("plugins", {
     missing = true,
     -- try to load one of these colorschemes when starting an installation during startup
     colorscheme = { "tokyonight", "catpuccin", "solarized", "koehler" },
+    diff = {
+      cmd = "diffview.nvim",
+    },
   },
 })

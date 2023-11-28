@@ -25,18 +25,6 @@ return {
     event = "CmdlineEnter",
   },
   {
-    -- git integration
-    "tpope/vim-fugitive",
-    dependencies = { "tpope/vim-rhubarb" },
-    event = "VeryLazy",
-    lazy = true,
-  },
-  {
-    -- github extension for fugitive
-    "tpope/vim-rhubarb",
-    lazy = true,
-  },
-  {
     -- repeat on steroids
     "tpope/vim-repeat",
     lazy = true,

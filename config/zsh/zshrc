@@ -50,7 +50,7 @@ if [ "${arch_name}" = "x86_64" ]; then
     else
         # echo "Running on native Intel"
         APPLE_SILICON=0
-    fi 
+    fi
 elif [ "${arch_name}" = "arm64" ]; then
     # echo "Running on ARM"
     APPLE_SILICON=1
@@ -129,3 +129,6 @@ export ATUIN_NOBIND="true"
 eval "$(atuin init zsh)"
 # ctrl+r for full atuin view
 bindkey '^r' _atuin_search_widget
+
+# PKGX integration
+eval "$(pkgx --shellcode)"  #docs.pkgx.sh/shellcode

@@ -162,17 +162,6 @@ local function tools_to_auto_install(my_lsps, my_linters, my_formatters, my_debu
 end
 
 return {
-  -- LSP status/notifications
-  {
-    "j-hui/fidget.nvim",
-    event = "VeryLazy",
-    config = true,
-    opts = {
-      notification = {
-        override_vim_notify = true,
-      },
-    },
-  },
   {
     "lsp_lines",
     url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",

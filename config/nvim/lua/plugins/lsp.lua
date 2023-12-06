@@ -66,7 +66,7 @@ local common = {
 
 -- TODO: dedupe this with linters/formatters
 local lsps = {
-  "biome",
+  -- "biome",
   "cssmodules_ls",
   "eslint",
   "flake8",
@@ -292,7 +292,7 @@ return {
   {
     "dmmulroy/tsc.nvim",
     opts = {},
-    -- cmd = { "TSC" },
+    cmd = { "TSC" },
   },
   -- lua dev environment config for neovim plugins
   {
@@ -350,11 +350,11 @@ return {
         },
       })
 
-      lsp_config.biome.setup({
-        capabilities = capabilities,
-        flags = common.flags,
-        on_attach = common.on_attach,
-      })
+      -- lsp_config.biome.setup({
+      --   capabilities = capabilities,
+      --   flags = common.flags,
+      --   on_attach = common.on_attach,
+      -- })
 
       lsp_config.cssmodules_ls.setup({
         capabilities = capabilities,

@@ -1,23 +1,14 @@
-local use_lazygit = true
-local only_lazygit = true
-
-local other_is_enabled = not (use_lazygit and only_lazygit)
-
 return {
-  {
-    "kdheepak/lazygit.nvim",
-    enabled = use_lazygit,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-  },
+  -- Nicer 3-way merge handling
   {
     "sindrets/diffview.nvim",
-    enabled = true,
+    event = { "VeryLazy" },
+    opts = {},
   },
+  -- Nice diff/conflict highlights
+  -- also disables LSP in those buffers
   {
     "akinsho/git-conflict.nvim",
-    enabled = other_is_enabled,
     opts = {
       disable_diagnostics = true,
       highlights = {
@@ -29,22 +20,29 @@ return {
   {
     -- git integration
     "tpope/vim-fugitive",
-    enabled = other_is_enabled,
-    dependencies = { "tpope/vim-rhubarb" },
+    enabled = true,
+    dependencies = {
+      -- github extension for fugitive
+      "tpope/vim-rhubarb",
+    },
     event = "VeryLazy",
     lazy = true,
   },
+
+  -- LAZYGIT
+  -- only just-in-case, better as tui instead of inside vim
   {
-    -- github extension for fugitive
-    "tpope/vim-rhubarb",
-    enabled = other_is_enabled,
-    lazy = true,
+    "kdheepak/lazygit.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    cmd = { "LazyGit" },
+    opts = {},
   },
 
   -- NEOGIT
   {
     "NeogitOrg/neogit",
-    enabled = other_is_enabled,
     dependencies = {
       "nvim-lua/plenary.nvim", -- required
       "sindrets/diffview.nvim", -- optional

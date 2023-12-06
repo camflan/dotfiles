@@ -13,6 +13,10 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = "rounded",
 })
 
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+  border = "rounded",
+})
+
 -- local Module to hold some common items
 local common = {
   flags = {},
@@ -84,6 +88,7 @@ local lsps = {
   "tailwindcss",
   "tsserver",
   "vim-language-server",
+  "yaml-language-server",
 }
 
 local linters_by_ft = {}
@@ -103,12 +108,11 @@ local formatters_by_ft = {
     "isort",
     "black",
   },
-  -- terraform = {
-  --   "terraform_fmt",
-  -- },
+  terraform = {
+    "terraform_fmt",
+  },
   yaml = {
     "yamlfix",
-    "yamlfmt",
   },
   -- all files
   ["*"] = { "codespell" },
@@ -123,6 +127,8 @@ local do_not_install = {
   "gofmt",
   "pg_format",
   "stylelint",
+  "terraform_fmt",
+
   -- not real formatters, but pseudo-formatters from conform.nvim
   "trim_whitespace",
   "trim_newlines",
@@ -234,7 +240,7 @@ return {
       require("mason-tool-installer").setup({
         ensure_installed = ensure_installed,
         auto_update = false,
-        run_on_start = false,
+        run_on_start = true,
         start_delay = 3000, -- 3 seconds
         debounce_hours = 24,
       })
@@ -263,6 +269,14 @@ return {
     -- Everything in opts will be passed to setup()
     opts = {
       formatters_by_ft = formatters_by_ft,
+      formatters = {
+        yamlfix = {
+          env = {
+            YAMLFIX_SECTION_WHITELINES = "1",
+            YAMLFIX_WHITELINES = "1",
+          },
+        },
+      },
       -- Set up format-on-save
       format_on_save = { timeout_ms = 1000, lsp_fallback = true },
     },
@@ -291,7 +305,9 @@ return {
   -- Workspace-wide TSC
   {
     "dmmulroy/tsc.nvim",
-    opts = {},
+    opts = {
+      auto_start_watch_mode = true,
+    },
     cmd = { "TSC" },
   },
   -- lua dev environment config for neovim plugins
@@ -393,11 +409,51 @@ return {
         },
       })
 
+      local schemastore = require("schemastore")
+
       lsp_config.jsonls.setup({
         settings = {
           json = {
-            schemas = require("schemastore").json.schemas(),
+            schemas = schemastore.json.schemas(),
             validate = { enable = true },
+          },
+        },
+      })
+
+      -- TODO: pull override from env?
+      local KUBERNETES_SCHEMA_VERSION = "v1.26.9"
+      local KUBERNETES_SCHEMA_VARIANT = "standalone-strict"
+
+      lsp_config.yamlls.setup({
+        capabilities = capabilities,
+        on_attach = common.on_attach,
+        flags = common.flags,
+        settings = {
+          redhat = { telemetry = { enabled = false } },
+          yaml = {
+            completion = true,
+            hover = true,
+            schemas = schemastore.yaml.schemas({
+              extra = {
+                {
+                  description = "",
+                  fileMatch = { "*.k8s.yaml" },
+                  name = "Kubernetes " .. KUBERNETES_SCHEMA_VERSION,
+                  url = "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/"
+                    .. KUBERNETES_SCHEMA_VERSION
+                    .. "-"
+                    .. KUBERNETES_SCHEMA_VARIANT
+                    .. "/all.json",
+                },
+              },
+            }),
+            schemaStore = {
+              -- disable built-in schemastore so we can
+              -- use b00/schemastore
+              enable = false,
+              url = "",
+            },
+            validate = true,
           },
         },
       })

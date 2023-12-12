@@ -16,7 +16,7 @@
 # auto_sync = true
 
 ## enable or disable automatic update checks
-# update_check = true
+update_check = false
 
 ## address of the sync server
 # sync_address = "https://api.atuin.sh"
@@ -25,6 +25,8 @@
 ## is ran, so sync intervals may well be longer
 ## set it to 0 to sync after every command
 # sync_frequency = "1h"
+
+workspaces = true
 
 ## which search mode to use
 ## possible values: prefix, fulltext, fuzzy, skim

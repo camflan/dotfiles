@@ -4,6 +4,7 @@
 - defaults:
     brewfile:
       stdout: true
+      stderr: true
     brew:
       stderr: true
       stdout: false

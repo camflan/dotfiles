@@ -1,6 +1,7 @@
 [submodule "lib/dotbot"]
 	path = lib/dotbot
 	url = https://github.com/anishathalye/dotbot
+    branch = main
 [submodule "lib/dotbot-asdf"]
 	path = lib/dotbot-asdf
 	url = https://github.com/sobolevn/dotbot-asdf.git

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#
+# Updates dotbot and plugin submodules
+git submodule foreach \
+    git pull origin HEAD --ff-only
+

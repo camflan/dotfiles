@@ -53,15 +53,12 @@
     ~/.config/zsh/.zprezto:
       description: Install zprezto
       url: https://github.com/sorin-ionescu/prezto.git
+      recursive: true
 
 - shell:
     # Update all of our submodules (dotbot, dotbot plugins)
     - command: git submodule update --init --recursive
       description: Installing submodules
-      stderr: true
-    - command: git clone --recursive https://github.com/sorin-ionescu/prezto.git
-        "${ZDOTDIR:-$HOME}/.zprezto"
-      description: Install zprezto
       stderr: true
 
   # install pkgx: https://docs.pkgx.sh/run-anywhere/terminals

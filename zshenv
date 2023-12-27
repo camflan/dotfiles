@@ -2,6 +2,7 @@
 # Ths will tell ZSH where to load from and allow
 # usage of our own zshenv
 
-ZDOTDIR=$HOME/.config/zsh
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
+export ZDOTDIR="${ZDOTDIR:=$XDG_CONFIG_HOME/zsh}"
 
 . $ZDOTDIR/.zshenv

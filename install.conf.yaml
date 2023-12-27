@@ -9,6 +9,9 @@
     brew:
       stderr: true
       stdout: false
+    git:
+      stderr: true
+      stdout: false
     link:
       relink: true
 
@@ -47,15 +50,20 @@
     # ~/.default-python-packages: default-python-packages
 
 - git:
-  ~/.config/zsh/.zprezto:
-    description: Install zprezto
-    url: https://github.com/sorin-ionescu/prezto.git
+    ~/.config/zsh/.zprezto:
+      description: Install zprezto
+      url: https://github.com/sorin-ionescu/prezto.git
 
 - shell:
-  # Update all of our submodules (zprezto, dotbot, dotbot plugins)
+    # Update all of our submodules (dotbot, dotbot plugins)
     - command: git submodule update --init --recursive
       description: Installing submodules
       stderr: true
+    - command: git clone --recursive https://github.com/sorin-ionescu/prezto.git
+        "${ZDOTDIR:-$HOME}/.zprezto"
+      description: Install zprezto
+      stderr: true
+
   # install pkgx: https://docs.pkgx.sh/run-anywhere/terminals
     # - command: curl -fsS https://pkgx.sh | sh
     #   stderr: true

@@ -1,8 +1,9 @@
 #
 # Defines environment variables.
 #
-export XDG_CONFIG_HOME=$HOME/.config
-
+# XDG_CONFIG_HOME & ZDOTDIR are defined in dotfiles/zshenv
+# so that we can source this file properly on login
+#
 export REPORTTIME=15
 
 export HISTFILE=~/.zsh_history

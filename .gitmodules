@@ -10,3 +10,6 @@
 [submodule "lib/dotbot-pip"]
 	path = lib/dotbot-pip
 	url = https://github.com/sobolevn/dotbot-pip.git
+[submodule "lib/dotbot-git"]
+	path = lib/dotbot-git
+	url = https://github.com/camflan/dotbot-git.git

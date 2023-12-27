@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Notify
+# Sends notification to macOS notification system
+# using AppleScript "display notification" API
+
+/usr/bin/osascript -e "display notification \"$*\""

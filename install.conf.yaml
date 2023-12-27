@@ -1,3 +1,4 @@
+---
 # Dotbot configuration
 #
 
@@ -11,41 +12,54 @@
     link:
       relink: true
 
-- clean: ["~"]
+- clean: ['~']
 
 - link:
-    ~/.asdfrc: asdfrc
-    ~/.default-nodejs-packages: default-nodejs-packages
-    ~/.default-python-packages: default-python-packages
+    ~/.zshenv: zshenv
+    ~/.gitignore: gitignore
+    ~/.tmux.conf: tmux.conf
+    ~/.vimrc: vimrc  # for legacy vim support - I use neovim by default
     ~/.config/:
       #
       # NOTE: there's an issue when there is only a single matched file
-      # in a glob. If you get 'ambigious action requested', this is probabaly
+      # in a glob. If you get 'ambigious action requested', this is probably
       # the issue
       # https://github.com/anishathalye/dotbot/issues/315
       #
       glob: true
       path: config/*
-      exclude: [config/zsh] # handled later
+      exclude: [config/asdf, config/zsh]  # handled later
     ~/.config/zsh/:
       glob: true
       path: config/zsh/*
-      prefix: "." # add a '.' to each filename
+      prefix: .  # add a '.' to each filename
       create: true
-    ~/.gitignore: gitignore
-    ~/.tmux.conf: tmux.conf
-    ~/.vimrc: vimrc
-    ~/.zshenv: zshenv
+    # ASDF-vm stuff
+    ~/.config/asdf/asdfrc:
+      path: config/asdf/asdfrc
+      create: true
+    # link asdf .default-XXXX-packages files
+    ~/:
+      glob: true
+      path: config/asdf/default-*
+      prefix: .  # add a '.' to each filename
+    # ~/.default-nodejs-packages: default-nodejs-packages
+    # ~/.default-python-packages: default-python-packages
+
+- git:
+  ~/.config/zsh/.zprezto:
+    description: Install zprezto
+    url: https://github.com/sorin-ionescu/prezto.git
 
 - shell:
   # Update all of our submodules (zprezto, dotbot, dotbot plugins)
-  - command: git submodule update --init --recursive
-    description: Installing submodules
-    stderr: true
+    - command: git submodule update --init --recursive
+      description: Installing submodules
+      stderr: true
   # install pkgx: https://docs.pkgx.sh/run-anywhere/terminals
-  - command: curl -fsS https://pkgx.sh | sh
-    stderr: true
-    description: Installing pkgx
+    # - command: curl -fsS https://pkgx.sh | sh
+    #   stderr: true
+    #   description: Installing pkgx
 
 #- create:
 #- ~/downloads

@@ -324,6 +324,20 @@ return {
     },
   },
   {
+    "marilari88/twoslash-queries.nvim",
+    lazy = true,
+    config = function()
+      local tsq = require("twoslash-queries")
+
+      tsq.setup({
+        multi_line = true,
+        highlight = "Comment",
+      })
+
+      vim.api.nvim_set_keymap("n", "<leader>ti", "<cmd>TwoslashQueriesInspect<CR>", {})
+    end,
+  },
+  {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
@@ -331,6 +345,7 @@ return {
       "folke/neodev.nvim",
       "hrsh7th/nvim-cmp",
       "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+      "marilari88/twoslash-queries.nvim",
     },
     config = function()
       local lsp_config = require("lspconfig")
@@ -343,6 +358,7 @@ return {
           client.server_capabilities.documentFormattingProvider = false
           client.server_capabilities.documentRangeFormattingProvider = false
 
+          require("twoslash-queries").attach(client, bufnr)
           common.on_attach(client, bufnr)
         end,
         flags = common.flags,

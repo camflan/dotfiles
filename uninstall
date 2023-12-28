@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+
+from __future__ import print_function
+
+import os
+
+import yaml
+
+CONFIG = "install.conf.yaml"
+LINK_COMMAND = "link"
+
+stream = open(CONFIG, "r")
+conf = yaml.load(stream, yaml.FullLoader)
+
+for section in conf:
+    if LINK_COMMAND in section:
+        for target in section[LINK_COMMAND]:
+            realpath = os.path.expanduser(target)
+            if os.path.islink(realpath):
+                print(f"Removing {realpath}")
+
+                try:
+                    os.unlink(realpath)
+                except Exception as e:
+                    print(f"Failed removing {realpath}. Error: {str(e)}")

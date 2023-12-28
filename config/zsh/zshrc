@@ -78,6 +78,14 @@ eval "$(starship init zsh)"
 # my DOTFILES config path
 export CBFDOTFILES_DIR=$HOME/dotfiles
 
+# cache the compdump once per day
+autoload -Uz compinit
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
+compinit -C
+
+
 # Source autocompletions for ZSH
 for cf in $CBFDOTFILES_DIR/config/zsh/completions/*.zsh_completion;
     do source $cf;
@@ -95,10 +103,6 @@ fi
 # append completions to fpath
 fpath=(${ASDF_DIR}/completions $fpath)
 
-# initialise completions with ZSH's compinit
-autoload -Uz compinit
-compinit
-
 # https://asdf-vm.com/#/core-manage-asdf
 . $HOME/.asdf/asdf.sh
 
@@ -111,13 +115,6 @@ if [[ -s "${ZDOTDIR:-$HOME}/.docker/init-zsh.sh" ]]; then
     source $HOME/.docker/init-zsh.sh || true
 fi
 
-
-# cache the compdump once per day
-autoload -Uz compinit
-for dump in ~/.zcompdump(N.mh+24); do
-  compinit
-done
-compinit -C
 
 # atuin (shell history)
 # https://atuin.sh/

@@ -14,6 +14,7 @@
       stdout: false
     link:
       relink: true
+      stderr: true
 
 - clean: ['~']
 
@@ -22,6 +23,9 @@
     ~/.gitignore: gitignore
     ~/.tmux.conf: tmux.conf
     ~/.vimrc: vimrc  # for legacy vim support - I use neovim by default
+    /usr/local/bin:
+      glob: true
+      path: bin/*
     ~/.config/:
       #
       # NOTE: there's an issue when there is only a single matched file
@@ -46,8 +50,6 @@
       glob: true
       path: config/asdf/default-*
       prefix: .  # add a '.' to each filename
-    # ~/.default-nodejs-packages: default-nodejs-packages
-    # ~/.default-python-packages: default-python-packages
 
 - git:
     ~/.config/zsh/.zprezto:
@@ -60,15 +62,6 @@
     - command: git submodule update --init --recursive
       description: Installing submodules
       stderr: true
-
-  # install pkgx: https://docs.pkgx.sh/run-anywhere/terminals
-    # - command: curl -fsS https://pkgx.sh | sh
-    #   stderr: true
-    #   description: Installing pkgx
-
-#- create:
-#- ~/downloads
-#- ~/.vim/undo-history
 
 # HOMEBREW
 - install-brew: true
@@ -107,3 +100,13 @@
       url: https://github.com/asdf-community/asdf-hashicorp.git
     - plugin: yarn
       url: https://github.com/twuni/asdf-yarn.git
+
+# Github cli extensions
+- ghe:
+    - gennaro-tedesco/gh-s
+    - dlvhdr/gh-dash
+    - kawarimidoll/gh-graph
+    - matt-bartel/gh-clone-org
+    - rnorth/gh-combine-prs
+    - seachicken/gh-poi
+    - yusukebe/gh-markdown-preview

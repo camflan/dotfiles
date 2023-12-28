@@ -1,20 +1,33 @@
 #!/usr/bin/env bash
+#
+# DOTBOT install script
+# Updates dotbot, sets config and plugins
+#
+# Camron Flanders <me@camronflanders.com>
 
 set -e
 
 CONFIG="install.conf.yaml"
-DOTBOT_DIR="./lib/dotbot"
+DOTBOT_LIB_DIR="./lib"
+DOTBOT_DIR="${DOTBOT_LIB_DIR}/dotbot"
+DOTBOT_PLUGIN_GLOB="${DOTBOT_LIB_DIR}/dotbot-*"
 
 DOTBOT_BIN="bin/dotbot"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DOTBOT_CMD="${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}"
 
 cd "${BASEDIR}"
 git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
-"${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" \
-    --plugin-dir ./lib/dotbot-asdf \
-    --plugin-dir ./lib/dotbot-brew \
-    --plugin-dir ./lib/dotbot-git \
-    --plugin-dir ./lib/dotbot-pip \
-    -c "${CONFIG}" "${@}"
+# automatically find/add dotbot plugins to script
+PLUGIN_DIR_OPTS=
+for plug in $DOTBOT_PLUGIN_GLOB; do
+    PLUGIN_DIR_OPTS="$PLUGIN_DIR_OPTS --plugin-dir $plug"
+done
+
+$DOTBOT_CMD \
+    -c "${CONFIG}" \
+    -d "${BASEDIR}" \
+    ${PLUGIN_DIR_OPTS} \
+    "${@}"

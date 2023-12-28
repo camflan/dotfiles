@@ -14,3 +14,9 @@
 [submodule "lib/dotbot-git"]
 	path = lib/dotbot-git
 	url = https://github.com/camflan/dotbot-git.git
+[submodule "lib/dotbot-golang"]
+	path = lib/dotbot-golang
+	url = https://github.com/delicb/dotbot-golang
+[submodule "lib/dotbot-gh-extension"]
+	path = lib/dotbot-gh-extension
+	url = https://github.com/fundor333/dotbot-gh-extension.git

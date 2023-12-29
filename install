@@ -7,13 +7,16 @@
 
 set -e
 
-CONFIG="install.conf.yaml"
+# Configuration
+CONFIG_FILE_NAME="install.conf.yaml"
 DOTBOT_LIB_DIR="./lib"
-DOTBOT_DIR="${DOTBOT_LIB_DIR}/dotbot"
 DOTBOT_PLUGIN_GLOB="${DOTBOT_LIB_DIR}/dotbot-*"
 
-DOTBOT_BIN="bin/dotbot"
+# Constants
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+DOTBOT_BIN="bin/dotbot"
+DOTBOT_DIR="${DOTBOT_LIB_DIR}/dotbot"
 DOTBOT_CMD="${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}"
 
 cd "${BASEDIR}"
@@ -26,8 +29,29 @@ for plug in $DOTBOT_PLUGIN_GLOB; do
     PLUGIN_DIR_OPTS="$PLUGIN_DIR_OPTS --plugin-dir $plug"
 done
 
+# naive checking to see if we want to run dotbot verbosely,
+# if so, dump some helpful information about this script
+if [[ "$*" == *"verbose"* ]]
+then
+    echo -ne "\033[33m"
+    echo "Script info:"
+    echo -ne "\033[0m"
+    echo "    BASEDIR:            $BASEDIR"
+    echo "    CONFIG_FILE_NAME:   $CONFIG_FILE_NAME"
+    echo "    DOTBOT_BIN:         $DOTBOT_BIN"
+    echo "    DOTBOT_CMD:         $DOTBOT_CMD"
+    echo "    DOTBOT_DIR:         $DOTBOT_DIR"
+    echo "    DOTBOT_LIB_DIR:     $DOTBOT_LIB_DIR"
+    echo "    DOTBOT_PLUGIN_GLOB: $DOTBOT_PLUGIN_GLOB"
+    echo "    PLUGIN_DIR_OPTS:    $PLUGIN_DIR_OPTS"
+    echo
+    echo -ne "\033[3m\033[2m"
+    echo "Starting dotbot…"
+    echo -ne "\033[0m"
+fi
+
 $DOTBOT_CMD \
-    -c "${CONFIG}" \
+    -c "${CONFIG_FILE_NAME}" \
     -d "${BASEDIR}" \
     ${PLUGIN_DIR_OPTS} \
     "${@}"

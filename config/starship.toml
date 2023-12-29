@@ -1,3 +1,5 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
 add_newline = false
 
 format = """\
@@ -16,6 +18,7 @@ format = """\
   """
 
 right_format = """\
+  $direnv\
   $battery\
 """
 
@@ -27,6 +30,17 @@ threshold = 20
 [character]
 success_symbol = ">:"
 error_symbol = ">:"
+
+[direnv]
+disabled = false
+detect_files = ['.envrc', '.env', '.env.local']
+# "loaded" doesn't seem to actually mean the ENV is loaded, just that there is
+# relevant files present. For now, we'll just remove $loaded from the format
+format = '[($symbol$allowed)]($style) '
+style = 'italic white'
+allowed_msg = '✅'
+not_allowed_msg = '⭕️'
+denied_msg = '⭕️'
 
 [git_status]
 ahead = '⇡${count}'

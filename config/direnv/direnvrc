@@ -1,0 +1,4 @@
+# personal code to run before each .envrc
+
+# 1password extension
+source_url "https://github.com/tmatilai/direnv-1password/raw/v0.1.0/1password.sh" "sha256-EBpKlq0fYtsxTUCun/ppQIt10RUyhifGt+740l2CJlg="

@@ -1,0 +1,9 @@
+# https://direnv.net/man/direnv.toml.1.html
+[global]
+disable_stdin = true
+load_dotenv = true
+strict_env = true
+warn_timeout = "5s"
+
+[whitelist]
+exact = ["~/dotfiles/.envrc"]

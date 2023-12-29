@@ -80,6 +80,7 @@ local lsps = {
   "lua_ls",
   "pyproject-flake8",
   "pyright",
+  "rust_analyzer",
   "ruff",
   "ruff_lsp",
   "selene",
@@ -107,6 +108,9 @@ local formatters_by_ft = {
     -- "ruff_fix", "ruff_format",
     "isort",
     "black",
+  },
+  rust = {
+    "rustfmt",
   },
   terraform = {
     "terraform_fmt",
@@ -496,6 +500,12 @@ return {
             },
           },
         },
+      })
+
+      lsp_config.rust_analyzer.setup({
+        capabilities = capabilities,
+        on_attach = common.on_attach,
+        flags = common.flags,
       })
 
       lsp_config.tailwindcss.setup({

@@ -23,9 +23,6 @@
     ~/.gitignore: gitignore
     ~/.tmux.conf: tmux.conf
     ~/.vimrc: vimrc  # for legacy vim support - I use neovim by default
-    /usr/local/bin:
-      glob: true
-      path: bin/*
     ~/.config/:
       #
       # NOTE: there's an issue when there is only a single matched file

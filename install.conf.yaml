@@ -35,12 +35,8 @@
       #
       glob: true
       path: config/*
+      relink: true
       exclude: [config/asdf, config/zsh]  # handled later
-    ~/.config/zsh/:
-      glob: true
-      path: config/zsh/*
-      prefix: .  # add a '.' to each filename
-      create: true
     # ASDF-vm stuff
     ~/.config/asdf/asdfrc:
       path: config/asdf/asdfrc
@@ -50,6 +46,11 @@
       glob: true
       path: config/asdf/default-*
       prefix: .  # add a '.' to each filename
+    ~/.config/zsh/:
+      glob: true
+      path: config/zsh/*
+      prefix: .  # add a '.' to each filename
+      create: true
 
 - git:
     ~/.config/zsh/.zprezto:

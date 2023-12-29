@@ -1,0 +1,160 @@
+# vim:ft=ini
+[user]
+    email = camron.flanders@gmail.com
+    name = Camron Flanders
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINVGx3kpqTYx9QOGAnli3U0yL9KL6v+u4w0X0x5VJlWA
+
+
+[github]
+    user = camflan
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+
+[includeIf "gitdir:~/dotfiles/"]
+  path = config-personal
+
+[includeIf "gitdir:~/src/"]
+  path = config-personal
+
+[includeIf "gitdir:~/src/_clients/uplift/"]
+  path = config-uplift
+
+[core]
+    editor = nvim
+    excludesfile = /Users/camron/.gitignore_global
+    attributesfile = /Users/camron/.gitattributes
+    trustctime = false
+
+[branch]
+    autosetupmerge = true
+
+[pager]
+    diff = delta
+    log = delta
+
+[diff]
+    algorithm = histogram
+    colorMoved = default
+
+[difftool]
+    prompt = false
+    tool = vimdiff
+
+[difftool "vimdiff"]
+      path = nvim
+
+[merge]
+    conflictstyle = diff3
+
+[mergetool]
+    prompt = false
+
+[mergetool "meld"]
+    trustExitCode = true
+    cmd = open -W -a Meld --args --auto-merge \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output=\"$MERGED\"
+
+[interactive]
+    diffFilter = delta --color-only --features=interactive
+
+[delta]
+    features = decorations dracula
+    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+    navigate = true    # use n and N to move between diff sections
+    ;side-by-side = true
+
+[delta "interactive"]
+    keep-plus-minus-markers = false
+
+[delta "dracula"]
+    syntax-theme = Dracula
+
+[delta "decorations"]
+    file-style = omit
+    hunk-header-decoration-style = blue ol
+    hunk-header-file-style = yellow ul
+    hunk-header-line-number-style = green ul
+    hunk-header-style = file line-number syntax
+    commit-decoration-style = yellow ul
+    paging = never
+
+[commit]
+  gpgsign = true
+
+[tag]
+  gpgsign = true
+
+[push]
+    default = current
+    followTags = true
+
+[status]
+  showUntrackedFiles = all
+  # Sometimes a newly-added folder, since it's only one line in git status, can slip under the radar.
+  # https://git-scm.com/docs/git-config#git-config-statusshowUntrackedFiles
+
+[color]
+    ui = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[filter "media"]
+    required = true
+    clean = git media clean %f
+    smudge = git media smudge %f
+
+[credential]
+    helper = osxkeychain
+
+[diff "plist"]
+    textconv = plutil -convert xml1 -o -
+
+[alias]
+    # open conflicted files in vim
+    conflicted = !nvim +Conflicted
+
+    # pretty graph
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+
+    # force, but nicely. Makes sure changes have been pulled first
+    please = push --force-with-lease
+
+    # remove local branches that do not have a remote counterpart
+    prune = fetch --prune
+
+    # tidy status
+    s = status --short --branch
+
+    # stash everything, even untracked
+    stash-all = stash save --include-untracked
+
+[merge]
+    ff = only
+
+    # Standard diff is two sets of final changes. This introduces the original text before each side's changes.
+    # https://git-scm.com/docs/git-config#git-config-mergeconflictStyle
+    conflictstyle = diff3
+
+[pull]
+    # rebase when pulling, not merge
+    rebase = true
+
+[init]
+    defaultBranch = main

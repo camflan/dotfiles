@@ -1,4 +1,11 @@
 # personal code to run before each .envrc
 
+# Make direnv silent while we load 1password, etc
+export DIRENV_LOG_FORMAT=
+
 # 1password extension
 source_url "https://github.com/tmatilai/direnv-1password/raw/v0.1.0/1password.sh" "sha256-EBpKlq0fYtsxTUCun/ppQIt10RUyhifGt+740l2CJlg="
+
+
+# re-enable direnv output, but make it a bit less obvious
+export DIRENV_LOG_FORMAT=$'\033[3m\033[2m[direnv]\033[23m %s\033[0m'

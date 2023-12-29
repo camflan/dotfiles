@@ -4,7 +4,6 @@
     name = Camron Flanders
     signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINVGx3kpqTYx9QOGAnli3U0yL9KL6v+u4w0X0x5VJlWA
 
-
 [github]
     user = camflan
 

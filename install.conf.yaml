@@ -94,6 +94,8 @@
       url: https://github.com/danhper/asdf-python.git
     - plugin: ruby
       url: https://github.com/asdf-vm/asdf-ruby.git
+    - plugin: rust
+      url: https://github.com/code-lever/asdf-rust.git
     - plugin: terraform
       url: https://github.com/asdf-community/asdf-hashicorp.git
     - plugin: vault
@@ -110,3 +112,8 @@
     - rnorth/gh-combine-prs
     - seachicken/gh-poi
     - yusukebe/gh-markdown-preview
+
+# Rust crates
+- cargo: [ripgrep]
+  # Install from create once https://github.com/starship/starship/pull/5657 is merged/released
+    # - starship

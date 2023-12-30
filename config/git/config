@@ -23,9 +23,10 @@
   path = config-uplift
 
 [core]
+    attributesfile = /Users/camron/.gitattributes
     editor = nvim
     excludesfile = /Users/camron/.gitignore_global
-    attributesfile = /Users/camron/.gitattributes
+    pager = delta
     trustctime = false
 
 [branch]
@@ -60,7 +61,8 @@
     diffFilter = delta --color-only --features=interactive
 
 [delta]
-    features = decorations dracula
+    features = decorations dracula line-numbers
+    line-numbers = true
     light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
     navigate = true    # use n and N to move between diff sections
     ;side-by-side = true
@@ -126,11 +128,8 @@
     textconv = plutil -convert xml1 -o -
 
 [alias]
-    # open conflicted files in vim
-    conflicted = !nvim +Conflicted
-
     # pretty graph
-    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    graph = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 
     # force, but nicely. Makes sure changes have been pulled first
     please = push --force-with-lease

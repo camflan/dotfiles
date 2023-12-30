@@ -11,10 +11,9 @@ alias fg1="fg %1"
 alias fg2="fg %2"
 alias fg3="fg %3"
 
-alias ggraph="git log --graph --all --decorate --stat --date=iso"
-alias gplog="git log --pretty=%B"
-
 alias dc="docker compose"
+
+alias w="walk"
 
 # bat supports paging, syntax highlighting, searching, etc
 alias cat="bat"

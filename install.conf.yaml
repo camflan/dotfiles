@@ -48,6 +48,9 @@
       path: config/zsh/*
       prefix: .  # add a '.' to each filename
       create: true
+    ~/.tool-versions:
+      path: ./tool-versions
+      create: true
 
 - git:
     ~/.config/zsh/.zprezto:

@@ -61,6 +61,11 @@
       description: Installing submodules
       stderr: true
 
+    - command: ./scripts/install-krew.sh
+      description: Install kubectl plugin manager `krew`
+      stdlog: true
+      stderr: true
+
 # HOMEBREW
 - install-brew: true
 - brewfile:

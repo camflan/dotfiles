@@ -22,6 +22,9 @@
 [includeIf "gitdir:~/src/_clients/uplift/"]
   path = config-uplift
 
+[includeIf "hasconfig:remote.*.url:git://git@bitbucket.org:togg_sw/*/**"]
+  path = config-bitbucket
+
 [core]
     attributesfile = /Users/camron/.gitattributes
     editor = nvim

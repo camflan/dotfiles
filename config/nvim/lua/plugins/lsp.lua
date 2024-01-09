@@ -96,28 +96,19 @@ local linters_by_ft = {}
 
 local formatters_by_ft = {
   go = { "gofmt" },
-  javascript = { "prettier" },
-  typescript = { "prettier" },
-  javascriptreact = { "prettier" },
-  typescriptreact = { "prettier" },
+  graphql = { "prettier" },
+  javascript = { "prettier", "injected" },
+  javascriptreact = { "prettier", "injected" },
+  json = { "prettier" },
   lua = { "stylua" },
   markdown = { "markdownlint", "injected" },
+  python = { "isort", "black", "injected" },
+  rust = { "rustfmt" },
   sql = { "pg_format" },
-  -- these are dynamically selected in conform
-  python = {
-    -- "ruff_fix", "ruff_format",
-    "isort",
-    "black",
-  },
-  rust = {
-    "rustfmt",
-  },
-  terraform = {
-    "terraform_fmt",
-  },
-  yaml = {
-    "yamlfix",
-  },
+  terraform = { "terraform_fmt" },
+  typescript = { "prettier" },
+  typescriptreact = { "prettier" },
+  yaml = { "yamlfix", "injected" },
   -- all files
   ["*"] = { "codespell" },
   -- files without any formatters available
@@ -330,6 +321,9 @@ return {
   {
     "marilari88/twoslash-queries.nvim",
     lazy = true,
+    keys = {
+      { "<leader>ti", "<cmd>TwoslashQueriesInspect<CR>" },
+    },
     config = function()
       local tsq = require("twoslash-queries")
 
@@ -337,8 +331,6 @@ return {
         multi_line = true,
         highlight = "Comment",
       })
-
-      vim.api.nvim_set_keymap("n", "<leader>ti", "<cmd>TwoslashQueriesInspect<CR>", {})
     end,
   },
   {

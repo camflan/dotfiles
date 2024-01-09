@@ -48,6 +48,10 @@ export WHALEBREW_CONFIG_DIR=$XDG_CONFIG_HOME/whalebrew
 export WHALEBREW_INSTALL_PATH=/opt/whalebrew/bin
 export PATH="$PATH:$WHALEBREW_INSTALL_PATH"
 
+# GHQ
+# https://github.com/x-motemen/ghq
+export GHQ_ROOT="$HOME/src"
+
 # Created by `pipx` on 2022-03-07 19:40:36
 export PATH="$PATH:/Users/camron/.local/bin"
 

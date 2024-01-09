@@ -107,4 +107,5 @@ bindkey '^r' _atuin_search_widget
 # PKGX integration
 eval "$(pkgx --shellcode)"  #docs.pkgx.sh/shellcode
 
+# direnv
 eval "$(direnv hook zsh)"

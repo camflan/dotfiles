@@ -64,7 +64,7 @@ vim.opt.smartcase = true
 vim.keymap.set("n", "<leader>/", ":silent nohlsearch<CR>", { desc = "Toggle search highlights", remap = false })
 
 -- jj to exit normal mode
-vim.keymap.set("i", "jj", "<C-[>", { desc = "ergo exit intead of esc", remap = false })
+vim.keymap.set("i", "jj", "<C-[>", { desc = "ergo exit instead of esc", remap = false })
 
 -- ; -> : for faster cmd
 vim.keymap.set({ "n", "v" }, ";", ":", { desc = "Fast access to :", remap = false })

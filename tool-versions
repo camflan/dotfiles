@@ -9,3 +9,4 @@ nodejs 20.6.0
 awscli 2.13.24
 rust 1.75.0
 cmake 3.28.1
+gcloud 459.0.0

@@ -20,7 +20,6 @@
 
 - link:
     ~/.zshenv: zshenv
-    ~/.gitignore: gitignore
     ~/.tmux.conf: tmux.conf
     ~/.vimrc: vimrc  # for legacy vim support - I use neovim by default
     ~/.config/:

@@ -1,7 +1,5 @@
 tap "1password/tap"
 tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/core"
 tap "oven-sh/bun"
 tap "superfly/tap"
 

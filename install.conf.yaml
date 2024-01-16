@@ -49,7 +49,7 @@
       prefix: .  # add a '.' to each filename
       create: true
     ~/.tool-versions:
-      path: ./tool-versions
+      path: ./.tool-versions
       create: true
 
 - git:
@@ -78,6 +78,10 @@
 - asdf:
     - plugin: awscli
       url: https://github.com/MetricMike/asdf-awscli.git
+    - plugin: gcloud
+      url: https://github.com/jthegedus/asdf-gcloud.git
+    - plugin: cilium-cli
+      url: https://github.com/carnei-ro/asdf-cilium-cli.git
     - plugin: cloud-sql-proxy
       url: https://github.com/pbr0ck3r/asdf-cloud-sql-proxy.git
     - plugin: java

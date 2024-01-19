@@ -121,8 +121,3 @@
     - rnorth/gh-combine-prs
     - seachicken/gh-poi
     - yusukebe/gh-markdown-preview
-
-# Rust crates
-- cargo: [ripgrep]
-  # Install from create once https://github.com/starship/starship/pull/5657 is merged/released
-    # - starship

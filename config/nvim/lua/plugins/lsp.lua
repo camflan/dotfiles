@@ -1,4 +1,4 @@
--- Set which codelens text levels to show
+-- Set which cmdelens text levels to show
 local original_set_virtual_text = vim.lsp.diagnostic.set_virtual_text
 local set_virtual_text_custom = function(diagnostics, bufnr, client_id, sign_ns, opts)
   opts = opts or {}
@@ -101,6 +101,7 @@ local formatters_by_ft = {
   javascriptreact = { "prettier", "injected" },
   json = { "prettier" },
   lua = { "stylua" },
+  html = { "prettier" },
   markdown = { "markdownlint", "injected" },
   python = { "isort", "black", "injected" },
   rust = { "rustfmt" },
@@ -273,20 +274,46 @@ return {
         },
       },
       -- Set up format-on-save
-      format_on_save = { timeout_ms = 1000, lsp_fallback = true },
+      format_on_save = function(bufnr)
+        -- Disable with a global or buffer-local variable
+        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+          return
+        end
+        return { timeout_ms = 1000, lsp_fallback = true }
+      end,
     },
-    -- config = function(_, opts)
-    --   require("conform").setup(opts)
 
-    --   -- TODO: dynamically select formatters
-    --   -- python = function(bufnr)
-    --   --     if require("conform").get_formatter_info("ruff_format", bufnr).available then
-    --   --         return { "ruff_fix", "ruff_format" }
-    --   --     else
-    --   --         return { "isort", "black" }
-    --   --     end
-    --   -- end,
-    -- end,
+    config = function(_, opts)
+      require("conform").setup(opts)
+      vim.api.nvim_create_user_command("ConformDisable", function(args)
+        if args.bang then
+          -- ConformDisable! will disable formatting just for this buffer
+          ---@diagnostic disable-next-line: inject-field
+          vim.b.disable_autoformat = true
+        else
+          vim.g.disable_autoformat = true
+        end
+      end, {
+        desc = "Disable autoformat-on-save",
+        bang = true,
+      })
+      vim.api.nvim_create_user_command("ConformEnable", function()
+        ---@diagnostic disable-next-line: inject-field
+        vim.b.disable_autoformat = false
+        vim.g.disable_autoformat = false
+      end, {
+        desc = "Re-enable autoformat-on-save",
+      })
+
+      --   -- TODO: dynamically select formatters
+      --   -- python = function(bufnr)
+      --   --     if require("conform").get_formatter_info("ruff_format", bufnr).available then
+      --   --         return { "ruff_fix", "ruff_format" }
+      --   --     else
+      --   --         return { "isort", "black" }
+      --   --     end
+      --   -- end,
+    end,
   },
   -- linters
   {

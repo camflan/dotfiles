@@ -86,6 +86,7 @@ brew "pastel"
 brew "pipx"
 brew "pkgxdev/made/pkgx"
 brew "podman"
+brew "ripgrep"
 brew "qemu"
 brew "qt@5"
 # spaceage sed https://github.com/ms-jpq/sad

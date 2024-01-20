@@ -9,6 +9,7 @@ return {
   -- also disables LSP in those buffers
   {
     "akinsho/git-conflict.nvim",
+    event = { "VeryLazy" },
     opts = {
       disable_diagnostics = true,
       highlights = {

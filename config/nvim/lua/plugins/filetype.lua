@@ -3,8 +3,7 @@ return {
   {
     "ethancarlsson/nvim-hurl.nvim",
     enabled = false,
-    ft = "hurl",
-    lazy = true,
+    ft = { "hurl" },
   },
   {
     "iamcco/markdown-preview.nvim",
@@ -17,8 +16,7 @@ return {
   },
   {
     "prisma/vim-prisma",
-    ft = "prisma",
-    lazy = true,
+    ft = { "prisma" },
     opts = {},
   },
 }

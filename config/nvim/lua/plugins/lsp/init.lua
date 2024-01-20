@@ -1,167 +1,5 @@
--- Set which cmdelens text levels to show
-local original_set_virtual_text = vim.lsp.diagnostic.set_virtual_text
-local set_virtual_text_custom = function(diagnostics, bufnr, client_id, sign_ns, opts)
-  opts = opts or {}
-  opts.severity_limit = "Warning"
-  original_set_virtual_text(diagnostics, bufnr, client_id, sign_ns, opts)
-end
-
-vim.lsp.diagnostic.set_virtual_text = set_virtual_text_custom
-
--- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = "rounded",
-})
-
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-  border = "rounded",
-})
-
--- local Module to hold some common items
-local common = {
-  flags = {},
-  on_attach = function(_, bufnr)
-    local keymap_opts = { buffer = bufnr, noremap = true, silent = true }
-
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    vim.keymap.set("n", "<leader>i", "<Cmd>lua vim.lsp.buf.hover()<CR>", keymap_opts)
-    vim.keymap.set("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", keymap_opts)
-    vim.keymap.set("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", keymap_opts)
-    vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", keymap_opts)
-    vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", keymap_opts)
-    vim.keymap.set("n", "<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", keymap_opts)
-    vim.keymap.set("n", "<leader>o", "<cmd>lua vim.lsp.buf.signature_help()<CR>", keymap_opts)
-    vim.keymap.set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", keymap_opts)
-    vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", keymap_opts)
-    vim.keymap.set("n", "<leader>u", "<cmd>lua vim.diagnostic.open_float()<CR>", keymap_opts)
-    vim.keymap.set("n", "<leader>k", "<cmd>lua vim.diagnostic.goto_prev()<CR>", keymap_opts)
-    vim.keymap.set("n", "<leader>j", "<cmd>lua vim.diagnostic.goto_next()<CR>", keymap_opts)
-    vim.keymap.set("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", keymap_opts)
-
-    vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-    -- configure LSP Diagnostic
-    vim.diagnostic.config({
-      underline = true,
-      update_in_insert = false,
-      severity_sort = true,
-      float = {
-        border = "rounded",
-        format = function(diagnostic)
-          if diagnostic.source == "eslint" then
-            return string.format(
-              "%s (%s: %s)",
-              diagnostic.message,
-              diagnostic.source,
-              -- shows the name of the rule
-              diagnostic.user_data.lsp.code
-            )
-          end
-
-          return string.format("%s (%s)", diagnostic.message, diagnostic.source)
-        end,
-        severity_sort = true,
-        close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-        max_width = 80,
-      },
-    })
-  end,
-}
-
--- TODO: dedupe this with linters/formatters
-local lsps = {
-  -- "biome",
-  "cssmodules_ls",
-  "eslint",
-  "flake8",
-  "graphql",
-  "intelephense",
-  "jsonls",
-  "lua_ls",
-  "pyproject-flake8",
-  "pyright",
-  "rust_analyzer",
-  "ruff",
-  "ruff_lsp",
-  "selene",
-  "stylua",
-  "svelte",
-  "tailwindcss",
-  "tsserver",
-  "vim-language-server",
-  "yaml-language-server",
-}
-
-local linters_by_ft = {}
-
-local formatters_by_ft = {
-  go = { "gofmt" },
-  graphql = { "prettier" },
-  javascript = { "prettier", "injected" },
-  javascriptreact = { "prettier", "injected" },
-  json = { "prettier" },
-  lua = { "stylua" },
-  html = { "prettier" },
-  markdown = { "markdownlint", "injected" },
-  python = { "isort", "black", "injected" },
-  rust = { "rustfmt" },
-  sql = { "pg_format" },
-  terraform = { "terraform_fmt" },
-  typescript = { "prettier" },
-  typescriptreact = { "prettier" },
-  yaml = { "yamlfix", "injected" },
-  -- all files
-  ["*"] = { "codespell" },
-  -- files without any formatters available
-  ["_"] = { "trim_whitespace" },
-}
-
-local debuggers = {}
-
-local do_not_install = {
-  -- installed externally due to its plugins: https://github.com/williamboman/mason.nvim/issues/695
-  "gofmt",
-  "pg_format",
-  "stylelint",
-  "terraform_fmt",
-
-  -- not real formatters, but pseudo-formatters from conform.nvim
-  "trim_whitespace",
-  "trim_newlines",
-  "squeeze_blanks",
-  "injected",
-}
-
----given the linter- and formatter-list of nvim-lint and conform.nvim, extract a
----list of all tools that need to be auto-installed
----@param my_lsps object[]
----@param my_linters object[]
----@param my_formatters object[]
----@param my_debuggers string[]
----@param tools_to_ignore string[]
----@return string[] tools
----@nodiscard
-local function tools_to_auto_install(my_lsps, my_linters, my_formatters, my_debuggers, tools_to_ignore)
-  -- get all linters, formatters, & debuggers and merge them into one list
-  local lsp_list = vim.tbl_flatten(vim.tbl_values(my_lsps))
-  local linter_list = vim.tbl_flatten(vim.tbl_values(my_linters))
-  local tools = vim.list_extend(lsp_list, linter_list)
-
-  local formatter_list = vim.tbl_flatten(vim.tbl_values(my_formatters))
-  vim.list_extend(tools, formatter_list)
-  vim.list_extend(tools, my_debuggers)
-
-  -- only unique tools
-  table.sort(tools)
-  tools = vim.fn.uniq(tools)
-
-  -- remove exceptions not to install
-  tools = vim.tbl_filter(function(tool)
-    return not vim.tbl_contains(tools_to_ignore, tool)
-  end, tools)
-
-  return tools
-end
+local constants = require("plugins.lsp.constants")
+local lsp_utils = require("plugins.lsp.utils")
 
 return {
   {
@@ -231,7 +69,13 @@ return {
     event = "VeryLazy",
     cmd = { "Mason", "MasonInstall", "MasonToolsInstall" },
     config = function()
-      local ensure_installed = tools_to_auto_install(lsps, linters_by_ft, formatters_by_ft, debuggers, do_not_install)
+      local ensure_installed = lsp_utils.tools_to_auto_install(
+        constants.lsps,
+        constants.linters_by_ft,
+        constants.formatters_by_ft,
+        constants.debuggers,
+        constants.do_not_install
+      )
 
       require("mason-tool-installer").setup({
         ensure_installed = ensure_installed,
@@ -246,7 +90,7 @@ return {
   {
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
-    cmd = { "ConformInfo" },
+    cmd = { "ConformInfo", "ConformEnable", "ConformDisable" },
     keys = {
       {
         -- Customize or remove this keymap to your liking
@@ -264,7 +108,7 @@ return {
     end,
     -- Everything in opts will be passed to setup()
     opts = {
-      formatters_by_ft = formatters_by_ft,
+      formatters_by_ft = constants.formatters_by_ft,
       formatters = {
         yamlfix = {
           env = {
@@ -321,7 +165,7 @@ return {
     event = "VeryLazy",
     config = function()
       local lint = require("lint")
-      lint.linters_by_ft = linters_by_ft
+      lint.linters_by_ft = constants.linters_by_ft
     end,
   },
   -- Workspace-wide TSC
@@ -336,6 +180,7 @@ return {
   {
     "folke/neodev.nvim",
     lazy = true,
+    ft = { "lua" },
     opts = {
       -- library = {
       --   plugins = {
@@ -347,7 +192,6 @@ return {
   },
   {
     "marilari88/twoslash-queries.nvim",
-    lazy = true,
     keys = {
       { "<leader>ti", "<cmd>TwoslashQueriesInspect<CR>" },
     },
@@ -373,6 +217,75 @@ return {
     config = function()
       local lsp_config = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+      -- Set which cmdelens text levels to show
+      local original_set_virtual_text = vim.lsp.diagnostic.set_virtual_text
+      local set_virtual_text_custom = function(diagnostics, bufnr, client_id, sign_ns, opts)
+        opts = opts or {}
+        opts.severity_limit = "Warning"
+        original_set_virtual_text(diagnostics, bufnr, client_id, sign_ns, opts)
+      end
+
+      vim.lsp.diagnostic.set_virtual_text = set_virtual_text_custom
+
+      -- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
+      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+        border = "rounded",
+      })
+
+      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+        border = "rounded",
+      })
+
+      local common = {
+        flags = {},
+        on_attach = function(_, bufnr)
+          local keymap_opts = { buffer = bufnr, noremap = true, silent = true }
+
+          -- See `:help vim.lsp.*` for documentation on any of the below functions
+          vim.keymap.set("n", "<leader>i", "<Cmd>lua vim.lsp.buf.hover()<CR>", keymap_opts)
+          vim.keymap.set("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", keymap_opts)
+          vim.keymap.set("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", keymap_opts)
+          vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", keymap_opts)
+          vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", keymap_opts)
+          vim.keymap.set("n", "<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", keymap_opts)
+          vim.keymap.set("n", "<leader>o", "<cmd>lua vim.lsp.buf.signature_help()<CR>", keymap_opts)
+          vim.keymap.set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", keymap_opts)
+          vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", keymap_opts)
+          vim.keymap.set("n", "<leader>u", "<cmd>lua vim.diagnostic.open_float()<CR>", keymap_opts)
+          vim.keymap.set("n", "<leader>k", "<cmd>lua vim.diagnostic.goto_prev()<CR>", keymap_opts)
+          vim.keymap.set("n", "<leader>j", "<cmd>lua vim.diagnostic.goto_next()<CR>", keymap_opts)
+          vim.keymap.set("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", keymap_opts)
+
+          vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+
+          -- configure LSP Diagnostic
+          vim.diagnostic.config({
+            underline = true,
+            update_in_insert = false,
+            severity_sort = true,
+            float = {
+              border = "rounded",
+              format = function(diagnostic)
+                if diagnostic.source == "eslint" then
+                  return string.format(
+                    "%s (%s: %s)",
+                    diagnostic.message,
+                    diagnostic.source,
+                    -- shows the name of the rule
+                    diagnostic.user_data.lsp.code
+                  )
+                end
+
+                return string.format("%s (%s)", diagnostic.message, diagnostic.source)
+              end,
+              severity_sort = true,
+              close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+              max_width = 80,
+            },
+          })
+        end,
+      }
 
       lsp_config.tsserver.setup({
         capabilities = capabilities,

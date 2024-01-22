@@ -106,29 +106,30 @@ return {
       -- If you want the formatexpr, here is the place to set it
       vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
     end,
-    -- Everything in opts will be passed to setup()
-    opts = {
-      formatters_by_ft = constants.formatters_by_ft,
-      formatters = {
-        yamlfix = {
-          env = {
-            YAMLFIX_SECTION_WHITELINES = "1",
-            YAMLFIX_WHITELINES = "1",
+    config = function()
+      local conform = require("conform")
+      -- local conform_utils = require("conform.util")
+
+      conform.setup({
+        formatters_by_ft = constants.formatters_by_ft,
+        formatters = {
+          yamlfix = {
+            env = {
+              YAMLFIX_SECTION_WHITELINES = "1",
+              YAMLFIX_WHITELINES = "1",
+            },
           },
         },
-      },
-      -- Set up format-on-save
-      format_on_save = function(bufnr)
-        -- Disable with a global or buffer-local variable
-        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-          return
-        end
-        return { timeout_ms = 1000, lsp_fallback = true }
-      end,
-    },
+        -- Set up format-on-save
+        format_on_save = function(bufnr)
+          -- Disable with a global or buffer-local variable
+          if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+            return
+          end
+          return { timeout_ms = 1000, lsp_fallback = true }
+        end,
+      })
 
-    config = function(_, opts)
-      require("conform").setup(opts)
       vim.api.nvim_create_user_command("ConformDisable", function(args)
         if args.bang then
           -- ConformDisable! will disable formatting just for this buffer
@@ -301,6 +302,12 @@ return {
         init_options = {
           npmLocation = "$HOME/.asdf-data/shims/npm",
         },
+      })
+
+      lsp_config.prismals.setup({
+        capabilities = capabilities,
+        on_attach = common.on_attach,
+        flags = common.flags,
       })
 
       lsp_config.lua_ls.setup({

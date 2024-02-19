@@ -76,6 +76,8 @@ brew "luv"
 brew "mas"
 # better terminal history
 brew "mcfly"
+# sed/cut/awk/etc
+brew "miller"
 brew "mysql"
 brew "mysql-client"
 # interactive cheatsheet for cli commands

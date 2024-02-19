@@ -11,7 +11,8 @@ vim.g.python3_host_prog = "$HOME/.asdf-data/shims/python3"
 
 -- let nvim set window title
 vim.opt.title = true
-vim.opt.titlestring = '%t%( %M%)%( (%{expand("%:~:.:h")})%)%( %a%)'
+vim.opt.titlestring = "%t%( %M%)%( (%{getcwd()})%)%( %a%)"
+-- vim.opt.titlestring = '%t%( %M%)%( (%{expand("%:~:p")})%)%( %a%)'
 
 -- spacebar as leader
 vim.g.mapleader = " "

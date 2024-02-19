@@ -31,6 +31,11 @@ return {
   },
 
   {
+    "chrisgrieser/nvim-tinygit",
+    event = { "VeryLazy" },
+  },
+
+  {
     "lewis6991/gitsigns.nvim",
     cmd = { "Gitsigns" },
     opts = {

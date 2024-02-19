@@ -343,6 +343,19 @@ return {
 
       lsp_config.eslint.setup({
         capabilities = capabilities,
+        filetypes = {
+          "astro",
+          "graphql",
+          "javascript",
+          "javascript.jsx",
+          "javascriptreact",
+          "svelte",
+          "typescript",
+          "typescript.tsx",
+          "typescriptreact",
+          "vue",
+        },
+        flags = common.flags,
         on_attach = function(client, bufnr)
           -- Fix on save
           vim.api.nvim_create_autocmd("BufWritePre", {
@@ -352,7 +365,6 @@ return {
 
           common.on_attach(client, bufnr)
         end,
-        flags = common.flags,
       })
 
       lsp_config.graphql.setup({

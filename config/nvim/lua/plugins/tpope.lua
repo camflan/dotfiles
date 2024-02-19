@@ -7,8 +7,7 @@ return {
   {
     -- replacements with case manipulation
     "tpope/vim-abolish",
-    lazy = true,
-    event = "CmdlineEnter",
+    event = { "VeryLazy", "CmdlineEnter" },
   },
   {
     -- more char data on ga,

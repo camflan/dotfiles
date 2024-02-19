@@ -15,6 +15,10 @@ return {
     end,
   },
   {
+    "https://github.com/apple/pkl-neovim.git",
+    ft = { "pkl" },
+  },
+  {
     "prisma/vim-prisma",
     ft = "prisma",
     lazy = true,

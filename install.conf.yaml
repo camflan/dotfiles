@@ -68,6 +68,11 @@
       stdlog: true
       stderr: true
 
+    - command: ./scripts/install-pkl.sh
+      description: Install pkl
+      stdlog: true
+      stderr: true
+
 # HOMEBREW
 - install-brew: true
 - brewfile:

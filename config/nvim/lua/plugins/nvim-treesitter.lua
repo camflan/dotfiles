@@ -45,6 +45,7 @@ return {
           "objc",
           "ocaml",
           "perl",
+          "pkl",
           "php",
           "phpdoc",
           "prisma",

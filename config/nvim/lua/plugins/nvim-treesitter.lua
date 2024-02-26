@@ -10,6 +10,7 @@ return {
         sync_install = true,
         ignore_install = {},
         ensure_installed = {
+          "astro",
           "c",
           "cmake",
           "cpp",
@@ -45,7 +46,7 @@ return {
           "objc",
           "ocaml",
           "perl",
-          "pkl",
+          -- "pkl",
           "php",
           "phpdoc",
           "prisma",

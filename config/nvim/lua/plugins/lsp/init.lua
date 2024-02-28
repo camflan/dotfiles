@@ -215,10 +215,14 @@ return {
       "hrsh7th/nvim-cmp",
       "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
       "marilari88/twoslash-queries.nvim",
+      -- "artemave/workspace-diagnostics.nvim",
     },
     config = function()
       local lsp_config = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+      -- local workspace_diagnostics = require("workspace-diagnostics")
+      local twoslash = require("twoslash-queries")
 
       -- Set which cmdelens text levels to show
       local original_set_virtual_text = vim.lsp.diagnostic.set_virtual_text
@@ -296,7 +300,8 @@ return {
           client.server_capabilities.documentFormattingProvider = false
           client.server_capabilities.documentRangeFormattingProvider = false
 
-          require("twoslash-queries").attach(client, bufnr)
+          -- workspace_diagnostics.populate_workspace_diagnostics(client, bufnr)
+          twoslash.attach(client, bufnr)
           common.on_attach(client, bufnr)
         end,
         flags = common.flags,
@@ -364,6 +369,7 @@ return {
             command = "EslintFixAll",
           })
 
+          -- workspace_diagnostics.populate_workspace_diagnostics(client, bufnr)
           common.on_attach(client, bufnr)
         end,
       })

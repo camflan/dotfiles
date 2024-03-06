@@ -1,6 +1,7 @@
 return {
   {
     "David-Kunz/gen.nvim",
+    enabled = false,
     opts = {
       model = "zephyr", -- The default model to use.
       -- host = "localhost", -- The host running the Ollama service.
@@ -31,7 +32,7 @@ return {
 
   {
     "dustinblackman/oatmeal.nvim",
-    enabled = false,
+    enabled = true,
     cmd = { "Oatmeal" },
     keys = {
       { "<leader>om", mode = "n", desc = "Start Oatmeal session" },
@@ -41,6 +42,7 @@ return {
       model = "codellama:latest",
     },
   },
+
   {
     "nomnivore/ollama.nvim",
     enabled = false,

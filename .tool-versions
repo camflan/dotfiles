@@ -11,3 +11,4 @@ ruby 2.7.4
 rust 1.75.0
 terraform 1.5.3
 vault 1.14.0
+golang 1.21.7

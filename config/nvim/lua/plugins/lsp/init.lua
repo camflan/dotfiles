@@ -310,6 +310,12 @@ return {
         },
       })
 
+      lsp_config.gopls.setup({
+        capabilities = capabilities,
+        on_attach = common.on_attach,
+        flags = common.flags,
+      })
+
       lsp_config.prismals.setup({
         capabilities = capabilities,
         on_attach = common.on_attach,

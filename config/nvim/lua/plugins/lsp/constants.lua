@@ -31,6 +31,7 @@ return {
     "cssmodules_ls",
     "eslint",
     "flake8",
+    "gopls",
     "graphql",
     "intelephense",
     "jsonls",

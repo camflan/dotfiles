@@ -59,6 +59,8 @@ brew "htop"
 brew "hurl"
 # benchmarking util
 brew "hyperfine"
+# interactive jq
+brew "ijq"
 # json filtering
 brew "jq"
 # Schema introspection

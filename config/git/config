@@ -147,8 +147,6 @@
     stash-all = stash save --include-untracked
 
 [merge]
-    ff = only
-
     # Standard diff is two sets of final changes. This introduces the original text before each side's changes.
     # https://git-scm.com/docs/git-config#git-config-mergeconflictStyle
     conflictstyle = diff3

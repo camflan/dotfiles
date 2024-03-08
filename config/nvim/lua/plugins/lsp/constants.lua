@@ -36,6 +36,7 @@ return {
     "intelephense",
     "jsonls",
     "lua_ls",
+    "prismals",
     "pyproject-flake8",
     "pyright",
     "rust_analyzer",

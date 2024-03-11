@@ -211,6 +211,7 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "b0o/schemastore.nvim",
+      "dmmulroy/ts-error-translator.nvim",
       "folke/neodev.nvim",
       "hrsh7th/nvim-cmp",
       "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
@@ -491,5 +492,14 @@ return {
         },
       })
     end,
+  },
+
+  -- nicer TS error messages
+  {
+    "dmmulroy/ts-error-translator.nvim",
+    lazy = true,
+    opts = {
+      auto_override_publish_diagnostics = true,
+    },
   },
 }

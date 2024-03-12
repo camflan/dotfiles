@@ -108,3 +108,14 @@ brew "whalebrew"
 
 cask "1password-cli"
 cask "ngrok"
+
+# quicklook plugins
+
+# provisioning certificates
+cask "provisionql"
+
+cask "syntax-highlight"
+cask "qlstephen"
+
+cask "betterzip"
+cask "quicklook-json"

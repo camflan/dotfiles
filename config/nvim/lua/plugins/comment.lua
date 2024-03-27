@@ -4,6 +4,7 @@ return {
     name = "context-commentstring",
     lazy = true,
   },
+
   {
     "numToStr/Comment.nvim",
     dependencies = {
@@ -54,6 +55,8 @@ return {
       })
     end,
   },
+
+  -- Quickly insert debug print/console.log/etc statements
   {
     "PatschD/zippy.nvim",
     lazy = true,

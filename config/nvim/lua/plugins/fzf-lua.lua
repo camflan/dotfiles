@@ -23,6 +23,14 @@ return {
         silent = true,
       },
       {
+        "<leader>q",
+        "<cmd>lua require('fzf-lua').resume()<CR>",
+        mode = { "n" },
+        desc = "Resume last Fzf session",
+        remap = false,
+        silent = true,
+      },
+      {
         "<leader>b",
         "<cmd>lua require('fzf-lua').buffers()<CR>",
         mode = { "n" },
@@ -56,7 +64,7 @@ return {
       },
       {
         "<leader>r",
-        "<cmd>lua require('fzf-lua').live_grep_native()<CR>",
+        "<cmd>lua require('fzf-lua').live_grep()<CR>",
         mode = { "n" },
         desc = "Live Ripgrep search of cwd",
         remap = false,
@@ -96,26 +104,45 @@ return {
       local actions = require("fzf-lua.actions")
 
       fzf.setup({
-        preview = {
-          default = "bat",
+        fzf_opts = {
+          -- saves to ~/.local/share/nvim/fzf-lua-history
+          ["--history"] = vim.fn.stdpath("data") .. "/fzf-lua-history",
         },
         actions = {
+          buffers = {
+            -- providers that inherit these actions:
+            --   buffers, tabs, lines, blines
+            ["default"] = actions.buf_switch_or_edit,
+            ["ctrl-o"] = actions.buf_edit,
+            ["ctrl-s"] = actions.buf_split,
+            ["ctrl-v"] = actions.buf_vsplit,
+            ["ctrl-t"] = actions.buf_tabedit,
+          },
           files = {
             -- providers that inherit these actions:
-            --   files, git_files, git_status, grep, lsp
-            --   oldfiles, quickfix, loclist, tags, btags
-            --   args
-            -- default action opens a single selection
-            -- or sends multiple selection to quickfix
-            -- replace the default action with the below
-            -- to open all files whether single or multiple
-            -- ["default"]     = actions.file_edit,
+            --   files, git_files, git_status, grep, lsp oldfiles, quickfix, loclist, tags, btags args
             ["default"] = actions.file_edit_or_qf,
-            ["ctrl-s"] = actions.file_split,
-            ["ctrl-v"] = actions.file_vsplit,
-            ["ctrl-t"] = actions.file_tabedit,
-            ["ctrl-q"] = actions.file_sel_to_qf,
             ["ctrl-l"] = actions.file_sel_to_ll,
+            ["ctrl-q"] = actions.file_sel_to_qf,
+            ["ctrl-s"] = actions.file_split,
+            ["ctrl-t"] = actions.file_tabedit,
+            ["ctrl-v"] = actions.file_vsplit,
+          },
+        },
+        files = {
+          fd_opts = [[--type f --hidden --follow --exclude .git --exclude node_modules]],
+          color_icons = false,
+          file_icons = false,
+          git_icons = false,
+        },
+        grep = {
+          debug = false,
+          fzf_opts = { ["--nth"] = "2.." },
+          rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e",
+          -- allow modifying file glob by passing `--file/glob/**/*` to a query
+          rg_glob = true,
+          actions = {
+            ["ctrl-r"] = { actions.toggle_ignore },
           },
         },
         keymap = {
@@ -123,7 +150,21 @@ return {
             ["<F1>"] = "toggle-help",
           },
           fzf = {
+            ["alt-a"] = "toggle-all",
             ["ctrl-q"] = "select-all+accept",
+            ["ctrl-y"] = "toggle-preview",
+            ["ctrl-z"] = "abort",
+          },
+        },
+        previewers = {
+          bat = {
+            cmd = "bat",
+          },
+        },
+        winopts = {
+          preview = {
+            default = "bat",
+            wrap = "nowrap",
           },
         },
       })

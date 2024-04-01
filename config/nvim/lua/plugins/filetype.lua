@@ -24,4 +24,9 @@ return {
     lazy = true,
     config = function() end,
   },
+
+  {
+    "Duologic/nvim-jsonnet",
+    ft = { "jsonnet" },
+  },
 }

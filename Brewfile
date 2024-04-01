@@ -9,6 +9,8 @@ brew "act"
 brew "bat"
 # improvted top
 brew "btop"
+# terminal image viewer
+brew "chafa"
 brew "colima"
 brew "ctop"
 # loads envrc and .env files automatically when entering a directory

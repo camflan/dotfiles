@@ -8,10 +8,10 @@
       stderr: true
     brew:
       stderr: true
-      stdout: false
+      stdout: true
     git:
       stderr: true
-      stdout: false
+      stdout: true
     link:
       relink: true
       stderr: true
@@ -88,8 +88,12 @@
       url: https://github.com/carnei-ro/asdf-cilium-cli.git
     - plugin: cloud-sql-proxy
       url: https://github.com/pbr0ck3r/asdf-cloud-sql-proxy.git
+    - plugin: helm
+      url: https://github.com/Antiarchitect/asdf-helm.git
     - plugin: java
       url: https://github.com/halcyon/asdf-java.git
+    - plugin: jsonnet-bundler
+      url: https://github.com/kc-workspace/asdf-jsonnet-bundler.git
     - plugin: kubectl
       url: https://github.com/asdf-community/asdf-kubectl.git
     - plugin: maven
@@ -110,6 +114,8 @@
       url: https://github.com/asdf-vm/asdf-ruby.git
     - plugin: rust
       url: https://github.com/code-lever/asdf-rust.git
+    - plugin: tanka
+      url: https://github.com/trotttrotttrott/asdf-tanka.git
     - plugin: terraform
       url: https://github.com/asdf-community/asdf-hashicorp.git
     - plugin: vault

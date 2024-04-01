@@ -405,6 +405,19 @@ return {
         },
       })
 
+      lsp_config.jsonnet_ls.setup({
+        capabilities = capabilities,
+        on_attach = common.on_attach,
+        flags = common.flags,
+        cmd = { "jsonnet-language-server", "--lint" }, -- Linting can be noisy
+
+        settings = {
+          formatting = {
+            UseImplicitPlus = true, -- Recommended but might conflict with project-level jsonnetfmt settings
+          },
+        },
+      })
+
       -- TODO: pull override from env?
       local KUBERNETES_SCHEMA_VERSION = "v1.26.9"
       local KUBERNETES_SCHEMA_VARIANT = "standalone-strict"

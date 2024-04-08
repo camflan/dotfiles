@@ -137,6 +137,9 @@ return {
         },
         grep = {
           debug = false,
+          color_icons = false,
+          file_icons = false,
+          git_icons = false,
           fzf_opts = { ["--nth"] = "2.." },
           rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e",
           -- allow modifying file glob by passing `--file/glob/**/*` to a query

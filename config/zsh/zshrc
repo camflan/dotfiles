@@ -48,6 +48,7 @@ eval "$($BREW_DIR/bin/brew shellenv)"
 export CFLAGS="-I$BREW_DIR/include"
 export LDFLAGS="-L$BREW_DIR/lib"
 
+# ASDF-VM
 # https://asdf-vm.com/#/core-manage-asdf
 . $HOME/.asdf/asdf.sh
 
@@ -56,6 +57,11 @@ fpath=(${ASDF_DIR}/completions $fpath)
 
 # rust
 . "$(asdf where rust)/env"
+
+# # Try vfox as replacement for ASDF, comment ASDF above
+# # VFOX https://vfox.lhan.me/guides/quick-start.html
+# eval "$(vfox activate zsh)"
+
 
 # FASD
 # Quick jump to directories/etc
@@ -106,8 +112,9 @@ eval "$(atuin init zsh)"
 # ctrl+r for full atuin view
 bindkey '^r' _atuin_search_widget
 
-# PKGX integration
-eval "$(pkgx --shellcode)"  #docs.pkgx.sh/shellcode
+# Disabling for now, not sure I'm actually using it (April 2024)
+# # PKGX integration
+# eval "$(pkgx --shellcode)"  #docs.pkgx.sh/shellcode
 
 # direnv
 eval "$(direnv hook zsh)"

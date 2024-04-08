@@ -2,6 +2,13 @@ tap "1password/tap"
 tap "homebrew/bundle"
 tap "oven-sh/bun"
 tap "superfly/tap"
+tap "version-fox/tap"
+
+# V-fox https://vfox.lhan.me/guides/quick-start.html
+brew "vfox"
+
+cask "1password-cli"
+cask "ngrok"
 
 # github actions runner
 brew "act"
@@ -57,6 +64,8 @@ brew "gping"
 brew "grex"
 brew "harfbuzz"
 brew "hdf5"
+# helix modal editor: https://docs.helix-editor.com/install.html#macos
+brew "helix"
 # improvted top
 brew "htop"
 # file based curl thingy
@@ -109,9 +118,6 @@ brew "walk"
 brew "wangle"
 brew "watchman"
 brew "whalebrew"
-
-cask "1password-cli"
-cask "ngrok"
 
 # quicklook plugins
 

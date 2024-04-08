@@ -50,6 +50,12 @@
     ~/.tool-versions:
       path: ./.tool-versions
       create: true
+    ~/.version-fox/.tool-versions:
+      path: ./.tool-versions
+      create: true
+    ~/.version-fox/config.yaml:
+      path: ./version-fox-config.yaml
+      create: true
 
 - git:
     ~/.config/zsh/.zprezto:

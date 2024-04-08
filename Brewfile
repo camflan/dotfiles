@@ -44,6 +44,8 @@ brew "gh"
 # install/clone git repos similarly to `go get`. eg, will clone to `~/src/github.com/org/reponame`
 brew "ghq"
 brew "git"
+# syntactical diffing: https://difftastic.wilfred.me.uk
+brew "difftastic"
 # enhanced diff
 brew "git-delta"
 brew "glib"

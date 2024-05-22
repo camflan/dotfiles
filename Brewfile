@@ -14,6 +14,8 @@ cask "ngrok"
 brew "act"
 # improved cat
 brew "bat"
+# json viewer / processor: https://fx.wtf
+brew "fx"
 # improvted top
 brew "btop"
 # terminal image viewer

@@ -13,8 +13,6 @@ alias fg3="fg %3"
 
 alias dc="docker compose"
 
-alias w="walk"
-
 # bat supports paging, syntax highlighting, searching, etc
 alias cat="bat"
 
@@ -118,3 +116,8 @@ bindkey '^r' _atuin_search_widget
 
 # direnv
 eval "$(direnv hook zsh)"
+
+# interactive directory walking (https://github.com/antonmedv/walk)
+function w {
+  cd "$(walk "$@")"
+}

@@ -9,6 +9,7 @@ brew "vfox"
 
 cask "1password-cli"
 cask "ngrok"
+cask "wezterm"
 
 # github actions runner
 brew "act"

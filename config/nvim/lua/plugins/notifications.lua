@@ -3,7 +3,7 @@ return {
   {
     "j-hui/fidget.nvim",
     event = "VeryLazy",
-    enabled = false,
+    enabled = true,
     opts = {
       notification = {
         override_vim_notify = false,
@@ -13,7 +13,7 @@ return {
   {
     "rcarriga/nvim-notify",
     event = "VeryLazy",
-    enabled = false,
+    enabled = true,
     config = function()
       local notify = require("notify")
 

@@ -5,7 +5,7 @@ return {
     keys = {
       {
         "<leader>T",
-        ":TroubleToggle<CR>",
+        ":Trouble toggle diagnostics<CR>",
         mode = { "n" },
         remap = false,
         silent = true,
@@ -13,7 +13,7 @@ return {
     },
     opts = {
       position = "bottom",
-      icons = false,
+      -- icons = false,
       fold_open = "v", -- icon used for open folds
       fold_closed = ">", -- icon used for closed folds
       indent_lines = false, -- add an indent guide below the fold icons

@@ -1,6 +1,7 @@
 return {
   {
     "f-person/auto-dark-mode.nvim",
+    enabled = false,
     opts = {
       update_interval = 1000,
       set_dark_mode = function()
@@ -17,6 +18,7 @@ return {
   {
     "ishan9299/nvim-solarized-lua",
     lazy = true,
+    priority = 1000,
   },
 
   -- tokyonight
@@ -24,6 +26,7 @@ return {
     "folke/tokyonight.nvim",
     name = "tokyonight",
     lazy = false,
+    enabled = true,
     priority = 1000,
     opts = {
       style = "storm",

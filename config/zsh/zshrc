@@ -1,6 +1,9 @@
 # ENV
 # loaded from .zshenv
 
+# setup wezterm shell integration: https://wezfurlong.org/wezterm/shell-integration.html
+. "$CBFDOTFILES_DIR/config/wezterm/shell-integration.sh"
+
 # aliases
 alias oh="open ."
 alias ls="eza --long --grid --header --classify --all --group-directories-first --git"

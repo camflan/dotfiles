@@ -104,6 +104,7 @@ return {
       local actions = require("fzf-lua.actions")
 
       fzf.setup({
+        fzf_colors = true,
         fzf_opts = {
           -- saves to ~/.local/share/nvim/fzf-lua-history
           ["--history"] = vim.fn.stdpath("data") .. "/fzf-lua-history",

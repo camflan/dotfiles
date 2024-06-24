@@ -25,6 +25,10 @@ config.cursor_blink_ease_out = "EaseOut"
 config.initial_cols = 120
 config.initial_rows = 50
 
+-- fixes left-alt (option) key for typing characters. eg, ALT-; for …
+-- https://github.com/wez/wezterm/issues/3866#issuecomment-1609587925
+config.send_composed_key_when_left_alt_is_pressed = true
+
 -- keybindings
 config.keys = {
 	-- Match split keys from iTerm

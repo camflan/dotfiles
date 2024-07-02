@@ -30,6 +30,8 @@ brew "doctl"
 brew "dustinblackman/tap/oatmeal"
 # enhanced dig
 brew "dog"
+# DNS client https://doggo.mrkaran.dev/docs/intro/installation/
+brew "doggo"
 # disk space analyzer and rm helper
 brew "dua-cli"
 brew "entr"

@@ -1,4 +1,58 @@
+local function get_hostname()
+  local f = io.popen("/bin/hostname")
+
+  if not f then
+    return
+  end
+
+  local hostname = f:read("*a") or ""
+  f:close()
+  hostname = string.gsub(hostname, "\n$", "")
+  return hostname
+end
+
 return {
+  {
+    "olimorris/codecompanion.nvim",
+    event = { "VeryLazy" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-telescope/telescope.nvim", -- Optional
+      {
+        "stevearc/dressing.nvim", -- Optional: Improves the default Neovim UI
+        opts = {},
+      },
+    },
+    config = function()
+      local code_companion = require("codecompanion")
+      local adapters = require("codecompanion.adapters")
+
+      local model = "deepseek-coder-v2:16b"
+
+      if get_hostname() == "mando" then
+        model = "starcoder2:3b"
+      end
+
+      code_companion.setup({
+        adapters = {
+          ollama = adapters.use("ollama", {
+            schema = {
+              model = {
+                default = model,
+              },
+            },
+          }),
+        },
+        strategies = {
+          chat = "ollama",
+          inline = "ollama",
+          agent = "ollama",
+        },
+      })
+    end,
+  },
+
   {
     "David-Kunz/gen.nvim",
     enabled = false,

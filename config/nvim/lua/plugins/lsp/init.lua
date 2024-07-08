@@ -1,6 +1,20 @@
 local constants = require("plugins.lsp.constants")
 local lsp_utils = require("plugins.lsp.utils")
 
+local toggle_inlay_hints = function(bufnr)
+  local toggle_opts = {}
+
+  if bufnr ~= nil then
+    toggle_opts = {
+      filter = {
+        bufnr = bufnr,
+      },
+    }
+  end
+
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(), toggle_opts)
+end
+
 return {
   {
     "lsp_lines",
@@ -24,7 +38,7 @@ return {
         virtual_text = true,
       })
 
-      vim.keymap.set("", "<Leader>L", toggle_lsp_lines, { desc = "Toggle lsp_lines" })
+      vim.keymap.set("", "<leader>tl", toggle_lsp_lines, { desc = "Toggle lsp_lines" })
     end,
   },
   -- eslint rule lookup
@@ -195,7 +209,7 @@ return {
   {
     "marilari88/twoslash-queries.nvim",
     keys = {
-      { "<leader>ti", "<cmd>TwoslashQueriesInspect<CR>" },
+      { "<leader>dq", "<cmd>TwoslashQueriesInspect<CR>" },
     },
     config = function()
       local tsq = require("twoslash-queries")
@@ -263,6 +277,9 @@ return {
           vim.keymap.set("n", "<leader>k", "<cmd>lua vim.diagnostic.goto_prev()<CR>", keymap_opts)
           vim.keymap.set("n", "<leader>j", "<cmd>lua vim.diagnostic.goto_next()<CR>", keymap_opts)
           vim.keymap.set("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", keymap_opts)
+          vim.keymap.set("", "<leader>ti", toggle_inlay_hints, {
+            desc = "Toggle inlay hints",
+          })
 
           vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
@@ -308,6 +325,16 @@ return {
         flags = common.flags,
         init_options = {
           npmLocation = "$HOME/.asdf-data/shims/npm",
+          preferences = {
+            includeInlayParameterNameHints = "all",
+            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+            includeInlayFunctionParameterTypeHints = true,
+            includeInlayVariableTypeHints = true,
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayFunctionLikeReturnTypeHints = true,
+            includeInlayEnumMemberValueHints = true,
+            importModuleSpecifierPreference = "non-relative",
+          },
         },
       })
 

@@ -78,7 +78,7 @@ return {
         desc = "Search :help docs",
       },
       {
-        "<leader>t",
+        "<leader>dt",
         "<cmd>lua require('fzf-lua').lsp_finder()<CR>",
         mode = { "n" },
         remap = false,
@@ -92,7 +92,7 @@ return {
         desc = "Live search LSP workspace symbols",
       },
       {
-        "<leader>c",
+        "<leader>dc",
         "<cmd>lua require('fzf-lua').lsp_code_actions()<CR>",
         mode = { "n" },
         remap = false,

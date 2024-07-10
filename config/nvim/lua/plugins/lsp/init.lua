@@ -17,6 +17,21 @@ end
 
 return {
   {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    enabled = false,
+    event = "VeryLazy",
+    config = function()
+      local tiny_inline = require("tiny-inline-diagnostic")
+      vim.diagnostic.config({
+        virtual_lines = false,
+        virtual_text = false,
+      })
+
+      tiny_inline.setup({})
+    end,
+  },
+
+  {
     "lsp_lines",
     url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     lazy = true,
@@ -28,8 +43,20 @@ return {
       local function toggle_lsp_lines()
         local new_value = lsp_lines.toggle()
 
+        local virtual_lines_opts = nil
+
+        if new_value then
+          virtual_lines_opts = {
+            only_current_line = true,
+          }
+        else
+          virtual_lines_opts = false
+        end
+
+        -- comment this setting out when using tiny-inline-diagnostic above
         vim.diagnostic.config({
           virtual_text = not new_value,
+          virtual_lines = virtual_lines_opts,
         })
       end
 
@@ -240,14 +267,14 @@ return {
       local twoslash = require("twoslash-queries")
 
       -- Set which cmdelens text levels to show
-      local original_set_virtual_text = vim.lsp.diagnostic.set_virtual_text
-      local set_virtual_text_custom = function(diagnostics, bufnr, client_id, sign_ns, opts)
-        opts = opts or {}
-        opts.severity_limit = "Warning"
-        original_set_virtual_text(diagnostics, bufnr, client_id, sign_ns, opts)
-      end
-
-      vim.lsp.diagnostic.set_virtual_text = set_virtual_text_custom
+      -- local original_set_virtual_text = vim.lsp.diagnostic.set_virtual_text
+      -- local set_virtual_text_custom = function(diagnostics, bufnr, client_id, sign_ns, opts)
+      --   opts = opts or {}
+      --   opts.severity_limit = "Warning"
+      --   original_set_virtual_text(diagnostics, bufnr, client_id, sign_ns, opts)
+      -- end
+      --
+      -- vim.lsp.diagnostic.set_virtual_text = set_virtual_text_custom
 
       -- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
       vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {

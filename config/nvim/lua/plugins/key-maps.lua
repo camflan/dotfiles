@@ -31,6 +31,37 @@ return {
       vim.keymap.set("n", "<leader><leader>l", require("smart-splits").swap_buf_right)
     end,
   },
+
+  {
+    "fedepujol/move.nvim",
+    opts = {
+      block = {
+        enable = true,
+        indent = true,
+      },
+      char = {
+        enable = false,
+      },
+      line = {
+        enable = false,
+        indent = false,
+      },
+      word = {
+        enable = false,
+      },
+    },
+    config = function(_, opts)
+      local m = require("move")
+      m.setup(opts)
+
+      local keymap_opts = { noremap = true, silent = true }
+      vim.keymap.set("v", "<A-j>", ":MoveBlock(1)<CR>", keymap_opts)
+      vim.keymap.set("v", "<A-k>", ":MoveBlock(-1)<CR>", keymap_opts)
+      vim.keymap.set("v", "<A-h>", ":MoveHBlock(-1)<CR>", keymap_opts)
+      vim.keymap.set("v", "<A-l>", ":MoveHBlock(1)<CR>", keymap_opts)
+    end,
+  },
+
   {
     "tris203/hawtkeys.nvim",
     dependencies = {
@@ -54,5 +85,36 @@ return {
     opts = {
       operators = { gc = "Comments" },
     },
+    config = function(_, opts)
+      local wk = require("which-key")
+      wk.setup(opts)
+
+      wk.register({
+        t = {
+          L = {
+            "<cmd>set list!<CR>",
+            "Toggle hidden chars (:set list!)",
+          },
+          S = {
+            "<cmd>setlocal spell! spelllang=en_us<CR>",
+            "Toggle spelling",
+          },
+          n = {
+            "<cmd>set number!<CR>",
+            "Toggle line numbers",
+          },
+          r = {
+            "<cmd>set relativenumber!<CR>",
+            "Toggle relative line numbers",
+          },
+          w = {
+            "<cmd>set nowrap!<CR>",
+            "Toggle line wrapping",
+          },
+        },
+      }, {
+        prefix = "<leader>",
+      })
+    end,
   },
 }

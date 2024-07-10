@@ -64,7 +64,7 @@ Plug 'dzeban/vim-log-syntax'
 Plug 'phaazon/hop.nvim'                                 " easymotion replacement for nvim
 Plug 'godlygeek/tabular'
 
-Plug 'brooth/far.vim'                                   " poweful Find And Replace
+Plug 'brooth/far.vim'                                   " powerful Find And Replace
 
 Plug 'mattn/emmet-vim'
 Plug 'scrooloose/nerdcommenter'
@@ -216,7 +216,7 @@ filetype plugin on                                                  "turn on fil
 "}}}
 
 "}}}
-"indention stuff {{{
+"indentation stuff {{{
 
 filetype indent on                                                  "indent based on filetype
 set shiftround                                                      "round to a multiple of my tab settings
@@ -340,12 +340,12 @@ nnoremap <leader>fa :Telescope lsp_code_actions<CR>
 "  nnoremap <leader>h :Helptags<CR>
 "  nnoremap <leader>g :Commits<CR>
 "  nnoremap <leader>G :Commits<CR>
-"  nnoremap <leader>r :Rg 
+"  nnoremap <leader>r :Rg
 "  nnoremap <leader>R :Rg<CR>
-"  
+"
 "  "[Buffers] Jump to the existing window if possible
 "  let g:fzf_buffers_jump = 1
-"  
+"
 "  " Customize fzf colors to match your color scheme
 "  let g:fzf_colors =
 "    \ { 'fg':      ['fg', 'Normal'],

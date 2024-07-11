@@ -1,6 +1,8 @@
 local constants = require("plugins.lsp.constants")
 local lsp_utils = require("plugins.lsp.utils")
 
+local USE_TINY_INLINE_DIAGNOSTIC = false
+
 local toggle_inlay_hints = function(bufnr)
   local toggle_opts = {}
 
@@ -17,8 +19,26 @@ end
 
 return {
   {
-    "rachartier/tiny-inline-diagnostic.nvim",
+    "sontungexpt/better-diagnostic-virtual-text",
     enabled = false,
+    event = { "LspAttach" },
+    config = function()
+      require("better-diagnostic-virtual-text").setup({
+        inline = true,
+        ui = {
+          above = true,
+        },
+      })
+
+      vim.diagnostic.config({
+        virtual_text = false,
+      })
+    end,
+  },
+
+  {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    enabled = USE_TINY_INLINE_DIAGNOSTIC,
     event = "VeryLazy",
     config = function()
       local tiny_inline = require("tiny-inline-diagnostic")
@@ -34,7 +54,8 @@ return {
   {
     "lsp_lines",
     url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    lazy = true,
+    enabled = true,
+    event = { "LspAttach" },
     config = function()
       local lsp_lines = require("lsp_lines")
       lsp_lines.setup()
@@ -53,16 +74,18 @@ return {
           virtual_lines_opts = false
         end
 
-        -- comment this setting out when using tiny-inline-diagnostic above
-        vim.diagnostic.config({
-          virtual_text = not new_value,
-          virtual_lines = virtual_lines_opts,
-        })
+        if not USE_TINY_INLINE_DIAGNOSTIC then
+          -- comment this setting out when using tiny-inline-diagnostic above
+          vim.diagnostic.config({
+            virtual_text = not new_value,
+            virtual_lines = virtual_lines_opts,
+          })
+        end
       end
 
       vim.diagnostic.config({
         virtual_lines = false,
-        virtual_text = true,
+        virtual_text = not USE_TINY_INLINE_DIAGNOSTIC,
       })
 
       vim.keymap.set("", "<leader>tl", toggle_lsp_lines, { desc = "Toggle lsp_lines" })
@@ -214,6 +237,13 @@ return {
   -- Workspace-wide TSC
   {
     "dmmulroy/tsc.nvim",
+    keys = {
+      {
+        "<leader>dT",
+        "<cmd>TSC<CR>",
+        desc = "Run TSC on entire workspace",
+      },
+    },
     opts = {
       auto_start_watch_mode = true,
     },
@@ -236,7 +266,11 @@ return {
   {
     "marilari88/twoslash-queries.nvim",
     keys = {
-      { "<leader>dq", "<cmd>TwoslashQueriesInspect<CR>" },
+      {
+        "<leader>dq",
+        "<cmd>TwoslashQueriesInspect<CR>",
+        desc = "Add magic twoslash comment for type introspection",
+      },
     },
     config = function()
       local tsq = require("twoslash-queries")

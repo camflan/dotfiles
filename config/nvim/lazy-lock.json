@@ -1,6 +1,8 @@
 {
   "LuaSnip": { "branch": "master", "commit": "ce0a05ab4e2839e1c48d072c5236cce846a387bc" },
+  "better-diagnostic-virtual-text": { "branch": "main", "commit": "cb3d5509fe81e9bcdaf562f032111bd2c1e84ac3" },
   "blayu.vim": { "branch": "master", "commit": "4a4878d21e440fa32d80765e463483c0911c3845" },
+  "buffish.nvim": { "branch": "main", "commit": "4858715e141b2fe24735205024f113ec0f23470f" },
   "catppuccin": { "branch": "main", "commit": "47bd419c0cb776cb0a67ebb525891eca44020b59" },
   "cmd-parser.nvim": { "branch": "master", "commit": "6363b8bddef968c3ec51a38172af44f675f01ef3" },
   "cmp-buffer": { "branch": "main", "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },

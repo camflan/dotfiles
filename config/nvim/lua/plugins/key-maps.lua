@@ -90,6 +90,30 @@ return {
       wk.setup(opts)
 
       wk.register({
+        -- <leader>o prefixes keymaps that *o*pen panels/modals/tools/etc
+        o = {
+          F = {
+            "<cmd>FzfLua<CR>",
+            "Open FzfLua",
+          },
+          L = {
+            "<cmd>LazyGit<CR>",
+            "Open Lazygit",
+          },
+          d = {
+            "<cmd>DiffviewOpen<CR>",
+            "Open DiffView",
+          },
+          l = {
+            "<cmd>Lazy<CR>",
+            "Open Lazy.nvim",
+          },
+          m = {
+            "<cmd>Mason<CR>",
+            "Open Mason",
+          },
+        },
+        -- <leader>t prefixes keymaps that *t*oggle functionality
         t = {
           L = {
             "<cmd>set list!<CR>",

@@ -1,7 +1,7 @@
 return {
   {
     "folke/trouble.nvim",
-    lazy = true,
+    event = { "VeryLazy" },
     keys = {
       {
         "<leader>T",

@@ -76,7 +76,7 @@ return {
   },
   {
     "folke/which-key.nvim",
-    event = "VeryLazy",
+    event = { "VeryLazy" },
     -- already have timeout set in init.lua
     -- init = function()
     --   vim.o.timeout = true

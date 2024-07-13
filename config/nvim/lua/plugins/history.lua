@@ -3,8 +3,9 @@ return {
     "mbbill/undotree",
     keys = {
       {
-        "<leader>U",
+        "<leader>oU",
         "<cmd>UndotreeToggle<CR>",
+        desc = "Show UndoTree",
         mode = { "n" },
       },
     },

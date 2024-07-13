@@ -77,67 +77,85 @@ return {
   {
     "folke/which-key.nvim",
     event = { "VeryLazy" },
-    -- already have timeout set in init.lua
-    -- init = function()
-    --   vim.o.timeout = true
-    --   vim.o.timeoutlen = 300
-    -- end,
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show({ global = false })
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
     opts = {
-      operators = { gc = "Comments" },
+      preset = "modern",
     },
     config = function(_, opts)
       local wk = require("which-key")
       wk.setup(opts)
 
-      wk.register({
-        -- <leader>o prefixes keymaps that *o*pen panels/modals/tools/etc
-        o = {
-          F = {
+      wk.add({
+        -- NORMAL mode keymaps
+        {
+          mode = { "n" },
+          { "<leader>d", group = "Dev utils" },
+          { "<leader>f", group = "FZF" },
+          { "<leader>g", group = "git" },
+
+          -- <leader>o prefixes keymaps that *o*pen panels/modals/tools/etc
+          { "<leader>o", group = "open panels/modules" },
+          {
+            "<leader>oF",
             "<cmd>FzfLua<CR>",
-            "Open FzfLua",
+            desc = "Open FzfLua",
           },
-          L = {
+          {
+            "<leader>oG",
             "<cmd>LazyGit<CR>",
-            "Open Lazygit",
+            desc = "Open Lazygit",
           },
-          d = {
+          {
+            "<leader>od",
             "<cmd>DiffviewOpen<CR>",
-            "Open DiffView",
+            desc = "Open DiffView",
           },
-          l = {
+          {
+            "<leader>oL",
             "<cmd>Lazy<CR>",
-            "Open Lazy.nvim",
+            desc = "Open Lazy.nvim",
           },
-          m = {
+          {
+            "<leader>oM",
             "<cmd>Mason<CR>",
-            "Open Mason",
+            desc = "Open Mason",
           },
-        },
-        -- <leader>t prefixes keymaps that *t*oggle functionality
-        t = {
-          L = {
+          -- <leader>t prefixes keymaps that *t*oggle functionality
+          { "<leader>t", group = "toggles" },
+          {
+            "<leader>tL",
             "<cmd>set list!<CR>",
-            "Toggle hidden chars (:set list!)",
+            desc = "Toggle hidden chars (:set list!)",
           },
-          S = {
+          {
+            "<leader>tS",
             "<cmd>setlocal spell! spelllang=en_us<CR>",
-            "Toggle spelling",
+            desc = "Toggle spelling",
           },
-          n = {
+          {
+            "<leader>tn",
             "<cmd>set number!<CR>",
-            "Toggle line numbers",
+            desc = "Toggle line numbers",
           },
-          r = {
+          {
+            "<leader>tr",
             "<cmd>set relativenumber!<CR>",
-            "Toggle relative line numbers",
+            desc = "Toggle relative line numbers",
           },
-          w = {
+          {
+            "<leader>tw",
             "<cmd>set nowrap!<CR>",
-            "Toggle line wrapping",
+            desc = "Toggle line wrapping",
           },
         },
-      }, {
-        prefix = "<leader>",
       })
     end,
   },

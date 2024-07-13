@@ -46,7 +46,7 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     keys = {
-      { "<leader>S", ":Spectre<CR>", mode = { "n" }, remap = false, silent = true },
+      { "<leader>oS", ":Spectre<CR>", desc = "Spectre find/replace", mode = { "n" }, remap = false, silent = true },
     },
     opts = {},
   },

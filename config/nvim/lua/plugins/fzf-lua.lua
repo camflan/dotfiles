@@ -7,7 +7,7 @@ return {
     },
     keys = {
       {
-        "<leader>F",
+        "<leader>fF",
         "<cmd>lua require('fzf-lua').builtin()<CR>",
         mode = { "n" },
         desc = "Open FzfLua",
@@ -15,7 +15,7 @@ return {
         silent = true,
       },
       {
-        "<leader>f",
+        "<leader>ff",
         "<cmd>lua require('fzf-lua').files()<CR>",
         mode = { "n" },
         desc = "Search files in cwd",
@@ -23,7 +23,7 @@ return {
         silent = true,
       },
       {
-        "<leader>q",
+        "<leader>fq",
         "<cmd>lua require('fzf-lua').resume()<CR>",
         mode = { "n" },
         desc = "Resume last Fzf session",
@@ -31,7 +31,7 @@ return {
         silent = true,
       },
       {
-        "<leader>b",
+        "<leader>fb",
         "<cmd>lua require('fzf-lua').buffers()<CR>",
         mode = { "n" },
         desc = "Search open buffers",
@@ -63,7 +63,7 @@ return {
         silent = true,
       },
       {
-        "<leader>r",
+        "<leader>fr",
         "<cmd>lua require('fzf-lua').live_grep()<CR>",
         mode = { "n" },
         desc = "Live Ripgrep search of cwd",
@@ -71,32 +71,25 @@ return {
         silent = true,
       },
       {
-        "<leader>h",
+        "<leader>fh",
         "<cmd>lua require('fzf-lua').help_tags()<CR>",
         mode = { "n" },
         remap = false,
         desc = "Search :help docs",
       },
       {
-        "<leader>dt",
+        "<leader>fT",
         "<cmd>lua require('fzf-lua').lsp_finder()<CR>",
         mode = { "n" },
         remap = false,
         desc = "Find current symbol in workspace",
       },
       {
-        "<leader>rs",
+        "<leader>frs",
         "<cmd>lua require('fzf-lua').lsp_live_workspace_symbols()<CR>",
         mode = { "n" },
         remap = false,
         desc = "Live search LSP workspace symbols",
-      },
-      {
-        "<leader>dc",
-        "<cmd>lua require('fzf-lua').lsp_code_actions()<CR>",
-        mode = { "n" },
-        remap = false,
-        desc = "Show LSP code actions for selection",
       },
     },
     config = function()

@@ -51,6 +51,14 @@ return {
         remap = false,
         silent = true,
       },
+      {
+        "<leader>xt",
+        "<cmd>Trouble todo<cr>",
+        desc = "Project TODOs (Trouble)",
+        mode = { "n" },
+        remap = false,
+        silent = true,
+      },
     },
     opts = {
       position = "bottom",

@@ -93,7 +93,7 @@ return {
         desc = "Find current symbol in workspace",
       },
       {
-        "<leader>frs",
+        "<leader>fs",
         "<cmd>lua require('fzf-lua').lsp_live_workspace_symbols()<CR>",
         mode = { "n" },
         remap = false,

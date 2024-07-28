@@ -18,10 +18,7 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
-      {
-        "stevearc/dressing.nvim", -- Optional: Improves the default Neovim UI
-        opts = {},
-      },
+      -- "stevearc/dressing.nvim", -- Optional: Improves the default Neovim UI
     },
     config = function()
       local code_companion = require("codecompanion")

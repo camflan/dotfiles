@@ -22,11 +22,22 @@ return {
       vim.keymap.set("n", "|", search.in_place)
     end,
   },
+
   {
     "ray-x/sad.nvim",
     cmd = { "Sad" },
     dependencies = {
       { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
+    },
+    keys = {
+      {
+        "<leader>oR",
+        ":Sad<CR>",
+        desc = "Search/Replace",
+        mode = { "n" },
+        remap = false,
+        silent = false,
+      },
     },
     opts = {
       debug = false, -- print debug info
@@ -39,6 +50,7 @@ return {
       width_ratio = 0.6, -- height ratio of sad window when split vertically
     },
   },
+
   {
     "nvim-pack/nvim-spectre",
     dependencies = {

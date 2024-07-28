@@ -2,6 +2,7 @@ return {
   -- Stars plugin repos on github
   {
     "jsongerber/thanks.nvim",
+    event = { "VeryLazy" },
     opts = {
       plugin_manager = "lazy",
       star_on_startup = false,

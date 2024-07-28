@@ -139,7 +139,7 @@ return {
   -- formatters
   {
     "stevearc/conform.nvim",
-    event = { "BufWritePre" },
+    event = { "BufReadPre", "BufNewFile", "BufWritePre", "VeryLazy" },
     cmd = { "ConformInfo", "ConformEnable", "ConformDisable" },
     keys = {
       {

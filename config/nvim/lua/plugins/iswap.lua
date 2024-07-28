@@ -4,7 +4,6 @@ return {
     keys = {
       { "<Leader>s", ":ISwap<CR>", desc = "ISwap arguments" },
     },
-    lazy = true,
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
     },

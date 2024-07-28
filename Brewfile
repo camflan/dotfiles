@@ -1,6 +1,7 @@
 tap "1password/tap"
 tap "homebrew/bundle"
 tap "oven-sh/bun"
+tap "ramiawar/dataline"
 tap "superfly/tap"
 tap "version-fox/tap"
 
@@ -8,6 +9,7 @@ tap "version-fox/tap"
 brew "vfox"
 
 cask "1password-cli"
+brew "dataline"
 cask "ngrok"
 cask "wezterm"
 

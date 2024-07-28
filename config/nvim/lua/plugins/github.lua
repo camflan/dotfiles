@@ -14,6 +14,7 @@ return {
       enable_builtin = true,
       default_remote = { "upstream", "origin", "github", "gh" },
     },
+    -- NOTE: Keymaps set in `which-key` config
   },
   {
     "ldelossa/gh.nvim",

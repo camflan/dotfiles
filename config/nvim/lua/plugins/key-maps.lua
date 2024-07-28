@@ -68,6 +68,7 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
+    enabled = false,
     config = {
       -- an empty table will work for default config
       --- if you use functions, or whichkey, or lazy to map keys
@@ -154,6 +155,34 @@ return {
             "<leader>tw",
             "<cmd>set nowrap!<CR>",
             desc = "Toggle line wrapping",
+          },
+        },
+      })
+
+      -- Octo.nvim
+      wk.add({
+        {
+          mode = { "n" },
+          { "<leader>O", group = "GitHub Octo" },
+          { "<leader>Op", "<cmd>Octo pr list<CR>", desc = "List PRs" },
+          {
+            "<leader>Or",
+            group = "+Review",
+          },
+          {
+            "<leader>Ors",
+            "<cmd>Octo review start<CR>",
+            desc = "Start review",
+          },
+          {
+            "<leader>Orc",
+            "<cmd>Octo review submit<CR>",
+            desc = "Submit review",
+          },
+          {
+            "<leader>Orr",
+            "<cmd>Octo review resume<CR>",
+            desc = "Resume review",
           },
         },
       })

@@ -14,11 +14,10 @@ end
 return {
   {
     "olimorris/codecompanion.nvim",
-    event = { "VeryLazy" },
+    cmd = { "CodeCompanion", "CodeCompanionActions" },
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
-      "nvim-telescope/telescope.nvim", -- Optional
       {
         "stevearc/dressing.nvim", -- Optional: Improves the default Neovim UI
         opts = {},
@@ -45,9 +44,9 @@ return {
           }),
         },
         strategies = {
-          chat = "ollama",
-          inline = "ollama",
-          agent = "ollama",
+          chat = { adapter = "ollama" },
+          inline = { adapter = "ollama" },
+          agent = { adapter = "ollama" },
         },
       })
     end,
@@ -86,10 +85,9 @@ return {
 
   {
     "dustinblackman/oatmeal.nvim",
-    enabled = true,
     cmd = { "Oatmeal" },
     keys = {
-      { "<leader>om", mode = "n", desc = "Start Oatmeal session" },
+      { "<leader>oO", mode = "n", desc = "Start Oatmeal session" },
     },
     opts = {
       backend = "ollama",

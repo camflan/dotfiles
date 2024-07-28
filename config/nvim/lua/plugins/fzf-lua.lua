@@ -15,6 +15,14 @@ return {
         silent = true,
       },
       {
+        "<leader>F",
+        "<cmd>lua require('fzf-lua').files()<CR>",
+        mode = { "n" },
+        desc = "Search files in cwd",
+        remap = false,
+        silent = true,
+      },
+      {
         "<leader>ff",
         "<cmd>lua require('fzf-lua').files()<CR>",
         mode = { "n" },

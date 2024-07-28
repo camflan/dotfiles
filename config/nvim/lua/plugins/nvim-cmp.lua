@@ -29,7 +29,7 @@ local cmp_kinds = {
 return {
   {
     "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
+    event = { "BufRead", "BufNewFile", "InsertEnter" },
     dependencies = {
       "L3MON4D3/LuaSnip",
       "hrsh7th/cmp-buffer",

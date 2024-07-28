@@ -2,12 +2,14 @@ return {
   -- LSP status/notifications
   {
     "j-hui/fidget.nvim",
-    lazy = true,
+    enabled = true,
+    event = { "VeryLazy" },
   },
+
   {
     "rcarriga/nvim-notify",
-    event = "VeryLazy",
-    enabled = false,
+    enabled = true,
+    event = { "VeryLazy" },
     config = function()
       local notify = require("notify")
 

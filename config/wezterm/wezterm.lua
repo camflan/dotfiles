@@ -12,7 +12,7 @@ config.color_scheme = utils.scheme_for_appearance(
 	-- "Solarized Light (Gogh)",
 	"Dracula (Official)"
 )
-config.font = wezterm.font("IBM Plex Mono")
+config.font = wezterm.font_with_fallback({ "IBM Plex Mono", "0xProto", "Monaspace Argon" })
 config.font_size = 13
 config.inactive_pane_hsb = { brightness = 0.75, saturation = 0.95 }
 

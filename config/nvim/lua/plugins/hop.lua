@@ -1,7 +1,6 @@
 return {
   {
     "smoka7/hop.nvim",
-    lazy = true,
     event = { "BufReadPre", "BufNewFile" },
     keys = {
       {

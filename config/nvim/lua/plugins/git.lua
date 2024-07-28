@@ -2,9 +2,16 @@ return {
   -- Nicer 3-way merge handling
   {
     "sindrets/diffview.nvim",
-    event = { "VeryLazy" },
+    keys = {
+      {
+        "<leader>od",
+        "<cmd>DiffviewOpen<CR>",
+        desc = "Open DiffView",
+      },
+    },
     opts = {},
   },
+
   -- Nice diff/conflict highlights
   -- also disables LSP in those buffers
   {
@@ -18,16 +25,15 @@ return {
       },
     },
   },
+
   {
     -- git integration
     "tpope/vim-fugitive",
-    enabled = true,
     dependencies = {
       -- github extension for fugitive
       "tpope/vim-rhubarb",
     },
     event = "VeryLazy",
-    lazy = true,
   },
 
   {

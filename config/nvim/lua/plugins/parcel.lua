@@ -4,6 +4,7 @@ return {
     dependencies = {
       "phelipetls/jsonpath.nvim",
     },
+    ft = { "json" },
     opts = {},
   },
 }

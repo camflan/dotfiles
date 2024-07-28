@@ -1,8 +1,9 @@
 return {
   {
     "mrjones2014/smart-splits.nvim",
+    event = { "VeryLazy" },
     opts = {
-      at_edge = "stop",
+      at_edge = "wrap",
       ignored_filetypes = { "NvimTree" },
     },
     config = function(_, opts)
@@ -32,8 +33,10 @@ return {
     end,
   },
 
+  -- Move lines around
   {
     "fedepujol/move.nvim",
+    event = { "VeryLazy" },
     opts = {
       block = {
         enable = true,
@@ -43,11 +46,11 @@ return {
         enable = false,
       },
       line = {
-        enable = false,
-        indent = false,
+        enable = true,
+        indent = true,
       },
       word = {
-        enable = false,
+        enable = true,
       },
     },
     config = function(_, opts)
@@ -55,6 +58,11 @@ return {
       m.setup(opts)
 
       local keymap_opts = { noremap = true, silent = true }
+      vim.keymap.set("n", "<A-j>", ":MoveLine(1)<CR>", keymap_opts)
+      vim.keymap.set("n", "<A-k>", ":MoveLine(-1)<CR>", keymap_opts)
+      vim.keymap.set("n", "<A-h>", ":MoveWord(-1)<CR>", keymap_opts)
+      vim.keymap.set("n", "<A-l>", ":MoveWord(1)<CR>", keymap_opts)
+
       vim.keymap.set("v", "<A-j>", ":MoveBlock(1)<CR>", keymap_opts)
       vim.keymap.set("v", "<A-k>", ":MoveBlock(-1)<CR>", keymap_opts)
       vim.keymap.set("v", "<A-h>", ":MoveHBlock(-1)<CR>", keymap_opts)
@@ -114,11 +122,12 @@ return {
             "<cmd>LazyGit<CR>",
             desc = "Open Lazygit",
           },
-          {
-            "<leader>od",
-            "<cmd>DiffviewOpen<CR>",
-            desc = "Open DiffView",
-          },
+          -- diffview keymaps set in git.lua
+          -- {
+          --   "<leader>od",
+          --   "<cmd>DiffviewOpen<CR>",
+          --   desc = "Open DiffView",
+          -- },
           {
             "<leader>oL",
             "<cmd>Lazy<CR>",

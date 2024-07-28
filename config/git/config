@@ -22,6 +22,9 @@
 [includeIf "gitdir:~/src/_clients/uplift/"]
   path = config-uplift
 
+[includeIf "gitdir:~/src/github.com/swoogo/"]
+  path = config-uplift
+
 [includeIf "hasconfig:remote.*.url:git://git@bitbucket.org:togg_sw/*/**"]
   path = config-bitbucket
 
@@ -42,10 +45,14 @@
 [diff]
     algorithm = histogram
     colorMoved = default
+    tool = difftastic
 
 [difftool]
     prompt = false
     tool = vimdiff
+
+[difftool "difftastic"]
+    cmd = difft "$LOCAL" "$REMOTE"
 
 [difftool "vimdiff"]
       path = nvim
@@ -131,6 +138,9 @@
     textconv = plutil -convert xml1 -o -
 
 [alias]
+    # `git dlog` to show `git log -p` with difftastic.
+    dlog = "-c diff.external=difft log -p --ext-diff"
+
     # pretty graph
     graph = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 

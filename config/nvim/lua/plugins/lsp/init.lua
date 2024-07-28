@@ -1,21 +1,6 @@
+local common = require("plugins.lsp.common")
 local constants = require("plugins.lsp.constants")
 local lsp_utils = require("plugins.lsp.utils")
-
-local USE_TINY_INLINE_DIAGNOSTIC = false
-
-local toggle_inlay_hints = function(bufnr)
-  local toggle_opts = {}
-
-  if bufnr ~= nil then
-    toggle_opts = {
-      filter = {
-        bufnr = bufnr,
-      },
-    }
-  end
-
-  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(), toggle_opts)
-end
 
 return {
   {
@@ -38,7 +23,7 @@ return {
 
   {
     "rachartier/tiny-inline-diagnostic.nvim",
-    enabled = USE_TINY_INLINE_DIAGNOSTIC,
+    enabled = constants.flags.USE_TINY_INLINE_DIAGNOSTIC,
     event = "VeryLazy",
     config = function()
       local tiny_inline = require("tiny-inline-diagnostic")
@@ -74,7 +59,7 @@ return {
           virtual_lines_opts = false
         end
 
-        if not USE_TINY_INLINE_DIAGNOSTIC then
+        if not constants.flags.USE_TINY_INLINE_DIAGNOSTIC then
           -- comment this setting out when using tiny-inline-diagnostic above
           vim.diagnostic.config({
             virtual_text = not new_value,
@@ -85,7 +70,7 @@ return {
 
       vim.diagnostic.config({
         virtual_lines = false,
-        virtual_text = not USE_TINY_INLINE_DIAGNOSTIC,
+        virtual_text = not constants.flags.USE_TINY_INLINE_DIAGNOSTIC,
       })
 
       vim.keymap.set("", "<leader>tl", toggle_lsp_lines, { desc = "Toggle lsp_lines" })
@@ -163,7 +148,7 @@ return {
         function()
           require("conform").format({ async = true, lsp_fallback = true })
         end,
-        mode = "",
+        mode = "n",
         desc = "Format buffer",
       },
     },
@@ -173,11 +158,29 @@ return {
     end,
     config = function()
       local conform = require("conform")
-      -- local conform_utils = require("conform.util")
+
+      -- Track slow formatting filetypes so we can run async
+      local slow_format_filetypes = {}
 
       conform.setup({
+        default_format_opts = {
+          lsp_format = "fallback",
+        },
         formatters_by_ft = constants.formatters_by_ft,
         formatters = {
+          codespell = {
+            condition = function(_, ctx)
+              -- NOTE: Do NOT let codespell run on lock files!
+              if vim.fs.basename(ctx.filename) == "package-lock.json" then
+                return false
+              -- NOTE: Do not run on Prisma files because it can change some Index types (BRING => BRING)
+              elseif vim.fs.basename(ctx.filename) == "schema.prisma" then
+                return false
+              else
+                return true
+              end
+            end,
+          },
           yamlfix = {
             env = {
               YAMLFIX_SECTION_WHITELINES = "1",
@@ -191,7 +194,24 @@ return {
           if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
             return
           end
-          return { timeout_ms = 1000, lsp_fallback = true }
+
+          if slow_format_filetypes[vim.bo[bufnr].filetype] then
+            return
+          end
+          local function on_format(err)
+            if err and err:match("timeout$") then
+              slow_format_filetypes[vim.bo[bufnr].filetype] = true
+            end
+          end
+
+          return { timeout_ms = 200, lsp_format = "fallback" }, on_format
+        end,
+
+        format_after_save = function(bufnr)
+          if not slow_format_filetypes[vim.bo[bufnr].filetype] then
+            return
+          end
+          return { lsp_format = "fallback" }
         end,
       })
 
@@ -290,6 +310,7 @@ return {
       "folke/neodev.nvim",
       "hrsh7th/nvim-cmp",
       "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+      "j-hui/fidget.nvim",
       "marilari88/twoslash-queries.nvim",
       -- "artemave/workspace-diagnostics.nvim",
     },
@@ -311,93 +332,43 @@ return {
       -- vim.lsp.diagnostic.set_virtual_text = set_virtual_text_custom
 
       -- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-        border = "rounded",
-      })
+      vim.lsp.handlers["textDocument/hover"] = common.handlers["textDocument/hover"]
 
       vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
         border = "rounded",
       })
 
-      local common = {
-        flags = {},
-        on_attach = function(_, bufnr)
-          local keymap_opts = { buffer = bufnr, noremap = true, silent = true }
+      -- 🪄 TYPESCRIPT LANGUAGE SERVER STUFF
+      if constants.flags.USE_TYPESCRIPT_TOOLS_INSTEAD_OF_TSSERVER then
+        -- noop
+      else
+        lsp_config.tsserver.setup({
+          capabilities = capabilities,
+          on_attach = function(client, bufnr)
+            -- we want prettier to format files, not tsserver
+            client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentRangeFormattingProvider = false
 
-          -- See `:help vim.lsp.*` for documentation on any of the below functions
-          vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", keymap_opts)
-          vim.keymap.set("n", "<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", keymap_opts)
-          vim.keymap.set("n", "<leader>i", "<Cmd>lua vim.lsp.buf.hover()<CR>", keymap_opts)
-          vim.keymap.set("n", "<leader>j", "<cmd>lua vim.diagnostic.goto_next()<CR>", keymap_opts)
-          vim.keymap.set("n", "<leader>k", "<cmd>lua vim.diagnostic.goto_prev()<CR>", keymap_opts)
-          -- vim.keymap.set("n", "<leader>o", "<cmd>lua vim.lsp.buf.signature_help()<CR>", keymap_opts)
-          vim.keymap.set("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", keymap_opts)
-          vim.keymap.set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", keymap_opts)
-          vim.keymap.set("n", "<leader>u", "<cmd>lua vim.diagnostic.open_float()<CR>", keymap_opts)
-          vim.keymap.set("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", keymap_opts)
-          vim.keymap.set("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", keymap_opts)
-          vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", keymap_opts)
-          vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", keymap_opts)
-          vim.keymap.set("", "<leader>ti", toggle_inlay_hints, {
-            desc = "Toggle inlay hints",
-          })
-
-          vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-          -- configure LSP Diagnostic
-          vim.diagnostic.config({
-            underline = true,
-            update_in_insert = false,
-            severity_sort = true,
-            float = {
-              border = "rounded",
-              format = function(diagnostic)
-                if diagnostic.source == "eslint" then
-                  return string.format(
-                    "%s (%s: %s)",
-                    diagnostic.message,
-                    diagnostic.source,
-                    -- shows the name of the rule
-                    diagnostic.user_data.lsp.code
-                  )
-                end
-
-                return string.format("%s (%s)", diagnostic.message, diagnostic.source)
-              end,
-              severity_sort = true,
-              close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-              max_width = 80,
+            -- workspace_diagnostics.populate_workspace_diagnostics(client, bufnr)
+            twoslash.attach(client, bufnr)
+            common.on_attach(client, bufnr)
+          end,
+          flags = common.flags,
+          init_options = {
+            npmLocation = "$HOME/.asdf-data/shims/npm",
+            preferences = {
+              includeInlayParameterNameHints = "all",
+              includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayVariableTypeHints = true,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayEnumMemberValueHints = true,
+              importModuleSpecifierPreference = "non-relative",
             },
-          })
-        end,
-      }
-
-      lsp_config.tsserver.setup({
-        capabilities = capabilities,
-        on_attach = function(client, bufnr)
-          -- we want prettier to format files, not tsserver
-          client.server_capabilities.documentFormattingProvider = false
-          client.server_capabilities.documentRangeFormattingProvider = false
-
-          -- workspace_diagnostics.populate_workspace_diagnostics(client, bufnr)
-          twoslash.attach(client, bufnr)
-          common.on_attach(client, bufnr)
-        end,
-        flags = common.flags,
-        init_options = {
-          npmLocation = "$HOME/.asdf-data/shims/npm",
-          preferences = {
-            includeInlayParameterNameHints = "all",
-            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-            includeInlayFunctionParameterTypeHints = true,
-            includeInlayVariableTypeHints = true,
-            includeInlayPropertyDeclarationTypeHints = true,
-            includeInlayFunctionLikeReturnTypeHints = true,
-            includeInlayEnumMemberValueHints = true,
-            importModuleSpecifierPreference = "non-relative",
           },
-        },
-      })
+        })
+      end
 
       lsp_config.gopls.setup({
         capabilities = capabilities,
@@ -601,6 +572,27 @@ return {
     lazy = true,
     opts = {
       auto_override_publish_diagnostics = true,
+      settings = {
+        code_lens = "all",
+        tsserver_file_preferences = {
+          includeInlayFunctionParameterTypeHints = "all",
+          includeInlayParameterNameHints = "all",
+          includeInlayVariableTypeHints = "all",
+        },
+      },
+    },
+  },
+
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    enabled = constants.flags.USE_TYPESCRIPT_TOOLS_INSTEAD_OF_TSSERVER,
+    event = { "VeryLazy" },
+    opts = {
+      handlers = common.handlers,
+      on_attach = function(_, bufnr)
+        common.on_attach(_, bufnr)
+      end,
     },
   },
 }

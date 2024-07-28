@@ -2,6 +2,14 @@
 return {
   debuggers = {},
 
+  -- TOGGLES FOR LSP FUNCTIONALITY / PLUGIN STATUS
+  flags = {
+    -- Try new inline diags plugin
+    USE_TINY_INLINE_DIAGNOSTIC = false,
+    -- try new tsserver plugin
+    USE_TYPESCRIPT_TOOLS_INSTEAD_OF_TSSERVER = false,
+  },
+
   formatters_by_ft = {
     go = { "gofmt" },
     graphql = { "prettier" },

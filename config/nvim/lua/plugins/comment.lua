@@ -1,6 +1,14 @@
 return {
   {
+    "folke/ts-comments.nvim",
+    opts = {},
+    event = "VeryLazy",
+    enabled = vim.fn.has("nvim-0.10.0") == 1,
+  },
+
+  {
     "JoosepAlviste/nvim-ts-context-commentstring",
+    enabled = vim.fn.has("nvim-0.10.0") ~= 1,
     name = "context-commentstring",
     lazy = true,
   },

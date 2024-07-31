@@ -22,11 +22,38 @@
 [includeIf "gitdir:~/src/_clients/uplift/"]
   path = config-uplift
 
+[includeIf "gitdir:~/src/uplift/"]
+  path = config-uplift
+
+[includeIf "gitdir:~/src/github.com/uplift-ltd/"]
+  path = config-uplift
+
 [includeIf "gitdir:~/src/github.com/swoogo/"]
   path = config-uplift
 
 [includeIf "hasconfig:remote.*.url:git://git@bitbucket.org:togg_sw/*/**"]
   path = config-bitbucket
+
+[alias]
+    difft = "difftool -t difftastic"
+
+    # `git dlog` to show `git log -p` with difftastic.
+    dlog = "-c diff.external=difft log -p --ext-diff"
+
+    # pretty graph
+    graph = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+
+    # force, but nicely. Makes sure changes have been pulled first
+    please = push --force-with-lease
+
+    # remove local branches that do not have a remote counterpart
+    prune = fetch --prune
+
+    # tidy status
+    s = status --short --branch
+
+    # stash everything, even untracked
+    stash-all = stash save --include-untracked
 
 [core]
     attributesfile = /Users/camron/.gitattributes
@@ -42,10 +69,12 @@
     diff = delta
     log = delta
 
+
+; DIFFING
 [diff]
     algorithm = histogram
     colorMoved = default
-    tool = difftastic
+    tool = delta
 
 [difftool]
     prompt = false
@@ -56,19 +85,6 @@
 
 [difftool "vimdiff"]
       path = nvim
-
-[merge]
-    conflictstyle = diff3
-
-[mergetool]
-    prompt = false
-
-[mergetool "meld"]
-    trustExitCode = true
-    cmd = open -W -a Meld --args --auto-merge \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output=\"$MERGED\"
-
-[interactive]
-    diffFilter = delta --color-only --features=interactive
 
 [delta]
     features = decorations dracula line-numbers
@@ -91,6 +107,23 @@
     hunk-header-style = file line-number syntax
     commit-decoration-style = yellow ul
     paging = never
+
+; /DIFFING
+
+[merge]
+    # Standard diff is two sets of final changes. This introduces the original text before each side's changes.
+    # https://git-scm.com/docs/git-config#git-config-mergeconflictStyle
+    conflictstyle = diff3
+
+[mergetool]
+    prompt = false
+
+[mergetool "meld"]
+    trustExitCode = true
+    cmd = open -W -a Meld --args --auto-merge \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output=\"$MERGED\"
+
+[interactive]
+    diffFilter = delta --color-only --features=interactive
 
 [commit]
   gpgsign = true
@@ -136,30 +169,6 @@
 
 [diff "plist"]
     textconv = plutil -convert xml1 -o -
-
-[alias]
-    # `git dlog` to show `git log -p` with difftastic.
-    dlog = "-c diff.external=difft log -p --ext-diff"
-
-    # pretty graph
-    graph = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-
-    # force, but nicely. Makes sure changes have been pulled first
-    please = push --force-with-lease
-
-    # remove local branches that do not have a remote counterpart
-    prune = fetch --prune
-
-    # tidy status
-    s = status --short --branch
-
-    # stash everything, even untracked
-    stash-all = stash save --include-untracked
-
-[merge]
-    # Standard diff is two sets of final changes. This introduces the original text before each side's changes.
-    # https://git-scm.com/docs/git-config#git-config-mergeconflictStyle
-    conflictstyle = diff3
 
 [pull]
     # rebase when pulling, not merge

@@ -4,6 +4,8 @@ return {
     "j-hui/fidget.nvim",
     enabled = true,
     event = { "VeryLazy" },
+    config = true,
+    opts = {},
   },
 
   {

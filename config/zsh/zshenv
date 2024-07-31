@@ -80,3 +80,7 @@ if [ -f "$HOME/bin/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/bin/goo
 
 # Kubectl Krew
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+
+# Ollama
+export OLLAMA_API_BASE=http://127.0.0.1:11434

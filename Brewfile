@@ -110,6 +110,8 @@ brew "pastel"
 brew "pipx"
 brew "pkgxdev/made/pkgx"
 brew "podman"
+# https://rclone.org/install/#macos-brew
+brew "rclone"
 brew "ripgrep"
 brew "qemu"
 brew "qt@5"

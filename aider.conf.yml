@@ -1,0 +1,5 @@
+---
+# Configuration for aider-chat
+# https://aider.chat/docs/config.html
+
+model: ollama/llama3:70b

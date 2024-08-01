@@ -38,6 +38,7 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lsp-document-symbol",
       "hrsh7th/cmp-nvim-lsp-signature-help",
+      -- "milanglacier/minuet-ai.nvim",
       "neovim/nvim-lspconfig",
       "saadparwaiz1/cmp_luasnip",
     },
@@ -71,6 +72,8 @@ return {
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
           ["<Tab>"] = cmp.mapping.confirm({ select = true }),
+          -- Configuration for minuet-ai (located in ai-llm.lua)
+          -- ["<C-Y>"] = require("minuet").make_cmp_map(),
         }),
         sources = cmp.config.sources({
           { name = "luasnip" }, -- For luasnip users.

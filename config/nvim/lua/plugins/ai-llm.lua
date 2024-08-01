@@ -11,6 +11,12 @@ local function get_hostname()
   return hostname
 end
 
+local preferred_ollama_model = "deepseek-coder-v2:16b"
+
+if get_hostname() == "mando" then
+  preferred_ollama_model = "starcoder2:3b"
+end
+
 return {
   {
     "olimorris/codecompanion.nvim",
@@ -24,18 +30,12 @@ return {
       local code_companion = require("codecompanion")
       local adapters = require("codecompanion.adapters")
 
-      local model = "deepseek-coder-v2:16b"
-
-      if get_hostname() == "mando" then
-        model = "starcoder2:3b"
-      end
-
       code_companion.setup({
         adapters = {
           ollama = adapters.use("ollama", {
             schema = {
               model = {
-                default = model,
+                default = preferred_ollama_model,
               },
             },
           }),
@@ -101,18 +101,30 @@ return {
 
     -- All the user commands added by the plugin
     cmd = { "Ollama", "OllamaModel", "OllamaServe", "OllamaServeStop" },
-
-    -- Sample keybind for prompting. Note that the <c-u> is important for selections to work properly.
-    -- keys = {
-    --     {
-    --         "<leader>oo",
-    --         ":<c-u>lua require('ollama').prompt()<cr>",
-    --         desc = "ollama prompt",
-    --         mode = { "n", "v" },
-    --     },
-    -- },
-
-    ---@type Ollama.Config
     opts = {},
+  },
+
+  {
+    {
+      "milanglacier/minuet-ai.nvim",
+      dependencies = {
+        { "nvim-lua/plenary.nvim" },
+      },
+      enabled = false,
+      config = function()
+        local minuet = require("minuet")
+
+        minuet.setup({
+          provider = "openai_compatible",
+          provider_options = {
+            openai_compatible = {
+              model = preferred_ollama_model,
+              end_point = "http://127.0.0.1:11434/chat/completions",
+              name = "Ollama",
+            },
+          },
+        })
+      end,
+    },
   },
 }

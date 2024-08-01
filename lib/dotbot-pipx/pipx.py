@@ -22,10 +22,7 @@ class Brew(dotbot.Plugin):
         return directive in self._supported_directives
 
     def handle(self, directive, data):
-        print("file: main.py~line: 24~handle", directive, data)
-
         data = self._maybe_convert_to_dict(data)
-        print("file: main.py~line: 27~data", data)
 
         try:
             self._handle_install(directive, data)
@@ -75,29 +72,20 @@ class Brew(dotbot.Plugin):
         binary = self._get_binary(directive, data)
         parameters = self._get_parameters(data)
 
-        print("file: pipx.py~line: 75~binary", binary, parameters)
-
-        # param = ""
-        # if parameters["user_directory"] and is_pip:
-        #     param = "--user"
-
         to_install = data.get("install", [])
-        print("file: pipx.py~line: 84~to_install", to_install)
 
         for req in to_install:
-            print("file: pipx.py~line: 87~req", req)
-            command = "{} install {}".format(binary, req)
+            command = f"{binary} install {req}"
 
             with open(os.devnull, "w") as devnull:
                 result = subprocess.call(
                     command,
                     shell=True,
                     stdin=devnull,
-                    stdout=True,  # if parameters["stdout"] else devnull,
-                    stderr=True,  # if parameters["stderr"] else devnull,
+                    stdout=True if parameters["stdout"] else devnull,
+                    stderr=True if parameters["stderr"] else devnull,
                     cwd=self.cwd,
                 )
-                print("file: pipx.py~line: 92~result", result)
 
                 if result not in [0, 1]:
-                    raise ValueError("Failed to install requirements.")
+                    raise ValueError(f"Failed to install {req}")

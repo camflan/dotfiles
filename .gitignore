@@ -129,3 +129,7 @@ config/containers/podman/machine/qemu
 config/containers
 config/helm/repositories.yaml
 config/npm/npmrc
+
+
+# python
+*.pyc

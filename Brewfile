@@ -17,13 +17,14 @@ cask "wezterm"
 brew "act"
 # improved cat
 brew "bat"
-# json viewer / processor: https://fx.wtf
+# json viewer / processor (jq alt): https://fx.wtf
 brew "fx"
 # improvted top
 brew "btop"
 # terminal image viewer
 brew "chafa"
 brew "colima"
+# container top
 brew "ctop"
 # loads envrc and .env files automatically when entering a directory
 brew "direnv"
@@ -91,8 +92,10 @@ brew "libidn2"
 brew "libmemcached"
 brew "libslirp"
 brew "libspatialite"
+# https://lima-vm.io (linux virtual machines)
 brew "lima"
 brew "luajit"
+# libuv bindings for lua
 brew "luv"
 # mac app store cli
 brew "mas"
@@ -107,7 +110,6 @@ brew "navi"
 brew "neovim"
 # colors! find/change/modify/etc
 brew "pastel"
-brew "pipx"
 brew "pkgxdev/made/pkgx"
 brew "podman"
 # https://rclone.org/install/#macos-brew
@@ -121,6 +123,7 @@ brew "sad"
 brew "superfly/tap/flyctl"
 brew "tldr"
 brew "trash"
+# network diagnostics https://trippy.cli.rs
 brew "trippy"
 # interactive directory tree tool
 brew "walk"

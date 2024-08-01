@@ -15,6 +15,9 @@
     link:
       relink: true
       stderr: true
+    pipx:
+      stderr: true
+      stdout: true
 
 - clean: ['~']
 
@@ -131,10 +134,20 @@
 
 # Github cli extensions
 - ghe:
-    - gennaro-tedesco/gh-s
     - dlvhdr/gh-dash
+    - gennaro-tedesco/gh-s
     - kawarimidoll/gh-graph
     - matt-bartel/gh-clone-org
     - rnorth/gh-combine-prs
     - seachicken/gh-poi
     - yusukebe/gh-markdown-preview
+
+- pipx:
+    install:
+      - aider-chat
+      - harlequin
+      - httpie
+      - pipenv
+      - posting
+      - tiptop
+      - yq

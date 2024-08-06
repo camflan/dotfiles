@@ -133,3 +133,5 @@ config/npm/npmrc
 
 # python
 *.pyc
+
+.aider*

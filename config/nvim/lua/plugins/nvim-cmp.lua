@@ -1,31 +1,3 @@
-local cmp_kinds = {
-  Text = "  ",
-  Method = "  ",
-  Function = "  ",
-  Constructor = "  ",
-  Field = "  ",
-  Variable = "  ",
-  Class = "  ",
-  Interface = "  ",
-  Module = "  ",
-  Property = "  ",
-  Unit = "  ",
-  Value = "  ",
-  Enum = "  ",
-  Keyword = "  ",
-  Snippet = "  ",
-  Color = "  ",
-  File = "  ",
-  Reference = "  ",
-  Folder = "  ",
-  EnumMember = "  ",
-  Constant = "  ",
-  Struct = "  ",
-  Event = "  ",
-  Operator = "  ",
-  TypeParameter = "  ",
-}
-
 return {
   {
     "hrsh7th/nvim-cmp",
@@ -47,6 +19,34 @@ return {
 
       local cmp = require("cmp")
 
+      local kind_icons = {
+        Text = "  ",
+        Method = "  ",
+        Function = "  ",
+        Constructor = "  ",
+        Field = "  ",
+        Variable = "  ",
+        Class = "  ",
+        Interface = "  ",
+        Module = "  ",
+        Property = "  ",
+        Unit = "  ",
+        Value = "  ",
+        Enum = "  ",
+        Keyword = "  ",
+        Snippet = "  ",
+        Color = "  ",
+        File = "  ",
+        Reference = "  ",
+        Folder = "  ",
+        EnumMember = "  ",
+        Constant = "  ",
+        Struct = "  ",
+        Event = "  ",
+        Operator = "  ",
+        TypeParameter = "  ",
+      }
+
       cmp.setup({
         snippet = {
           expand = function(args)
@@ -62,7 +62,7 @@ return {
           fields = { "kind", "abbr", "menu" },
           format = function(_, vim_item)
             vim_item.menu = " " .. vim_item.kind
-            vim_item.kind = (cmp_kinds[vim_item.kind] or " ")
+            vim_item.kind = (kind_icons[vim_item.kind] or " ")
             return vim_item
           end,
         },

@@ -11,10 +11,14 @@ local function get_hostname()
   return hostname
 end
 
-local preferred_ollama_model = "deepseek-coder-v2:16b"
+local function get_preferred_model()
+  local preferred_ollama_model = "deepseek-coder-v2:16b"
 
-if get_hostname() == "mando" then
-  preferred_ollama_model = "starcoder2:3b"
+  if get_hostname() == "mando" then
+    preferred_ollama_model = "starcoder2:3b"
+  end
+
+  return preferred_ollama_model
 end
 
 return {
@@ -35,7 +39,7 @@ return {
           ollama = adapters.use("ollama", {
             schema = {
               model = {
-                default = preferred_ollama_model,
+                default = get_preferred_model(),
               },
             },
           }),
@@ -118,7 +122,7 @@ return {
           provider = "openai_compatible",
           provider_options = {
             openai_compatible = {
-              model = preferred_ollama_model,
+              model = get_preferred_model(),
               end_point = "http://127.0.0.1:11434/chat/completions",
               name = "Ollama",
             },

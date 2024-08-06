@@ -1,6 +1,4 @@
-local common = require("plugins.lsp.common")
 local constants = require("plugins.lsp.constants")
-local lsp_utils = require("plugins.lsp.utils")
 
 return {
   {
@@ -118,6 +116,7 @@ return {
     event = "VeryLazy",
     cmd = { "Mason", "MasonInstall", "MasonToolsInstall" },
     config = function()
+      local lsp_utils = require("plugins.lsp.utils")
       local ensure_installed = lsp_utils.tools_to_auto_install(
         constants.lsps,
         constants.linters_by_ft,
@@ -315,6 +314,7 @@ return {
       -- "artemave/workspace-diagnostics.nvim",
     },
     config = function()
+      local common = require("plugins.lsp.common")
       local lsp_config = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -588,11 +588,16 @@ return {
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     enabled = constants.flags.USE_TYPESCRIPT_TOOLS_INSTEAD_OF_TSSERVER,
     event = { "VeryLazy" },
-    opts = {
-      handlers = common.handlers,
-      on_attach = function(_, bufnr)
-        common.on_attach(_, bufnr)
-      end,
-    },
+    config = function()
+      local common = require("plugins.lsp.common")
+      local tt = require("typescript-tools")
+
+      tt.setup({
+        handlers = common.handlers,
+        on_attach = function(_, bufnr)
+          common.on_attach(_, bufnr)
+        end,
+      })
+    end,
   },
 }

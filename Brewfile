@@ -21,6 +21,8 @@ brew "bat"
 brew "fx"
 # improvted top
 brew "btop"
+# another top: https://github.com/ClementTsang/bottom#installation
+brew "bottom"
 # terminal image viewer
 brew "chafa"
 brew "colima"

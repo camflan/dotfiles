@@ -7,9 +7,6 @@ VERSION=0.25.1
 PLATFORM=aarch64
 INSTALL_PATH=/usr/local/bin
 
-curl -L -o pkl https://github.com/apple/pkl/releases/download/0.25.1/pkl-macos-aarch64
-chmod +x pkl
-
 echo "Installing pkl…"
 
 # test if it exists

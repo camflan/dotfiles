@@ -4,15 +4,21 @@
 # setup wezterm shell integration: https://wezfurlong.org/wezterm/shell-integration.html
 . "$CBFDOTFILES_DIR/config/wezterm/shell-integration.sh"
 
+export PATH="$CBFDOTFILES_DIR/config/zsh/zfunctions:$PATH"
+
 # aliases
 alias oh="open ."
 alias ls="eza --long --grid --header --classify --all --group-directories-first --git"
 alias lsv="/bin/ls"
 alias ll="ls -lahL"
 
+# foregrounds a backgrounded job
 alias fg1="fg %1"
 alias fg2="fg %2"
 alias fg3="fg %3"
+
+# opens oil in neovim
+alias oil="nvim -c Oil"
 
 alias dc="docker compose"
 

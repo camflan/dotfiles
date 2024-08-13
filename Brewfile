@@ -17,8 +17,6 @@ cask "wezterm"
 brew "act"
 # improved cat
 brew "bat"
-# json viewer / processor (jq alt): https://fx.wtf
-brew "fx"
 # improvted top
 brew "btop"
 # another top: https://github.com/ClementTsang/bottom#installation
@@ -48,7 +46,6 @@ brew "fb303"
 brew "fbthrift"
 # enhanced find
 brew "fd"
-brew "firebase-cli"
 brew "fizz"
 brew "folly"
 # FZF, fuzzy list filtering

@@ -8,6 +8,9 @@ local function get_appearance_mode()
 end
 
 return {
+	is_dark_mode = function()
+		return get_appearance_mode():find("Dark")
+	end,
 	scheme_for_appearance = function(light_color_scheme, dark_color_scheme)
 		local appearance = get_appearance_mode()
 

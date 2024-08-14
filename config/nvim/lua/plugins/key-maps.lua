@@ -168,6 +168,14 @@ return {
         },
       })
 
+      wk.add({
+        {
+          { "<leader>c", group = "Clipboard" },
+          { "<leader>cc", '"*y', desc = "Yank to system clipboard", mode = { "v" } },
+          { "<leader>cp", '"*p', desc = "Paste from system clipboard", mode = { "n", "v" } },
+        },
+      })
+
       -- Octo.nvim
       wk.add({
         {

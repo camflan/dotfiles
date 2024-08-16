@@ -164,8 +164,8 @@
     clean = git media clean %f
     smudge = git media smudge %f
 
-[credential]
-    helper = osxkeychain
+; [credential]
+;     helper = osxkeychain
 
 [diff "plist"]
     textconv = plutil -convert xml1 -o -

@@ -16,7 +16,6 @@ return {
   {
     "prisma/vim-prisma",
     ft = { "prisma" },
-    lazy = true,
     config = function() end,
   },
 

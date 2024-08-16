@@ -21,19 +21,19 @@ return {
     -- unix helpers that work on the buffer and file together. delete/move/copy/etc
     "tpope/vim-eunuch",
     lazy = true,
-    event = "CmdlineEnter",
+    event = {"CmdlineEnter"},
   },
   {
     -- repeat on steroids
     "tpope/vim-repeat",
     lazy = true,
-    event = "InsertEnter",
+    event = { "InsertEnter" },
   },
   {
     -- support readline keys on cmdline
     "tpope/vim-rsi",
     lazy = true,
-    event = "CmdlineEnter",
+    event = {"CmdlineEnter"},
   },
   {
     -- C-A/X to inc/dec dates, numbers, more

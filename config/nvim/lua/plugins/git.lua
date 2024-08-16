@@ -2,6 +2,7 @@ return {
   -- Nicer 3-way merge handling
   {
     "sindrets/diffview.nvim",
+    cmd = {'DiffviewOpen'},
     keys = {
       {
         "<leader>od",
@@ -33,12 +34,7 @@ return {
       -- github extension for fugitive
       "tpope/vim-rhubarb",
     },
-    event = "VeryLazy",
-  },
-
-  {
-    "chrisgrieser/nvim-tinygit",
-    event = { "VeryLazy" },
+    event = {"VeryLazy"},
   },
 
   {
@@ -84,17 +80,6 @@ return {
         col = 1,
       },
     },
-  },
-
-  -- LAZYGIT
-  -- only just-in-case, better as tui instead of inside vim
-  {
-    "kdheepak/lazygit.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    cmd = { "LazyGit" },
-    opts = {},
   },
 
   -- NEOGIT

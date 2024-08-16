@@ -3,7 +3,7 @@ local constants = require("plugins.lsp.constants")
 return {
   {
     "sontungexpt/better-diagnostic-virtual-text",
-    enabled = false,
+    cond = false,
     event = { "LspAttach" },
     config = function()
       require("better-diagnostic-virtual-text").setup({
@@ -21,7 +21,7 @@ return {
 
   {
     "rachartier/tiny-inline-diagnostic.nvim",
-    enabled = constants.flags.USE_TINY_INLINE_DIAGNOSTIC,
+    cond = constants.flags.USE_TINY_INLINE_DIAGNOSTIC,
     event = "VeryLazy",
     config = function()
       local tiny_inline = require("tiny-inline-diagnostic")
@@ -37,7 +37,6 @@ return {
   {
     "lsp_lines",
     url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    enabled = true,
     event = { "LspAttach" },
     config = function()
       local lsp_lines = require("lsp_lines")
@@ -138,6 +137,7 @@ return {
   -- formatters
   {
     "stevearc/conform.nvim",
+    cond = false,
     event = { "BufReadPre", "BufNewFile", "BufWritePre", "VeryLazy" },
     cmd = { "ConformInfo", "ConformEnable", "ConformDisable" },
     keys = {
@@ -197,6 +197,7 @@ return {
           if slow_format_filetypes[vim.bo[bufnr].filetype] then
             return
           end
+
           local function on_format(err)
             if err and err:match("timeout$") then
               slow_format_filetypes[vim.bo[bufnr].filetype] = true
@@ -247,6 +248,16 @@ return {
   -- linters
   {
     "mfussenegger/nvim-lint",
+    cond = function()
+      local next = next
+
+      -- disable if there are no linters configured
+      if next(constants.linters_by_ft) == nil then
+        return false
+      else
+        return true
+      end
+    end,
     event = "VeryLazy",
     config = function()
       local lint = require("lint")
@@ -271,19 +282,12 @@ return {
   -- lua dev environment config for neovim plugins
   {
     "folke/neodev.nvim",
-    lazy = true,
     ft = { "lua" },
-    opts = {
-      -- library = {
-      --   plugins = {
-      --     "nvim-dap-ui",
-      --   },
-      --   types = true,
-      -- },
-    },
+    opts = {},
   },
   {
     "marilari88/twoslash-queries.nvim",
+    lazy = true,
     keys = {
       {
         "<leader>dq",
@@ -302,6 +306,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    cond = true,
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "b0o/schemastore.nvim",
@@ -318,18 +323,6 @@ return {
       local lsp_config = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      -- local workspace_diagnostics = require("workspace-diagnostics")
-      local twoslash = require("twoslash-queries")
-
-      -- Set which cmdelens text levels to show
-      -- local original_set_virtual_text = vim.lsp.diagnostic.set_virtual_text
-      -- local set_virtual_text_custom = function(diagnostics, bufnr, client_id, sign_ns, opts)
-      --   opts = opts or {}
-      --   opts.severity_limit = "Warning"
-      --   original_set_virtual_text(diagnostics, bufnr, client_id, sign_ns, opts)
-      -- end
-      --
-      -- vim.lsp.diagnostic.set_virtual_text = set_virtual_text_custom
 
       -- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
       vim.lsp.handlers["textDocument/hover"] = common.handlers["textDocument/hover"]
@@ -342,6 +335,8 @@ return {
       if constants.flags.USE_TYPESCRIPT_TOOLS_INSTEAD_OF_TSSERVER then
         -- noop
       else
+        local twoslash = require("twoslash-queries")
+
         lsp_config.tsserver.setup({
           capabilities = capabilities,
           on_attach = function(client, bufnr)
@@ -357,13 +352,13 @@ return {
           init_options = {
             npmLocation = "$HOME/.asdf-data/shims/npm",
             preferences = {
-              includeInlayParameterNameHints = "all",
-              includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-              includeInlayFunctionParameterTypeHints = true,
-              includeInlayVariableTypeHints = true,
-              includeInlayPropertyDeclarationTypeHints = true,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayEnumMemberValueHints = true,
+              -- includeInlayParameterNameHints = "all",
+              -- includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+              -- includeInlayFunctionParameterTypeHints = true,
+              -- includeInlayVariableTypeHints = true,
+              -- includeInlayPropertyDeclarationTypeHints = true,
+              -- includeInlayFunctionLikeReturnTypeHints = true,
+              -- includeInlayEnumMemberValueHints = true,
               importModuleSpecifierPreference = "non-relative",
             },
           },
@@ -403,15 +398,21 @@ return {
       --   on_attach = common.on_attach,
       -- })
 
-      lsp_config.cssmodules_ls.setup({
-        capabilities = capabilities,
-        on_attach = function(client, bufnr)
-          -- avoid accepting `definitionProvider` responses from this LSP
-          client.server_capabilities.definitionProvider = false
-          common.on_attach(client, bufnr)
-        end,
-        flags = common.flags,
-      })
+        if constants.flags.USE_CSS_MODULES_LS then 
+            lsp_config.cssmodules_ls.setup({
+                capabilities = capabilities,
+                on_attach = function(client, bufnr)
+                    -- avoid accepting `definitionProvider` responses from this LSP
+                    client.server_capabilities.definitionProvider = false
+                    common.on_attach(client, bufnr)
+                end,
+                flags = common.flags,
+            })
+        end
+
+            local eslint_flags = {unpack(common.flags)}
+            eslint_flags.allow_incremental_sync = false
+            eslint_flags.debounce_text_changes = 1000
 
       lsp_config.eslint.setup({
         capabilities = capabilities,
@@ -427,13 +428,15 @@ return {
           "typescriptreact",
           "vue",
         },
-        flags = common.flags,
+        flags = eslint_flags,
         on_attach = function(client, bufnr)
+          if constants.flags.USE_ESLINT_FIX_ON_SAVE then
           -- Fix on save
           vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = bufnr,
             command = "EslintFixAll",
           })
+                    end
 
           -- workspace_diagnostics.populate_workspace_diagnostics(client, bufnr)
           common.on_attach(client, bufnr)
@@ -545,6 +548,7 @@ return {
         flags = common.flags,
       })
 
+      if false then
       lsp_config.tailwindcss.setup({
         capabilities = capabilities,
         on_attach = common.on_attach,
@@ -563,6 +567,7 @@ return {
           },
         },
       })
+            end
     end,
   },
 
@@ -586,16 +591,18 @@ return {
   {
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    enabled = constants.flags.USE_TYPESCRIPT_TOOLS_INSTEAD_OF_TSSERVER,
+    cond = constants.flags.USE_TYPESCRIPT_TOOLS_INSTEAD_OF_TSSERVER,
     event = { "VeryLazy" },
     config = function()
       local common = require("plugins.lsp.common")
       local tt = require("typescript-tools")
+      local twoslash = require("twoslash-queries")
 
       tt.setup({
         handlers = common.handlers,
-        on_attach = function(_, bufnr)
-          common.on_attach(_, bufnr)
+        on_attach = function(client, bufnr)
+          twoslash.attach(client, bufnr)
+          common.on_attach(client, bufnr)
         end,
       })
     end,

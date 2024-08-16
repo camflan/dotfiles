@@ -4,10 +4,12 @@ return {
 
   -- TOGGLES FOR LSP FUNCTIONALITY / PLUGIN STATUS
   flags = {
+    USE_CSS_MODULES_LS = false,
+    USE_ESLINT_FIX_ON_SAVE = false,
     -- Try new inline diags plugin
     USE_TINY_INLINE_DIAGNOSTIC = false,
     -- try new tsserver plugin
-    USE_TYPESCRIPT_TOOLS_INSTEAD_OF_TSSERVER = false,
+    USE_TYPESCRIPT_TOOLS_INSTEAD_OF_TSSERVER = true,
   },
 
   formatters_by_ft = {

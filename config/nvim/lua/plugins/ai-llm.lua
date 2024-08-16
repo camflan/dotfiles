@@ -55,7 +55,7 @@ return {
 
   {
     "David-Kunz/gen.nvim",
-    enabled = false,
+    cond = false,
     opts = {
       model = "zephyr", -- The default model to use.
       -- host = "localhost", -- The host running the Ollama service.
@@ -98,7 +98,7 @@ return {
 
   {
     "nomnivore/ollama.nvim",
-    enabled = false,
+    cond = false,
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -108,13 +108,12 @@ return {
     opts = {},
   },
 
-  {
     {
       "milanglacier/minuet-ai.nvim",
       dependencies = {
         { "nvim-lua/plenary.nvim" },
       },
-      enabled = false,
+      cond = false,
       config = function()
         local minuet = require("minuet")
 
@@ -129,6 +128,5 @@ return {
           },
         })
       end,
-    },
   },
 }

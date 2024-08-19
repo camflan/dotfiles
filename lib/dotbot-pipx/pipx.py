@@ -74,9 +74,16 @@ class Brew(dotbot.Plugin):
 
         to_install = data.get("install", [])
 
+        if not to_install:
+            self._log.info("No binaries to install")
+            return
+
+        self._log.info(f"Installing {len(to_install)} binaries")
+
         for req in to_install:
             command = f"{binary} install {req}"
 
+            self._log.info(f"Installing {req}")
             with open(os.devnull, "w") as devnull:
                 result = subprocess.call(
                     command,

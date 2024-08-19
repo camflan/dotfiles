@@ -1,4 +1,5 @@
 tap "1password/tap"
+tap "dustinblackman/tap"
 tap "homebrew/bundle"
 tap "oven-sh/bun"
 tap "ramiawar/dataline"
@@ -12,6 +13,17 @@ cask "1password-cli"
 brew "dataline"
 cask "ngrok"
 cask "wezterm"
+
+# Librewolf browser: https://librewolf.net/
+cask "librewolf", args: { no_quarantine: true }
+
+# JQ like, data selector and multi-format converter
+# JSON,YAML,etc
+# https://daseldocs.tomwright.me/installation
+brew "dasel"
+
+# https://github.com/atuinsh/atuin
+brew "atuin"
 
 # github actions runner
 brew "act"
@@ -109,7 +121,6 @@ brew "navi"
 brew "neovim"
 # colors! find/change/modify/etc
 brew "pastel"
-brew "pkgxdev/made/pkgx"
 brew "podman"
 # https://rclone.org/install/#macos-brew
 brew "rclone"
@@ -130,13 +141,13 @@ brew "wangle"
 brew "watchman"
 brew "whalebrew"
 
+# https://github.com/JoeDog/siege
+brew "siege"
+
 # quicklook plugins
 
 # provisioning certificates
-cask "provisionql"
-
-cask "syntax-highlight"
-cask "qlstephen"
-
 cask "betterzip"
+cask "provisionql"
+cask "qlstephen"
 cask "quicklook-json"

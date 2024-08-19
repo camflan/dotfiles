@@ -14,3 +14,4 @@ helm 3.14.3
 awscli 2.13.24
 vault 1.14.0
 adr-tools 3.0.0
+pipx 1.6.0

@@ -36,15 +36,23 @@
       path: config/*
       relink: true
       exclude: [config/asdf, config/zsh]  # handled later
+    #
     # ASDF-vm stuff
     ~/.config/asdf/asdfrc:
       path: config/asdf/asdfrc
       create: true
+    #
     # link asdf .default-XXXX-packages files
     ~/:
       glob: true
       path: config/asdf/default-*
       prefix: .  # add a '.' to each filename
+    #
+    # FIXME: Source doesn't exist when running this script
+    # 1password ssh agent: https://developer.1password.com/docs/ssh/get-started
+    # ~/.1password/agent.sock:
+    #   path: ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+
     ~/.config/zsh/:
       glob: true
       path: config/zsh/*

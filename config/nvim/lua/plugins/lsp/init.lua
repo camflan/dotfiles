@@ -137,7 +137,6 @@ return {
   -- formatters
   {
     "stevearc/conform.nvim",
-    cond = false,
     event = { "BufReadPre", "BufNewFile", "BufWritePre", "VeryLazy" },
     cmd = { "ConformInfo", "ConformEnable", "ConformDisable" },
     keys = {
@@ -323,7 +322,6 @@ return {
       local lsp_config = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-
       -- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
       vim.lsp.handlers["textDocument/hover"] = common.handlers["textDocument/hover"]
 
@@ -398,21 +396,21 @@ return {
       --   on_attach = common.on_attach,
       -- })
 
-        if constants.flags.USE_CSS_MODULES_LS then 
-            lsp_config.cssmodules_ls.setup({
-                capabilities = capabilities,
-                on_attach = function(client, bufnr)
-                    -- avoid accepting `definitionProvider` responses from this LSP
-                    client.server_capabilities.definitionProvider = false
-                    common.on_attach(client, bufnr)
-                end,
-                flags = common.flags,
-            })
-        end
+      if constants.flags.USE_CSS_MODULES_LS then
+        lsp_config.cssmodules_ls.setup({
+          capabilities = capabilities,
+          on_attach = function(client, bufnr)
+            -- avoid accepting `definitionProvider` responses from this LSP
+            client.server_capabilities.definitionProvider = false
+            common.on_attach(client, bufnr)
+          end,
+          flags = common.flags,
+        })
+      end
 
-            local eslint_flags = {unpack(common.flags)}
-            eslint_flags.allow_incremental_sync = false
-            eslint_flags.debounce_text_changes = 1000
+      local eslint_flags = { unpack(common.flags) }
+      eslint_flags.allow_incremental_sync = false
+      eslint_flags.debounce_text_changes = 1000
 
       lsp_config.eslint.setup({
         capabilities = capabilities,
@@ -431,12 +429,12 @@ return {
         flags = eslint_flags,
         on_attach = function(client, bufnr)
           if constants.flags.USE_ESLINT_FIX_ON_SAVE then
-          -- Fix on save
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            buffer = bufnr,
-            command = "EslintFixAll",
-          })
-                    end
+            -- Fix on save
+            vim.api.nvim_create_autocmd("BufWritePre", {
+              buffer = bufnr,
+              command = "EslintFixAll",
+            })
+          end
 
           -- workspace_diagnostics.populate_workspace_diagnostics(client, bufnr)
           common.on_attach(client, bufnr)
@@ -549,25 +547,25 @@ return {
       })
 
       if false then
-      lsp_config.tailwindcss.setup({
-        capabilities = capabilities,
-        on_attach = common.on_attach,
-        flags = common.flags,
-        settings = {
-          tailwindCSS = {
-            experimental = {
-              classRegex = {
-                { "cva\\(((?:[^()]|\\([^()]*\\))*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
-                { "classnames\\(([^)]*)\\)", "'([^']*)'" },
-                { "cx\\(([^)]*)\\)", "'([^']*)'" },
-                { "clsx\\(([^)]*)\\)", "'([^']*)'" },
-                -- { "cva\\(([^)]*)\\)", "'([^']*)'" },
+        lsp_config.tailwindcss.setup({
+          capabilities = capabilities,
+          on_attach = common.on_attach,
+          flags = common.flags,
+          settings = {
+            tailwindCSS = {
+              experimental = {
+                classRegex = {
+                  { "cva\\(((?:[^()]|\\([^()]*\\))*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+                  { "classnames\\(([^)]*)\\)", "'([^']*)'" },
+                  { "cx\\(([^)]*)\\)", "'([^']*)'" },
+                  { "clsx\\(([^)]*)\\)", "'([^']*)'" },
+                  -- { "cva\\(([^)]*)\\)", "'([^']*)'" },
+                },
               },
             },
           },
-        },
-      })
-            end
+        })
+      end
     end,
   },
 

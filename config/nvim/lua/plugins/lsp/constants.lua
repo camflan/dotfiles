@@ -10,6 +10,7 @@ return {
     USE_TINY_INLINE_DIAGNOSTIC = false,
     -- try new tsserver plugin
     USE_TYPESCRIPT_TOOLS_INSTEAD_OF_TSSERVER = false,
+    USE_TAILWIND_LS = true,
   },
 
   formatters_by_ft = {

@@ -546,7 +546,7 @@ return {
         flags = common.flags,
       })
 
-      if false then
+      if constants.flags.USE_TAILWIND_LS then
         lsp_config.tailwindcss.setup({
           capabilities = capabilities,
           on_attach = common.on_attach,

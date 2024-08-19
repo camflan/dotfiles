@@ -1,5 +1,4 @@
 -- ┌──────────────────────────────┐
--- │******************************│
 -- │******************************│██
 -- │******************************│██
 -- │******************************│██
@@ -14,7 +13,6 @@
 -- │******************************│██
 -- │******************************│██     Official docs:
 -- │******************************│██     https://wezfurlong.org/wezterm/config/lua/general.html
--- │******************************│██
 -- └──────────────────────────────┘██
 --   ████████████████████████████████
 --
@@ -32,8 +30,14 @@ config.color_scheme = utils.scheme_for_appearance(
 	"Tokyo Night",
 	"Dracula (Official)"
 )
-config.font = wezterm.font_with_fallback({ "IBM Plex Mono", "0xProto", "Monaspace Argon" })
+config.font = wezterm.font_with_fallback({
+	"IBM Plex Mono",
+	"0xProto",
+	"Menlo",
+	"Monaspace Argon",
+})
 config.font_size = 13
+config.line_height = 1.05
 config.inactive_pane_hsb = { brightness = 0.75, saturation = 0.95 }
 
 config.animation_fps = 60
@@ -56,7 +60,7 @@ config.window_background_opacity = 1
 -- Sets the font for the window frame (tab bar)
 config.window_frame = {
 	font = config.font,
-	font_size = 11,
+	font_size = 12,
 }
 
 config.default_workspace = "default"
@@ -194,31 +198,62 @@ smart_splits.apply_to_config(config, {
 -- TODO: Style tabs
 -- https://wezfurlong.org/wezterm/config/lua/window-events/format-tab-title.html
 
+-- The filled in variant of the < symbol
+local SOLID_LEFT_ARROW = wezterm.nerdfonts.pl_right_hard_divider
+
+-- The filled in variant of the > symbol
+local SOLID_RIGHT_ARROW = wezterm.nerdfonts.pl_left_hard_divider
+
 -- This function returns the suggested title for a tab.
 -- It prefers the title that was set via `tab:set_title()`
 -- or `wezterm cli set-tab-title`, but falls back to the
 -- title of the active pane in that tab.
--- local function tab_title(tab_info)
--- 	local title = tab_info.tab_title
--- 	-- if the tab title is explicitly set, take that
--- 	if title and #title > 0 then
--- 		return title
--- 	end
--- 	-- Otherwise, use the title from the active pane
--- 	-- in that tab
--- 	return tab_info.active_pane.title
--- end
---
+local function tab_title(tab_info)
+	print(tab_info.tab_index)
+	local title = tab_info.tab_title
+	-- if the tab title is explicitly set, take that
+	if title and #title > 0 then
+		return title
+	end
+	-- Otherwise, use the title from the active pane
+	-- in that tab
+	return tab_info.tab_index + " " + tab_info.active_pane.title
+end
+
+config.use_fancy_tab_bar = true
+
 -- wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
--- 	local title = tab_title(tab)
+-- 	local edge_background = "#0b0022"
+-- 	local background = "#1b1032"
+-- 	local foreground = "#808080"
+--
 -- 	if tab.is_active then
--- 		return {
--- 			{ Background = { Color = "white" } },
--- 			{ Foreground = { Color = "black" } },
--- 			{ Text = " " .. title .. " " },
--- 		}
+-- 		background = "#2b2042"
+-- 		foreground = "#c0c0c0"
+-- 	elseif hover then
+-- 		background = "#3b3052"
+-- 		foreground = "#909090"
 -- 	end
--- 	return title
+--
+-- 	local edge_foreground = background
+--
+-- 	local title = tab_title(tab)
+--
+-- 	-- ensure that the titles fit in the available space,
+-- 	-- and that we have room for the edges.
+-- 	-- title = wezterm.truncate_right(title, max_width - 2)
+--
+-- 	return {
+-- 		{ Background = { Color = edge_background } },
+-- 		{ Foreground = { Color = edge_foreground } },
+-- 		{ Text = SOLID_LEFT_ARROW },
+-- 		{ Background = { Color = background } },
+-- 		{ Foreground = { Color = foreground } },
+-- 		{ Text = title },
+-- 		{ Background = { Color = edge_background } },
+-- 		{ Foreground = { Color = edge_foreground } },
+-- 		{ Text = SOLID_RIGHT_ARROW },
+-- 	}
 -- end)
 -- END OF STYLE TABS
 

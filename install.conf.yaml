@@ -3,12 +3,12 @@
 #
 
 - defaults:
-    brewfile:
-      stdout: true
-      stderr: true
     brew:
       stderr: true
       stdout: true
+    brewfile:
+      stdout: true
+      stderr: true
     git:
       stderr: true
       stdout: true
@@ -123,6 +123,8 @@
       url: https://github.com/jonathanmorley/asdf-pre-commit.git
     - plugin: poetry
       url: https://github.com/asdf-community/asdf-poetry.git
+    - plugin: pipx
+      url: https://github.com/yozachar/asdf-pipx.git
     - plugin: postgres
       url: https://github.com/smashedtoatoms/asdf-postgres.git
     - plugin: python

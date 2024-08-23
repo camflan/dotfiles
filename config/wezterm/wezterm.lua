@@ -65,6 +65,15 @@ config.window_frame = {
 
 config.default_workspace = "default"
 
+config.ssh_domains = {
+	{
+		multiplexing = "WezTerm",
+		name = "studio",
+		remote_address = "studio",
+		username = "camron",
+	},
+}
+
 local function segments_for_right_status(window)
 	local segments = {
 		-- wezterm.strftime("%a %b %-d %H:%M"),

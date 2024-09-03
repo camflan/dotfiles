@@ -162,34 +162,6 @@ return {
           { "<leader>cp", '"*p', desc = "Paste from system clipboard", mode = { "n", "v" } },
         },
       })
-
-      -- Octo.nvim
-      wk.add({
-        {
-          mode = { "n" },
-          { "<leader>O", group = "GitHub Octo" },
-          { "<leader>Op", "<cmd>Octo pr list<CR>", desc = "List PRs" },
-          {
-            "<leader>Or",
-            group = "+Review",
-          },
-          {
-            "<leader>Ors",
-            "<cmd>Octo review start<CR>",
-            desc = "Start review",
-          },
-          {
-            "<leader>Orc",
-            "<cmd>Octo review submit<CR>",
-            desc = "Submit review",
-          },
-          {
-            "<leader>Orr",
-            "<cmd>Octo review resume<CR>",
-            desc = "Resume review",
-          },
-        },
-      })
     end,
   },
 }

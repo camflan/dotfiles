@@ -179,8 +179,10 @@ return {
               end
             end,
           },
+          -- https://lyz-code.github.io/yamlfix/#configuration-options
           yamlfix = {
             env = {
+              YAMLFIX_SEQUENCE_STYLE = "keep_style",
               YAMLFIX_SECTION_WHITELINES = "1",
               YAMLFIX_WHITELINES = "1",
             },
@@ -375,6 +377,12 @@ return {
         flags = common.flags,
       })
 
+      lsp_config.terraformls.setup({
+        capabilities = capabilities,
+        on_attach = common.on_attach,
+        flags = common.flags,
+      })
+
       lsp_config.lua_ls.setup({
         capabilities = capabilities,
         on_attach = common.on_attach,
@@ -490,6 +498,7 @@ return {
           redhat = { telemetry = { enabled = false } },
           yaml = {
             completion = true,
+            format = { enable = false },
             hover = true,
             schemas = schemastore.yaml.schemas({
               extra = {

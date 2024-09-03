@@ -4,17 +4,17 @@ return {
     dependencies = {
       "nvim-tree/nvim-web-devicons",
     },
-    lazy = true,
+    cmd = { "Oil" },
     keys = {
       {
         "-",
-        "<CMD>Oil<CR>",
+        "<cmd>Oil<CR>",
         mode = { "n" },
         desc = "Open parent directory",
       },
       {
         "<leader>-",
-        "<CMD>Oil --float<CR>",
+        "<cmd>Oil --float<CR>",
         mode = { "n" },
         desc = "Open parent directory in float",
       },

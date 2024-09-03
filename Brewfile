@@ -9,10 +9,14 @@ tap "version-fox/tap"
 # V-fox https://vfox.lhan.me/guides/quick-start.html
 brew "vfox"
 
-cask "1password-cli"
 brew "dataline"
+
+cask "1password-cli"
 cask "ngrok"
 cask "wezterm"
+
+# Ungoogled Chromium
+cask "eloston-chromium", args: { no_quarantine: true }
 
 # Librewolf browser: https://librewolf.net/
 cask "librewolf", args: { no_quarantine: true }

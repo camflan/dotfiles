@@ -13,6 +13,8 @@ return {
     lazy = true,
   },
 
+  { "LudoPinelli/comment-box.nvim", event = { "VeryLazy" }, opts = {} },
+
   -- Quickly insert debug print/console.log/etc statements
   {
     "PatschD/zippy.nvim",

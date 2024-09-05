@@ -97,6 +97,8 @@
 
 # ASDF-VM
 - asdf:
+    - plugin: adr-tools
+      url: https://gitlab.com/td7x/asdf/adr-tools.git
     - plugin: awscli
       url: https://github.com/MetricMike/asdf-awscli.git
     - plugin: gcloud

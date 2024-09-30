@@ -102,8 +102,18 @@ return {
     },
     opts = {
       modes = {
+        char = {
+          keys = {
+            "f",
+            "F",
+            "t",
+            "T",
+            [","] = "\\",
+            [";"] = ",",
+          },
+        },
         search = {
-          enabled = true,
+          enabled = false,
         },
       },
     },

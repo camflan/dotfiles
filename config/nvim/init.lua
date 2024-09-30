@@ -53,16 +53,10 @@ vim.opt.tabstop = 4
 vim.opt.breakindent = true
 vim.opt.showbreak = "↪"
 
--- navigation
-vim.keymap.set({ "n", "i", "v" }, "<C-h>", "<C-W>h")
-vim.keymap.set({ "n", "i", "v" }, "<C-j>", "<C-W>j")
-vim.keymap.set({ "n", "i", "v" }, "<C-k>", "<C-W>k")
-vim.keymap.set({ "n", "i", "v" }, "<C-l>", "<C-W>l")
-
 -- search
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.keymap.set("n", "<leader>/", ":silent nohlsearch<CR>", { desc = "Toggle search highlights", remap = false })
+vim.keymap.set("n", "<leader>/", "<cmd>silent nohlsearch<CR>", { desc = "Toggle search highlights", remap = false })
 
 -- jj to exit normal mode
 vim.keymap.set("i", "jj", "<C-[>", { desc = "ergo exit instead of esc", remap = false })

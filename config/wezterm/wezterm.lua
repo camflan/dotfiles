@@ -31,6 +31,7 @@ config.color_scheme = utils.scheme_for_appearance(
 	"Dracula (Official)"
 )
 config.font = wezterm.font_with_fallback({
+	-- "Departure Mono"
 	"IBM Plex Mono",
 	"0xProto",
 	"Menlo",

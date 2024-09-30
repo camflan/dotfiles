@@ -21,8 +21,8 @@ return {
           statusline = {},
           winbar = {},
         },
-        ignore_focus = {},
-        always_divide_middle = true,
+        ignore_focus = { "oil" },
+        always_divide_middle = false,
         globalstatus = false,
         refresh = {
           statusline = 1000,
@@ -45,23 +45,42 @@ return {
             "filename",
             file_status = true,
             newfile_status = true,
-            path = 4,
+            path = 1,
             symbols = {
-              newfile = "[N]",
+              newfile = "[!]",
             },
           },
         },
-        lualine_x = { "diagnostics" },
+        lualine_x = {
+          {
+            "diagnostics",
+            -- sources = { "nvim_diagnostic", "nvim_lsp", "nvim_workspace_diagnostic" },
+          },
+          {
+            "diff",
+          },
+        },
         lualine_y = {},
         lualine_z = {
           { "location", separator = "", padding = { left = 1, right = 0 } },
-          { "progress", separator = "", padding = { left = 0, right = 1 } },
+          { "progress", separator = "", padding = { left = 1, right = 1 } },
         },
       },
       inactive_sections = {
         lualine_a = {},
         lualine_b = {},
-        lualine_c = { "filename" },
+        lualine_c = {
+          {
+            "filename",
+            file_status = true,
+            newfile_status = true,
+            path = 2,
+            shorting_target = 60,
+            symbols = {
+              newfile = "[N]",
+            },
+          },
+        },
         lualine_x = { "location" },
         lualine_y = {},
         lualine_z = {},

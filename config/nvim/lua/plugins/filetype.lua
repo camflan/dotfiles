@@ -1,3 +1,17 @@
+vim.filetype.add({
+  filename = {
+    extension = {
+      tf = "terraform",
+      tfvars = "terraform",
+    },
+    ["package.json"] = function()
+      return "json", function()
+        vim.cmd("PackageInfoShow")
+      end
+    end,
+  },
+})
+
 return {
   {
     "iamcco/markdown-preview.nvim",

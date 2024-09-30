@@ -112,9 +112,8 @@ return {
             [";"] = ",",
           },
         },
-        search = {
-          enabled = false,
-        },
+        char = { enabled = false },
+        search = { enabled = false },
       },
     },
   },

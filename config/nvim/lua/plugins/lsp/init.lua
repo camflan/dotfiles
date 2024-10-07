@@ -608,9 +608,26 @@ return {
       tt.setup({
         handlers = common.handlers,
         on_attach = function(client, bufnr)
+          -- we want prettier to format files, not tsserver
+          client.server_capabilities.documentFormattingProvider = false
+          client.server_capabilities.documentRangeFormattingProvider = false
+
           twoslash.attach(client, bufnr)
           common.on_attach(client, bufnr)
         end,
+        init_options = {
+          npmLocation = "$HOME/.asdf-data/shims/npm",
+          preferences = {
+            -- includeInlayParameterNameHints = "all",
+            -- includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+            -- includeInlayFunctionParameterTypeHints = true,
+            -- includeInlayVariableTypeHints = true,
+            -- includeInlayPropertyDeclarationTypeHints = true,
+            -- includeInlayFunctionLikeReturnTypeHints = true,
+            -- includeInlayEnumMemberValueHints = true,
+            importModuleSpecifierPreference = "non-relative",
+          },
+        },
       })
     end,
   },

@@ -1,17 +1,50 @@
 -- TODO: dedupe this with linters/formatters
+
+local flags = {
+  USE_CSS_MODULES_LS = false,
+  USE_ESLINT_FIX_ON_SAVE = true,
+  -- Try new inline diags plugin
+  USE_TINY_INLINE_DIAGNOSTIC = false,
+  -- try new tsserver plugin
+  USE_TYPESCRIPT_TOOLS_INSTEAD_OF_TSSERVER = true,
+  USE_TAILWIND_LS = true,
+}
+
+local lsps = {
+  -- "biome",
+  "cssmodules_ls",
+  "eslint",
+  "flake8",
+  "gopls",
+  "graphql",
+  "intelephense",
+  "jsonls",
+  "jsonnet_ls",
+  "lua_ls",
+  "prismals",
+  "pyproject-flake8",
+  "pyright",
+  "rust_analyzer",
+  "ruff",
+  "ruff_lsp",
+  "selene",
+  "stylua",
+  "svelte",
+  "tailwindcss",
+  "vim-language-server",
+  "yaml-language-server",
+}
+
+if not flags.USE_TYPESCRIPT_TOOLS_INSTEAD_OF_TSSERVER then
+  -- renamed tsserver to ts_ls
+  table.insert(lsps, "ts_ls")
+end
+
 return {
   debuggers = {},
 
   -- TOGGLES FOR LSP FUNCTIONALITY / PLUGIN STATUS
-  flags = {
-    USE_CSS_MODULES_LS = false,
-    USE_ESLINT_FIX_ON_SAVE = true,
-    -- Try new inline diags plugin
-    USE_TINY_INLINE_DIAGNOSTIC = false,
-    -- try new tsserver plugin
-    USE_TYPESCRIPT_TOOLS_INSTEAD_OF_TSSERVER = false,
-    USE_TAILWIND_LS = true,
-  },
+  flags = flags,
 
   formatters_by_ft = {
     go = { "gofmt" },
@@ -38,31 +71,7 @@ return {
 
   linters_by_ft = {},
 
-  lsps = {
-    -- "biome",
-    "cssmodules_ls",
-    "eslint",
-    "flake8",
-    "gopls",
-    "graphql",
-    "intelephense",
-    "jsonls",
-    "jsonnet_ls",
-    "lua_ls",
-    "prismals",
-    "pyproject-flake8",
-    "pyright",
-    "rust_analyzer",
-    "ruff",
-    "ruff_lsp",
-    "selene",
-    "stylua",
-    "svelte",
-    "tailwindcss",
-    "tsserver",
-    "vim-language-server",
-    "yaml-language-server",
-  },
+  lsps = lsps,
 
   do_not_install = {
     -- installed externally due to its plugins: https://github.com/williamboman/mason.nvim/issues/695

@@ -171,6 +171,8 @@ return {
               -- NOTE: Do NOT let codespell run on lock files!
               if vim.fs.basename(ctx.filename) == "package-lock.json" then
                 return false
+              elseif vim.fs.basename(ctx.filename) == "package.json" then
+                return false
               -- NOTE: Do not run on Prisma files because it can change some Index types (BRING => BRING)
               elseif vim.fs.basename(ctx.filename) == "schema.prisma" then
                 return false
@@ -372,6 +374,12 @@ return {
       })
 
       lsp_config.prismals.setup({
+        capabilities = capabilities,
+        on_attach = common.on_attach,
+        flags = common.flags,
+      })
+
+      lsp_config.pylyzer.setup({
         capabilities = capabilities,
         on_attach = common.on_attach,
         flags = common.flags,
@@ -626,6 +634,12 @@ return {
             -- includeInlayFunctionLikeReturnTypeHints = true,
             -- includeInlayEnumMemberValueHints = true,
             importModuleSpecifierPreference = "non-relative",
+          },
+        },
+        settings = {
+          jsx_close_tag = {
+            enable = true,
+            filetypes = { "javascriptreact", "typescriptreact" },
           },
         },
       })

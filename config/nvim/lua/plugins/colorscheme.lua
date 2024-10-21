@@ -1,3 +1,5 @@
+local COLORSCHEME = "nord"
+
 return {
   {
     "f-person/auto-dark-mode.nvim",
@@ -17,15 +19,29 @@ return {
 
   {
     "ishan9299/nvim-solarized-lua",
-    enabled = false,
+    name = "solarized",
+    enabled = COLORSCHEME == "solarized",
     lazy = true,
     priority = 1000,
+    config = function()
+      vim.cmd("colorscheme solarized")
+    end,
+  },
+
+  {
+    "EdenEast/nightfox.nvim",
+    enabled = COLORSCHEME == "nightfox",
+    priority = 1000, -- load as soon as possible
+    config = function()
+      vim.cmd("colorscheme nightfox")
+    end,
   },
 
   -- tokyonight
   {
     "folke/tokyonight.nvim",
     name = "tokyonight",
+    enabled = COLORSCHEME == "tokyonight",
     lazy = false,
     priority = 1000,
     opts = {
@@ -35,24 +51,84 @@ return {
     },
     config = function(_, opts)
       require("tokyonight").setup(opts)
-
       vim.cmd([[colorscheme tokyonight]])
+    end,
+  },
+
+  {
+    "nyoom-engineering/oxocarbon.nvim",
+    enabled = COLORSCHEME == "oxocarbon",
+    priority = 1000, -- load as soon as possible
+    -- Add in any other configuration;
+    --   event = foo,
+    --   config = bar
+    --   end,
+    config = function()
+      vim.cmd("colorscheme oxocarbon")
+    end,
+  },
+
+  {
+    "shaunsingh/nord.nvim",
+    enabled = COLORSCHEME == "nord",
+    priority = 1000, -- load as soon as possible
+    config = function()
+      vim.cmd("colorscheme nord")
+    end,
+  },
+
+  {
+    "AlexvZyl/nordic.nvim",
+    lazy = false,
+    enabled = COLORSCHEME == "nordic",
+    priority = 1000,
+    config = function()
+      require("nordic").load()
+      vim.cmd("colorscheme nordic")
+    end,
+  },
+
+  {
+    "0xstepit/flow.nvim",
+    lazy = false,
+    enabled = COLORSCHEME == "flow",
+    priority = 1000,
+    opts = {},
+    config = function(_, opts)
+      require("flow").setup(opts)
+      vim.cmd("colorscheme flow")
     end,
   },
 
   -- github
   {
     "projekt0n/github-nvim-theme",
-    enabled = false,
-    lazy = true, -- make sure we load this during startup if it is your main colorscheme
+    enabled = COLORSCHEME == "github-nvim",
+    lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
     opts = {},
+    config = function(_, opts)
+      require("github-theme").setup(opts)
+      vim.cmd("colorscheme github_dark")
+    end,
+  },
+
+  {
+    "marko-cerovac/material.nvim",
+    enabled = COLORSCHEME == "material",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+    config = function(_, opts)
+      require("material").setup(opts)
+      vim.cmd("colorscheme material")
+    end,
   },
 
   -- catppuccin
   {
     "catppuccin/nvim",
-    lazy = true,
+    enabled = COLORSCHEME == "catppuccin",
     name = "catppuccin",
     priority = 1000, -- load as soon as possible
     dependencies = {
@@ -80,7 +156,7 @@ return {
 
   {
     "sainnhe/sonokai",
-    lazy = true,
+    enabled = COLORSCHEME == "sonokai",
   },
 
   {

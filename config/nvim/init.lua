@@ -87,7 +87,16 @@ require("lazy").setup("plugins", {
     -- install missing plugins on startup. This doesn't increase startup time.
     missing = true,
     -- try to load one of these colorschemes when starting an installation during startup
-    colorscheme = { "tokyonight", "catpuccin", "solarized", "koehler" },
+    colorscheme = {
+      "tokyonight",
+      "catpuccin",
+      "nord",
+      "oxocarbon",
+      "nightfox",
+      "sonokai",
+      "solarized",
+      "koehler",
+    },
     diff = {
       cmd = "diffview.nvim",
     },

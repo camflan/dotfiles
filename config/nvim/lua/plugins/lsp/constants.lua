@@ -22,6 +22,7 @@ local lsps = {
   "jsonnet_ls",
   "lua_ls",
   "prismals",
+  "pylyzer",
   "pyproject-flake8",
   "pyright",
   "rust_analyzer",

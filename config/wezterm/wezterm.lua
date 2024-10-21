@@ -30,14 +30,31 @@ config.color_scheme = utils.scheme_for_appearance(
 	"Tokyo Night",
 	"Dracula (Official)"
 )
+
 config.font = wezterm.font_with_fallback({
-	-- "Departure Mono"
 	"IBM Plex Mono",
+	"Departure Mono",
+	"Fira Code",
+	"Intel One Mono",
+	{ family = "Recursive Mono Static Beta 1.020", style = "Normal", weight = 433 },
+	"JetBrains Mono",
+	"SF Mono",
+	"Spot Mono",
+	"Victor Mono",
+	"PT Mono",
+	"Andale Mono",
 	"0xProto",
 	"Menlo",
 	"Monaspace Argon",
 })
+
+print("CONFIG")
+print(config.font)
+print(wezterm.font)
+print("")
+
 config.font_size = 13
+
 config.line_height = 1.05
 config.inactive_pane_hsb = { brightness = 0.75, saturation = 0.95 }
 

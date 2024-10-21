@@ -12,6 +12,7 @@ brew "vfox"
 brew "dataline"
 
 cask "1password-cli"
+cask "ollamac"
 cask "ngrok"
 cask "wezterm"
 

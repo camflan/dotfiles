@@ -1,20 +1,19 @@
 -- ┌──────────────────────────────┐
 -- │******************************│██
--- │******************************│██
--- │******************************│██
--- │*******██████*███████████*****│██     _  _  ____  ____  ____  ____  ____  _  _
--- │*****███*****██******██*******│██    / )( \(  __)(__  )(_  _)(  __)(  _ \( \/ )
--- │****██********██*█***██*******│██    \ /\ / ) _)  / _/   )(   ) _)  )   // \/ \
--- │****██***********██████*******│██    (_/\_)(____)(____) (__) (____)(__\_)\_)(_/
--- │****██***********█***██*******│██      ___  __   __ _  ____  __  ___
--- │****██********██*█***██*******│██     / __)/  \ (  ( \(  __)(  )/ __)
--- │*****███*****██******██*******│██    ( (__(  O )/    / ) _)  )(( (_ \
--- │*******███████****███████*****│██     \___)\__/ \_)__)(__)  (__)\___/
--- │******************************│██
+-- │******************************│██     _  _  ____  ____  ____  ____  ____  _  _
+-- │*******██████*███████████*****│██    / )( \(  __)(__  )(_  _)(  __)(  _ \( \/ )
+-- │*****███*****██******██*******│██    \ /\ / ) _)  / _/   )(   ) _)  )   // \/ \
+-- │****██********██*█***██*******│██    (_/\_)(____)(____) (__) (____)(__\_)\_)(_/
+-- │****██***********██████*******│██      ___  __   __ _  ____  __  ___
+-- │****██***********█***██*******│██     / __)/  \ (  ( \(  __)(  )/ __)
+-- │****██********██*█***██*******│██    ( (__(  O )/    / ) _)  )(( (_ \
+-- │*****███*****██******██*******│██     \___)\__/ \_)__)(__)  (__)\___/
+-- │*******███████****███████*****│██
 -- │******************************│██     Official docs:
 -- │******************************│██     https://wezfurlong.org/wezterm/config/lua/general.html
 -- └──────────────────────────────┘██
 --   ████████████████████████████████
+--
 --
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
@@ -32,31 +31,31 @@ config.color_scheme = utils.scheme_for_appearance(
 )
 
 config.font = wezterm.font_with_fallback({
-	"IBM Plex Mono",
-	"Departure Mono",
-	"Fira Code",
-	"Intel One Mono",
+	{ family = "IBM Plex Mono", style = "Normal", weight = 450 }, -- primary font
+	{ family = "Victor Mono", style = "Normal", weight = "Medium" }, -- cursive, fancy
+	{ family = "Departure Mono", style = "Normal", weight = "Regular" }, -- pixel font
+
+	{ family = "Spot Mono", style = "Normal", weight = "Regular" },
+	{ family = "B612 Mono", style = "Normal", weight = "Regular" },
+	{ family = "FantasqueSansM Nerd Font Mono", style = "Normal", weight = "Regular" },
+	{ family = "IntoneMono Nerd Font", style = "Normal", weight = "Regular" },
 	{ family = "Recursive Mono Static Beta 1.020", style = "Normal", weight = 433 },
-	"JetBrains Mono",
-	"SF Mono",
-	"Spot Mono",
-	"Victor Mono",
-	"PT Mono",
-	"Andale Mono",
-	"0xProto",
-	"Menlo",
-	"Monaspace Argon",
+	{ family = "Monaspace Neon", style = "Normal", weight = "Regular" },
+	{ family = "Monaspace Argon", style = "Normal", weight = "Regular" },
+	{ family = "Fira Code", style = "Normal", weight = "Regular" },
+	{ family = "Intel One Mono", style = "Normal", weight = "Regular" },
+	{ family = "JetBrains Mono", style = "Normal", weight = "Regular" },
+	{ family = "SF Mono", style = "Normal", weight = "Regular" },
+	{ family = "PT Mono", style = "Normal", weight = "Regular" },
+	{ family = "Andale Mono", style = "Normal", weight = "Regular" },
+	{ family = "0xProto", style = "Normal", weight = "Regular" },
+	{ family = "Menlo", style = "Normal", weight = "Regular" },
 })
 
-print("CONFIG")
-print(config.font)
-print(wezterm.font)
-print("")
-
 config.font_size = 13
-
 config.line_height = 1.05
-config.inactive_pane_hsb = { brightness = 0.75, saturation = 0.95 }
+
+config.inactive_pane_hsb = { brightness = 1, saturation = 1 }
 
 config.animation_fps = 60
 config.default_cursor_style = "BlinkingUnderline"

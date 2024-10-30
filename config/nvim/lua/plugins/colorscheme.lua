@@ -1,4 +1,8 @@
-local COLORSCHEME = "nord"
+local COLORSCHEME = "poimandres"
+local COLORSCHEME_FLAVOR = {
+  catppuccin = "mocha",
+  zenbones = "nordbones", -- "zenbones",
+}
 
 return {
   {
@@ -136,21 +140,76 @@ return {
     },
     config = function()
       local catppuccin = require("catppuccin")
-      vim.g.catppuccin_flavour = "macchiato"
+      vim.g.catppuccin_flavour = COLORSCHEME_FLAVOR.catppuccin
 
       catppuccin.setup({
-        flavour = "macchiato",
+        flavour = COLORSCHEME_FLAVOR.catppuccin,
         integrations = {
+          cmp = true,
+          dadbod_ui = true,
+          diffview = true,
+          fidget = true,
+          flash = true,
+          fzf = true,
+          gitsigns = true,
           hop = true,
+          indent_blankline = {
+            enabled = true,
+          },
+          lsp_trouble = true,
+          mason = true,
           native_lsp = {
             enabled = true,
           },
+          notify = true,
           treesitter = true,
-          lsp_trouble = true,
+          which_key = true,
         },
       })
 
       vim.cmd([[colorscheme catppuccin]])
+    end,
+  },
+
+  {
+    "Mofiqul/dracula.nvim",
+    enabled = COLORSCHEME == "dracula",
+    opts = {
+      italic_comment = true,
+    },
+    config = function(_, opts)
+      local dracula = require("dracula")
+      dracula.setup(opts)
+
+      vim.cmd([[colorscheme dracula]])
+    end,
+  },
+
+  {
+    "zenbones-theme/zenbones.nvim",
+    -- Optionally install Lush. Allows for more configuration or extending the colorscheme
+    -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
+    -- In Vim, compat mode is turned on as Lush only works in Neovim.
+    dependencies = { "rktjmp/lush.nvim" },
+    enabled = COLORSCHEME == "zenbones",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme(COLORSCHEME_FLAVOR.zenbones)
+    end,
+  },
+
+  {
+    "olivercederborg/poimandres.nvim",
+    enabled = COLORSCHEME == "poimandres",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+    config = function(_, opts)
+      require("poimandres").setup(opts)
+    end,
+    init = function()
+      vim.cmd("colorscheme poimandres")
     end,
   },
 
@@ -178,6 +237,5 @@ return {
   { "phanviet/vim-monokai-pro", lazy = true },
   { "andreypopp/vim-colors-plain", lazy = true },
   { "cocopon/iceberg.vim", lazy = true },
-  { "dracula/vim", name = "dracula", lazy = true },
   { "pineapplegiant/spaceduck", lazy = true },
 }

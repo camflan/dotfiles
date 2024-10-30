@@ -89,6 +89,8 @@ require("lazy").setup("plugins", {
     -- try to load one of these colorschemes when starting an installation during startup
     colorscheme = {
       "tokyonight",
+      "dracula",
+      "poimandres",
       "catpuccin",
       "nord",
       "oxocarbon",

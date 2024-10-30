@@ -30,3 +30,6 @@
 #  https://developer.1password.com/docs/ssh/agent/config
 [[ssh-keys]]
 vault = "Private"
+
+[[ssh-keys]]
+vault = "Uplift"

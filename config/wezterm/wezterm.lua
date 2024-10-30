@@ -24,15 +24,30 @@ local utils = require("utils")
 
 -- appearance
 config.color_scheme = utils.scheme_for_appearance(
-	-- Commented out until I can fix the FZF/bat highlighting in nvim properly
-	-- "Solarized Light (Gogh)",
+	"Dracula (Official)",
+	"Tokyo Night Moon",
+	"Nocturnal Winter",
+	"Catppuccin Macchiato",
+	"Catppuccin Mocha",
 	"Tokyo Night",
-	"Dracula (Official)"
+	"Tokyo Night Storm (Gogh)",
+	"Tokyo Night Storm",
+	"Tokyo Night (Gogh)",
+	"Catppuccin Frappe",
+	"Catppuccin Latte",
+	"Pandora",
+	"Builtin Solarized Dark",
+	"Broadcast",
+	"Neon Night (Gogh)"
+
+	-- Commented out until I can fix the FZF/bat highlighting in nvim properly
+	-- Light themes
+	-- "Solarized Light (Gogh)",
 )
 
 config.font = wezterm.font_with_fallback({
-	{ family = "IBM Plex Mono", style = "Normal", weight = 450 }, -- primary font
 	{ family = "Victor Mono", style = "Normal", weight = "Medium" }, -- cursive, fancy
+	{ family = "IBM Plex Mono", style = "Normal", weight = 450 }, -- primary font
 	{ family = "Departure Mono", style = "Normal", weight = "Regular" }, -- pixel font
 
 	{ family = "Spot Mono", style = "Normal", weight = "Regular" },
@@ -52,7 +67,7 @@ config.font = wezterm.font_with_fallback({
 	{ family = "Menlo", style = "Normal", weight = "Regular" },
 })
 
-config.font_size = 13
+config.font_size = 14
 config.line_height = 1.05
 
 config.inactive_pane_hsb = { brightness = 1, saturation = 1 }

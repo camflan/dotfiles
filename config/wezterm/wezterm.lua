@@ -20,57 +20,20 @@ local config = wezterm.config_builder()
 -- integration with neovim
 local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
 
+local constants = require("constants")
+local list = require("lib.list")
 local utils = require("utils")
 
 -- appearance
-config.color_scheme = utils.scheme_for_appearance(
-	"Dracula (Official)",
-	"Tokyo Night Moon",
-	"Nocturnal Winter",
-	"Catppuccin Macchiato",
-	"Catppuccin Mocha",
-	"Tokyo Night",
-	"Tokyo Night Storm (Gogh)",
-	"Tokyo Night Storm",
-	"Tokyo Night (Gogh)",
-	"Catppuccin Frappe",
-	"Catppuccin Latte",
-	"Pandora",
-	"Builtin Solarized Dark",
-	"Broadcast",
-	"Neon Night (Gogh)"
+config.color_scheme = utils.scheme_for_appearance(constants.color_schemes[1], constants.color_schemes[2])
 
-	-- Commented out until I can fix the FZF/bat highlighting in nvim properly
-	-- Light themes
-	-- "Solarized Light (Gogh)",
-)
+-- fonts
+local desired_font = constants.fonts[1]
+local font_metrics = utils.get_font_config(desired_font.family)
 
-config.font = wezterm.font_with_fallback({
-	{ family = "Victor Mono", style = "Normal", weight = "Medium" }, -- cursive, fancy
-	{ family = "IBM Plex Mono", style = "Normal", weight = 450 }, -- primary font
-	{ family = "Departure Mono", style = "Normal", weight = "Regular" }, -- pixel font
-
-	{ family = "Spot Mono", style = "Normal", weight = "Regular" },
-	{ family = "B612 Mono", style = "Normal", weight = "Regular" },
-	{ family = "FantasqueSansM Nerd Font Mono", style = "Normal", weight = "Regular" },
-	{ family = "IntoneMono Nerd Font", style = "Normal", weight = "Regular" },
-	{ family = "Recursive Mono Static Beta 1.020", style = "Normal", weight = 433 },
-	{ family = "Monaspace Neon", style = "Normal", weight = "Regular" },
-	{ family = "Monaspace Argon", style = "Normal", weight = "Regular" },
-	{ family = "Fira Code", style = "Normal", weight = "Regular" },
-	{ family = "Intel One Mono", style = "Normal", weight = "Regular" },
-	{ family = "JetBrains Mono", style = "Normal", weight = "Regular" },
-	{ family = "SF Mono", style = "Normal", weight = "Regular" },
-	{ family = "PT Mono", style = "Normal", weight = "Regular" },
-	{ family = "Andale Mono", style = "Normal", weight = "Regular" },
-	{ family = "0xProto", style = "Normal", weight = "Regular" },
-	{ family = "Menlo", style = "Normal", weight = "Regular" },
-})
-
-config.font_size = 14
-config.line_height = 1.05
-
-config.inactive_pane_hsb = { brightness = 1, saturation = 1 }
+config.font = wezterm.font_with_fallback(constants.fonts)
+config.font_size = font_metrics.font_size
+config.line_height = font_metrics.line_height
 
 config.animation_fps = 60
 config.default_cursor_style = "BlinkingUnderline"
@@ -81,6 +44,7 @@ config.cursor_blink_ease_out = "EaseOut"
 config.initial_cols = 120
 config.initial_rows = 50
 
+config.inactive_pane_hsb = { brightness = 1, saturation = 1 }
 config.window_background_opacity = 1
 -- config.macos_window_background_blur = 30
 -- Removes the title bar, leaving only the tab bar. Keeps
@@ -90,6 +54,7 @@ config.window_background_opacity = 1
 -- them into the tab bar.
 -- config.window_decorations = "RESIZE|INTEGRATED_BUTTONS"
 -- Sets the font for the window frame (tab bar)
+
 config.window_frame = {
 	font = config.font,
 	font_size = 12,

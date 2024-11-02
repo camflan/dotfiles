@@ -6,7 +6,7 @@ terraform 1.5.3
 ruby 2.7.4
 maven 3.6.3
 pre-commit 3.3.2
-rust 1.75.0
+rust 1.82.0
 nodejs 20.6.0
 golang 1.22.1
 gcloud 459.0.0

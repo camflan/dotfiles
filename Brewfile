@@ -10,6 +10,7 @@ tap "version-fox/tap"
 brew "vfox"
 
 brew "dataline"
+brew "starship"
 
 cask "1password-cli"
 cask "ollamac"

@@ -3,6 +3,9 @@
 local flags = {
   USE_CSS_MODULES_LS = false,
   USE_ESLINT_FIX_ON_SAVE = true,
+  USE_PYLYZER = false,
+  USE_PYRIGHT = true,
+  USE_RUFF = false,
   -- Try new inline diags plugin
   USE_TINY_INLINE_DIAGNOSTIC = false,
   -- try new tsserver plugin
@@ -27,7 +30,6 @@ local lsps = {
   "pyright",
   "rust_analyzer",
   "ruff",
-  "ruff_lsp",
   "selene",
   "stylua",
   "svelte",

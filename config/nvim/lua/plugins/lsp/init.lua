@@ -379,11 +379,13 @@ return {
         flags = common.flags,
       })
 
-      lsp_config.pylyzer.setup({
-        capabilities = capabilities,
-        on_attach = common.on_attach,
-        flags = common.flags,
-      })
+      if common.flags.USE_PYLYZER then
+        lsp_config.pylyzer.setup({
+          capabilities = capabilities,
+          on_attach = common.on_attach,
+          flags = common.flags,
+        })
+      end
 
       lsp_config.terraformls.setup({
         capabilities = capabilities,
@@ -533,29 +535,35 @@ return {
         },
       })
 
-      lsp_config.pyright.setup({
-        capabilities = capabilities,
-        flags = common.flags,
-        on_attach = common.on_attach,
-      })
+      if common.flags.USE_PYRIGHT then
+        lsp_config.pyright.setup({
+          capabilities = capabilities,
+          flags = common.flags,
+          on_attach = common.on_attach,
+        })
+      end
 
-      lsp_config.ruff_lsp.setup({
-        capabilities = capabilities,
-        flags = common.flags,
-        on_attach = function(client, bufnr)
-          -- Disable hover in favor of Pyright
-          client.server_capabilities.hoverProvider = false
+      if common.flags.USE_RUFF then
+        lsp_config.ruff.setup({
+          capabilities = capabilities,
+          flags = common.flags,
+          on_attach = function(client, bufnr)
+            if common.flags.USE_PYRIGHT then
+              -- Disable hover in favor of Pyright
+              client.server_capabilities.hoverProvider = false
+            end
 
-          common.on_attach(client, bufnr)
-        end,
-        settings = {
-          python = {
-            analysis = {
-              project = "pyproject.toml",
+            common.on_attach(client, bufnr)
+          end,
+          settings = {
+            python = {
+              analysis = {
+                project = "pyproject.toml",
+              },
             },
           },
-        },
-      })
+        })
+      end
 
       lsp_config.rust_analyzer.setup({
         capabilities = capabilities,

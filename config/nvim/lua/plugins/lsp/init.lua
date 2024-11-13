@@ -379,7 +379,7 @@ return {
         flags = common.flags,
       })
 
-      if common.flags.USE_PYLYZER then
+      if constants.flags.USE_PYLYZER then
         lsp_config.pylyzer.setup({
           capabilities = capabilities,
           on_attach = common.on_attach,
@@ -472,6 +472,34 @@ return {
         },
       })
 
+      lsp_config.harper_ls.setup({
+        capabilities = capabilities,
+        on_attach = common.on_attach,
+        flags = common.flags,
+        settings = {
+          ["harper-ls"] = {
+            linters = {
+              spell_check = true,
+              spelled_numbers = false,
+              an_a = true,
+              sentence_capitalization = false,
+              unclosed_quotes = true,
+              wrong_quotes = false,
+              long_sentences = true,
+              repeated_words = true,
+              spaces = true,
+              matcher = true,
+              correct_number_suffix = true,
+              number_suffix_capitalization = true,
+              multiple_sequential_pronouns = true,
+              linking_verbs = false,
+              avoid_curses = true,
+              terminating_conjunctions = true,
+            },
+          },
+        },
+      })
+
       local schemastore = require("schemastore")
 
       lsp_config.jsonls.setup({
@@ -535,7 +563,7 @@ return {
         },
       })
 
-      if common.flags.USE_PYRIGHT then
+      if constants.flags.USE_PYRIGHT then
         lsp_config.pyright.setup({
           capabilities = capabilities,
           flags = common.flags,
@@ -543,7 +571,7 @@ return {
         })
       end
 
-      if common.flags.USE_RUFF then
+      if constants.flags.USE_RUFF then
         lsp_config.ruff.setup({
           capabilities = capabilities,
           flags = common.flags,

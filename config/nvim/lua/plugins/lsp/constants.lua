@@ -1,9 +1,11 @@
 -- TODO: dedupe this with linters/formatters
 
 local flags = {
+  USE_BIOME = false,
   USE_CSS_MODULES_LS = false,
   USE_ESLINT_FIX_ON_SAVE = true,
-  USE_PYLYZER = false,
+  USE_HARPER = true,
+  USE_PYLYZER = true,
   USE_PYRIGHT = true,
   USE_RUFF = false,
   -- Try new inline diags plugin
@@ -14,7 +16,6 @@ local flags = {
 }
 
 local lsps = {
-  -- "biome",
   "cssmodules_ls",
   "eslint",
   "flake8",
@@ -25,9 +26,7 @@ local lsps = {
   "jsonnet_ls",
   "lua_ls",
   "prismals",
-  "pylyzer",
   "pyproject-flake8",
-  "pyright",
   "rust_analyzer",
   "ruff",
   "selene",
@@ -37,6 +36,27 @@ local lsps = {
   "vim-language-server",
   "yaml-language-server",
 }
+
+if flags.USE_BIOME then
+  table.insert(lsps, "biome")
+end
+
+if flags.USE_HARPER then
+  -- grammar lsp https://github.com/elijah-potter/harper
+  table.insert(lsps, "harper-ls")
+end
+
+if flags.USE_PYLYZER then
+  table.insert(lsps, "pylyzer")
+end
+
+if flags.USE_PYRIGHT then
+  table.insert(lsps, "pyright")
+end
+
+if flags.USE_RUFF then
+  table.insert(lsps, "ruff")
+end
 
 if not flags.USE_TYPESCRIPT_TOOLS_INSTEAD_OF_TSSERVER then
   -- renamed tsserver to ts_ls
@@ -66,8 +86,13 @@ return {
     typescript = { "prettier" },
     typescriptreact = { "prettier" },
     yaml = { "yamlfix", "injected" },
+
     -- all files
-    ["*"] = { "codespell" },
+    ["*"] = {
+      -- Using Harper-ls for now
+      --     "codespell"
+      "trim_whitespace",
+    },
     -- files without any formatters available
     ["_"] = { "trim_whitespace" },
   },
@@ -80,6 +105,7 @@ return {
     -- installed externally due to its plugins: https://github.com/williamboman/mason.nvim/issues/695
     "gofmt",
     "pg_format",
+    "rustfmt",
     "stylelint",
     "terraform_fmt",
 

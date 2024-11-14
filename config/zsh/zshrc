@@ -136,3 +136,8 @@ eval "$(direnv hook zsh)"
 function w {
   cd "$(walk "$@")"
 }
+
+# UV (https://docs.astral.sh/uv/getting-started/installation/#upgrading-uv)
+# add autocompletions
+eval "$(uv --generate-shell-completion zsh)
+eval "$(uvx --generate-shell-completion zsh)

@@ -68,6 +68,10 @@
       path: ./version-fox-config.yaml
       create: true
 
+    # XDG paths
+    ~/.cache:
+      path: ~/Library/Caches
+
 - git:
     ~/.config/zsh/.zprezto:
       description: Install zprezto

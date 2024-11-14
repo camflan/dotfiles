@@ -32,6 +32,27 @@ return {
     end,
   },
 
+  -- https://github.com/comfysage/evergarden
+  {
+    "comfysage/evergarden",
+    enabled = COLORSCHEME == "evergarden",
+    priority = 1000, -- Colorscheme plugin is loaded first before any other plugins
+    opts = {
+      transparent_background = true,
+      contrast_dark = "medium", -- 'hard'|'medium'|'soft'
+      override_terminal = true,
+      style = {
+        -- tabline = { reverse = true, color = "green" },
+        -- search = { reverse = false, inc_reverse = true },
+        types = { italic = true },
+        keyword = { italic = true },
+        comment = { italic = false },
+        -- sign = { highlight = false },
+      },
+      overrides = {}, -- add custom overrides
+    },
+  },
+
   {
     "EdenEast/nightfox.nvim",
     enabled = COLORSCHEME == "nightfox",

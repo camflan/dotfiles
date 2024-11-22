@@ -1,9 +1,10 @@
 return {
 	color_schemes = {
-		"Dracula (Official)",
-		"Tokyo Night Moon",
-		"Nocturnal Winter",
 		"Catppuccin Macchiato",
+		"Neon Night (Gogh)",
+		"Nocturnal Winter",
+		"Tokyo Night Moon",
+		"Dracula (Official)",
 		"Catppuccin Mocha",
 		"Tokyo Night",
 		"Tokyo Night Storm (Gogh)",
@@ -14,18 +15,17 @@ return {
 		"Pandora",
 		"Builtin Solarized Dark",
 		"Broadcast",
-		"Neon Night (Gogh)",
 
-		-- Commented out until I can fix the FZF/bat highlighting in nvim properly
+		-- Commented out until I can fix the FZF/bat highlighting in neovim properly
 		-- Light themes
 		-- "Solarized Light (Gogh)",
 	},
 
 	fonts = {
-		{ family = "SF Mono", style = "Normal", weight = "Regular" },
-		{ family = "Departure Mono", style = "Normal", weight = "Regular" }, -- pixel font
 		{ family = "IBM Plex Mono", style = "Normal", weight = 450 }, -- primary font
+		{ family = "Departure Mono", style = "Normal", weight = "Regular" }, -- pixel font
 		{ family = "Victor Mono", style = "Normal", weight = "Medium" }, -- cursive, fancy
+		{ family = "SF Mono", style = "Normal", weight = "Regular" },
 
 		{ family = "0xProto", style = "Normal", weight = "Regular" },
 		{ family = "Andale Mono", style = "Normal", weight = "Regular" },

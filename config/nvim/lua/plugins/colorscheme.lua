@@ -1,4 +1,4 @@
-local COLORSCHEME = "poimandres"
+local COLORSCHEME = "catppuccin"
 local COLORSCHEME_FLAVOR = {
   catppuccin = "mocha",
   zenbones = "nordbones", -- "zenbones",

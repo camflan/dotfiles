@@ -25,7 +25,7 @@ return {
         always_divide_middle = false,
         globalstatus = false,
         refresh = {
-          statusline = 1000,
+          statusline = 100,
           tabline = 1000,
           winbar = 1000,
         },
@@ -55,9 +55,6 @@ return {
           {
             "diagnostics",
             -- sources = { "nvim_diagnostic", "nvim_lsp", "nvim_workspace_diagnostic" },
-          },
-          {
-            "diff",
           },
         },
         lualine_y = {},

@@ -25,7 +25,7 @@ return {
 		elseif font_name == "SF Mono" then
 			metrics.font_size = 12
 		elseif font_name == "Victor Mono" then
-			metrics.font_size = 14
+			metrics.font_size = 13
 		end
 
 		return metrics

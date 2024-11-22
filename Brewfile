@@ -13,9 +13,12 @@ brew "dataline"
 brew "starship"
 
 cask "1password-cli"
-cask "ollamac"
 cask "ngrok"
+cask "ollamac"
 cask "wezterm"
+
+# https://github.com/Itaybre/CameraController
+cask "cameracontroller"
 
 # Ungoogled Chromium
 cask "eloston-chromium", args: { no_quarantine: true }
@@ -31,6 +34,10 @@ brew "dasel"
 # https://github.com/atuinsh/atuin
 brew "atuin"
 
+brew "ffmpeg"
+
+# pipe viewer, inspect unix pipe progress: http://www.ivarch.com/programs/pv.shtml
+brew "pv"
 # github actions runner
 brew "act"
 # improved cat

@@ -44,7 +44,7 @@
     graph = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 
     # force, but nicely. Makes sure changes have been pulled first
-    please = push --force-with-lease
+    force-push-please = push --force-with-lease
 
     # remove local branches that do not have a remote counterpart
     prune = fetch --prune

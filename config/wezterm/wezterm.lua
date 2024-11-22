@@ -21,7 +21,6 @@ local config = wezterm.config_builder()
 local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
 
 local constants = require("constants")
-local list = require("lib.list")
 local utils = require("utils")
 
 -- appearance

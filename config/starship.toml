@@ -40,7 +40,7 @@ format = '[($symbol$allowed)]($style) '
 style = 'italic white'
 allowed_msg = '✅'
 not_allowed_msg = '⭕️'
-denied_msg = '⭕️'
+denied_msg = '❌'
 
 [git_status]
 ahead = '⇡${count}'

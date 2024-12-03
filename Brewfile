@@ -12,6 +12,10 @@ brew "vfox"
 brew "dataline"
 brew "starship"
 
+# UI for rsync tasks
+# https://github.com/rsyncOSX/RsyncUI
+cask "rsyncui"
+
 cask "1password-cli"
 cask "ngrok"
 cask "ollamac"
@@ -35,6 +39,9 @@ brew "dasel"
 brew "atuin"
 
 brew "ffmpeg"
+
+# simon wilisons cli utility: https://github.com/simonw/llm
+brew "llm"
 
 # pipe viewer, inspect unix pipe progress: http://www.ivarch.com/programs/pv.shtml
 brew "pv"

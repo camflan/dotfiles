@@ -14,8 +14,19 @@ return {
   {
     "ptdewey/pendulum-nvim",
     event = { "VeryLazy" },
-    config = function()
-      require("pendulum").setup()
+    opts = {
+      log_file = vim.fn.stdpath("data") .. "/pendulum-time-tracker.csv",
+      report_excludes = {
+        directory = {
+          "dotfiles",
+        },
+        filetype = {
+          "oil",
+        },
+      },
+    },
+    config = function(_, opts)
+      require("pendulum").setup(opts)
     end,
   },
 }

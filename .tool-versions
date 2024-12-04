@@ -1,6 +1,6 @@
 java zulu-11.48.21
 cilium-cli 0.15.4
-python 3.11.6
+python 3.12.7
 kubectl 1.26.3
 terraform 1.5.3
 ruby 2.7.4

@@ -30,6 +30,10 @@ cask "eloston-chromium", args: { no_quarantine: true }
 # Librewolf browser: https://librewolf.net/
 cask "librewolf", args: { no_quarantine: true }
 
+# Markdown editor
+# https://github.com/MarkEdit-app/MarkEdit
+cask "markedit"
+
 # JQ like, data selector and multi-format converter
 # JSON,YAML,etc
 # https://daseldocs.tomwright.me/installation
@@ -165,9 +169,8 @@ brew "whalebrew"
 brew "siege"
 
 # quicklook plugins
-
-# provisioning certificates
 cask "betterzip"
+# provisioning certificates
 cask "provisionql"
 cask "qlstephen"
 cask "quicklook-json"

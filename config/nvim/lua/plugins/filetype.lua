@@ -14,6 +14,17 @@ vim.filetype.add({
 
 return {
   {
+    -- "iamcco/markdown-preview.nvim",
+    dir = "/Users/camron/src/github.com/camflan/markdown-preview.nvim",
+    name = "Markdown Preview",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "md", "markdown" },
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+  },
+
+  {
     "iamcco/markdown-preview.nvim",
     enabled = true,
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },

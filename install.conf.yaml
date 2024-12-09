@@ -143,6 +143,8 @@
       url: https://github.com/trotttrotttrott/asdf-tanka.git
     - plugin: terraform
       url: https://github.com/asdf-community/asdf-hashicorp.git
+    - plugin: uv
+      url: https://github.com/asdf-community/asdf-uv.git
     - plugin: vault
       url: https://github.com/asdf-community/asdf-hashicorp.git
     - plugin: yarn

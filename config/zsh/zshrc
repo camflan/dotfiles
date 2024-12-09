@@ -23,8 +23,8 @@ alias sbook="cd $HOME/src/srcbook; npm run start"
 # opens oil in neovim
 alias oil="nvim -c Oil"
 
-alias g="g"
 alias dc="docker compose"
+alias nr="npm run"
 
 # bat supports paging, syntax highlighting, searching, etc
 alias cat="bat"
@@ -61,30 +61,45 @@ eval "$($BREW_DIR/bin/brew shellenv)"
 export CFLAGS="-I$BREW_DIR/include"
 export LDFLAGS="-L$BREW_DIR/lib"
 
-# ASDF-VM
-# https://asdf-vm.com/#/core-manage-asdf
-. $HOME/.asdf/asdf.sh
-
 # append completions to fpath
-fpath=(${ASDF_DIR}/completions $fpath)
+fpath=(${ZDOTDIR}/completions $fpath)
 
-# rust
-. "$(asdf where rust)/env"
+environment_manager=mise
 
-# # Try vfox as replacement for ASDF, comment ASDF above
-# # VFOX https://vfox.lhan.me/guides/quick-start.html
-# eval "$(vfox activate zsh)"
+if [ "$environment_manager" = "asdf" ]; then
+    # ASDF-VM
+    # https://asdf-vm.com/#/core-manage-asdf
+    . $HOME/.asdf/asdf.sh
+
+    fpath=(${ASDF_DIR}/completions $fpath)
+
+    # rust
+    . "$(asdf where rust)/env"
+elif [ "$environment_manager" = "vfox" ]; then
+    # Try vfox as replacement for ASDF, comment ASDF above
+    # VFOX https://vfox.lhan.me/guides/quick-start.html
+    eval "$(vfox activate zsh)"
+elif [ "$environment_manager" = "mise" ]; then
+    eval "$(mise activate zsh)"
+fi
 
 
 # FASD
 # Quick jump to directories/etc
 # aliased to z and zz
-eval "$(fasd --init auto)"
+if hash fasd; then
+    eval "$(fasd --init auto)"
+fi
 
 # prompt
-eval "$(starship init zsh)"
+if hash starship; then
+    eval "$(starship init zsh)"
+else
+    echo "no starship?"
+fi
 
 # cache the compdump once per day
+# TODO: fix autocompletes
 autoload -Uz compinit
 for dump in ~/.zcompdump(N.mh+24); do
   compinit
@@ -93,9 +108,9 @@ compinit -C
 
 
 # Source autocompletions for ZSH
-for cf in $CBFDOTFILES_DIR/config/zsh/completions/*.zsh_completion;
-    do source $cf;
-done
+# for cf in $CBFDOTFILES_DIR/config/zsh/completions/*.zsh_completion;
+#     do source $cf;
+# done
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
@@ -139,5 +154,10 @@ function w {
 
 # UV (https://docs.astral.sh/uv/getting-started/installation/#upgrading-uv)
 # add autocompletions
-eval "$(uv --generate-shell-completion zsh)
-eval "$(uvx --generate-shell-completion zsh)
+if hash uv &> /dev/null; then
+    eval "$(uv --generate-shell-completion zsh)"
+fi
+
+if hash uvx &> /dev/null; then
+    eval "$(uvx --generate-shell-completion zsh)"
+fi

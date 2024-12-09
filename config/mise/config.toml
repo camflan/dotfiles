@@ -1,0 +1,21 @@
+[tools]
+adr-tools = "latest"
+awscli = "latest"
+gcloud = "latest"
+go = "latest"
+helm = "latest"
+kubectl = "latest"
+node = "lts"
+"pipx:httpie" = "latest"
+python = "3.12"
+ruby = "latest"
+rust = "stable"
+terraform = "latest"
+usage = "latest"
+uv = "latest"
+vault = "latest"
+
+[settings]
+
+[settings.pipx]
+uvx = true

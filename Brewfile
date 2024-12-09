@@ -9,6 +9,11 @@ tap "version-fox/tap"
 # V-fox https://vfox.lhan.me/guides/quick-start.html
 brew "vfox"
 
+# Mise.
+# asdf/vfox/direnv replacement
+# https://mise.jdx.dev/installing-mise.html#homebrew
+brew "mise"
+
 brew "dataline"
 brew "starship"
 

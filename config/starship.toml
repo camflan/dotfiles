@@ -32,7 +32,7 @@ success_symbol = ">:"
 error_symbol = ">:"
 
 [direnv]
-disabled = false
+disabled = true
 detect_files = ['.envrc', '.env', '.env.local']
 # "loaded" doesn't seem to actually mean the ENV is loaded, just that there is
 # relevant files present. For now, we'll just remove $loaded from the format

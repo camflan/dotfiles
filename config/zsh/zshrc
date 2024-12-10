@@ -1,6 +1,13 @@
 # ENV
 # loaded from .zshenv
 
+
+# asdf | mise | vfox
+environment_manager=mise
+# direnv | mise
+local_env_manager=mise
+
+
 # setup wezterm shell integration: https://wezfurlong.org/wezterm/shell-integration.html
 . "$CBFDOTFILES_DIR/config/wezterm/shell-integration.sh"
 
@@ -63,8 +70,6 @@ export LDFLAGS="-L$BREW_DIR/lib"
 
 # append completions to fpath
 fpath=(${ZDOTDIR}/completions $fpath)
-
-environment_manager=mise
 
 if [ "$environment_manager" = "asdf" ]; then
     # ASDF-VM
@@ -144,8 +149,10 @@ bindkey '^r' _atuin_search_widget
 # # PKGX integration
 # eval "$(pkgx --shellcode)"  #docs.pkgx.sh/shellcode
 
-# direnv
-eval "$(direnv hook zsh)"
+if [[ "$local_env_manager" == "direnv" ]]; then
+    # direnv
+    eval "$(direnv hook zsh)"
+fi
 
 # interactive directory walking (https://github.com/antonmedv/walk)
 function w {

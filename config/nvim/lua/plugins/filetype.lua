@@ -13,6 +13,7 @@ vim.filetype.add({
 })
 
 return {
+  { "MeanderingProgrammer/render-markdown.nvim", ft = { "markdown", "codecompanion" } },
   {
     "iamcco/markdown-preview.nvim",
     enabled = true,

@@ -315,7 +315,10 @@ return {
       "b0o/schemastore.nvim",
       "dmmulroy/ts-error-translator.nvim",
       "folke/neodev.nvim",
-      "hrsh7th/nvim-cmp",
+
+      "saghen/blink.cmp",
+      -- "hrsh7th/nvim-cmp",
+
       "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
       "j-hui/fidget.nvim",
       "marilari88/twoslash-queries.nvim",
@@ -324,7 +327,9 @@ return {
     config = function()
       local common = require("plugins.lsp.common")
       local lsp_config = require("lspconfig")
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+      -- local cmp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       -- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
       vim.lsp.handlers["textDocument/hover"] = common.handlers["textDocument/hover"]
@@ -611,6 +616,16 @@ return {
           flags = common.flags,
           settings = {
             tailwindCSS = {
+              classAttributes = {
+                "class",
+                "className",
+                "ngClass",
+                ".*Class",
+                ".*Classes",
+                ".*ClassNames",
+                ".*CLASSNAMES",
+                ".*Styles",
+              },
               experimental = {
                 classRegex = {
                   { "cva\\(((?:[^()]|\\([^()]*\\))*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },

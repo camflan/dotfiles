@@ -15,9 +15,6 @@
     link:
       relink: true
       stderr: true
-    pipx:
-      stderr: true
-      stdout: true
 
 - clean: ['~']
 
@@ -88,67 +85,17 @@
       description: Install kubectl plugin manager `krew`
       stdlog: true
       stderr: true
-
-    - command: ./scripts/install-pkl.sh
-      description: Install pkl
-      stdlog: true
-      stderr: true
+    #
+    # Installed with 'mise'. Remove this if mise works well as replacement for asdf
+    # - command: ./scripts/install-pkl.sh
+    #   description: Install pkl
+    #   stdlog: true
+    #   stderr: true
 
 # HOMEBREW
 - install-brew: true
 - brewfile:
     - Brewfile
-
-# ASDF-VM
-- asdf:
-    - plugin: adr-tools
-      url: https://gitlab.com/td7x/asdf/adr-tools.git
-    - plugin: awscli
-      url: https://github.com/MetricMike/asdf-awscli.git
-    - plugin: gcloud
-      url: https://github.com/jthegedus/asdf-gcloud.git
-    - plugin: cilium-cli
-      url: https://github.com/carnei-ro/asdf-cilium-cli.git
-    - plugin: cloud-sql-proxy
-      url: https://github.com/pbr0ck3r/asdf-cloud-sql-proxy.git
-    - plugin: helm
-      url: https://github.com/Antiarchitect/asdf-helm.git
-    - plugin: java
-      url: https://github.com/halcyon/asdf-java.git
-    - plugin: jsonnet-bundler
-      url: https://github.com/kc-workspace/asdf-jsonnet-bundler.git
-    - plugin: kubectl
-      url: https://github.com/asdf-community/asdf-kubectl.git
-    - plugin: maven
-      url: https://github.com/halcyon/asdf-maven.git
-    - plugin: neovim
-      url: https://github.com/richin13/asdf-neovim.git
-    - plugin: nodejs
-      url: https://github.com/asdf-vm/asdf-nodejs.git
-    - plugin: pre-commit
-      url: https://github.com/jonathanmorley/asdf-pre-commit.git
-    - plugin: poetry
-      url: https://github.com/asdf-community/asdf-poetry.git
-    - plugin: pipx
-      url: https://github.com/yozachar/asdf-pipx.git
-    - plugin: postgres
-      url: https://github.com/smashedtoatoms/asdf-postgres.git
-    - plugin: python
-      url: https://github.com/danhper/asdf-python.git
-    - plugin: ruby
-      url: https://github.com/asdf-vm/asdf-ruby.git
-    - plugin: rust
-      url: https://github.com/code-lever/asdf-rust.git
-    - plugin: tanka
-      url: https://github.com/trotttrotttrott/asdf-tanka.git
-    - plugin: terraform
-      url: https://github.com/asdf-community/asdf-hashicorp.git
-    - plugin: uv
-      url: https://github.com/asdf-community/asdf-uv.git
-    - plugin: vault
-      url: https://github.com/asdf-community/asdf-hashicorp.git
-    - plugin: yarn
-      url: https://github.com/twuni/asdf-yarn.git
 
 # Github cli extensions
 - ghe:
@@ -159,13 +106,3 @@
     - rnorth/gh-combine-prs
     - seachicken/gh-poi
     - yusukebe/gh-markdown-preview
-
-- pipx:
-    install:
-      - aider-chat
-      - harlequin
-      - httpie
-      - pipenv
-      - posting
-      - tiptop
-      - yq

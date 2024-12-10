@@ -7,6 +7,10 @@ helm = "latest"
 kubectl = "latest"
 node = "lts"
 "pipx:httpie" = "latest"
+"pipx:pipenv" = "latest"
+"pipx:tiptop" = "latest"
+"pipx:yq" = "latest"
+pkl = "latest"
 python = "3.12"
 ruby = "latest"
 rust = "stable"
@@ -17,5 +21,19 @@ vault = "latest"
 
 [settings]
 
+[settings.node]
+gpg_verify = true
+
 [settings.pipx]
 uvx = true
+
+[settings.python]
+default_packages_file = "./default-python-packages"
+uv_venv_auto = true
+
+[settings.status]
+show_env = true
+show_tools = true
+
+[settings.swift]
+gpg_verify = true

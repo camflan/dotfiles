@@ -101,6 +101,11 @@ return {
           { "<leader>o", group = "open panels/modules" },
           {
             "<leader>oF",
+            "<cmd>!fork<CR>",
+            desc = "Open in Fork.app",
+          },
+          {
+            "<leader>of",
             "<cmd>FzfLua<CR>",
             desc = "Open FzfLua",
           },

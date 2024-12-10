@@ -4,10 +4,14 @@ local COLORSCHEME_FLAVOR = {
   zenbones = "nordbones", -- "zenbones",
 }
 
+local is_colorscheme_active = function(plugin)
+  return plugin.name == COLORSCHEME
+end
+
 return {
   {
     "f-person/auto-dark-mode.nvim",
-    enabled = false,
+    cond = false,
     opts = {
       update_interval = 1000,
       set_dark_mode = function()
@@ -24,7 +28,7 @@ return {
   {
     "ishan9299/nvim-solarized-lua",
     name = "solarized",
-    enabled = COLORSCHEME == "solarized",
+    cond = is_colorscheme_active,
     lazy = true,
     priority = 1000,
     config = function()
@@ -35,7 +39,7 @@ return {
   -- https://github.com/comfysage/evergarden
   {
     "comfysage/evergarden",
-    enabled = COLORSCHEME == "evergarden",
+    cond = is_colorscheme_active,
     priority = 1000, -- Colorscheme plugin is loaded first before any other plugins
     opts = {
       transparent_background = true,
@@ -55,7 +59,7 @@ return {
 
   {
     "EdenEast/nightfox.nvim",
-    enabled = COLORSCHEME == "nightfox",
+    cond = is_colorscheme_active,
     priority = 1000, -- load as soon as possible
     config = function()
       vim.cmd("colorscheme nightfox")
@@ -66,7 +70,7 @@ return {
   {
     "folke/tokyonight.nvim",
     name = "tokyonight",
-    enabled = COLORSCHEME == "tokyonight",
+    cond = is_colorscheme_active,
     lazy = false,
     priority = 1000,
     opts = {
@@ -82,7 +86,7 @@ return {
 
   {
     "nyoom-engineering/oxocarbon.nvim",
-    enabled = COLORSCHEME == "oxocarbon",
+    cond = is_colorscheme_active,
     priority = 1000, -- load as soon as possible
     -- Add in any other configuration;
     --   event = foo,
@@ -95,7 +99,7 @@ return {
 
   {
     "shaunsingh/nord.nvim",
-    enabled = COLORSCHEME == "nord",
+    cond = is_colorscheme_active,
     priority = 1000, -- load as soon as possible
     config = function()
       vim.cmd("colorscheme nord")
@@ -105,7 +109,7 @@ return {
   {
     "AlexvZyl/nordic.nvim",
     lazy = false,
-    enabled = COLORSCHEME == "nordic",
+    cond = is_colorscheme_active,
     priority = 1000,
     config = function()
       require("nordic").load()
@@ -116,7 +120,7 @@ return {
   {
     "0xstepit/flow.nvim",
     lazy = false,
-    enabled = COLORSCHEME == "flow",
+    cond = is_colorscheme_active,
     priority = 1000,
     opts = {},
     config = function(_, opts)
@@ -128,7 +132,7 @@ return {
   -- github
   {
     "projekt0n/github-nvim-theme",
-    enabled = COLORSCHEME == "github-nvim",
+    cond = is_colorscheme_active,
     lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
     opts = {},
@@ -140,7 +144,7 @@ return {
 
   {
     "marko-cerovac/material.nvim",
-    enabled = COLORSCHEME == "material",
+    cond = is_colorscheme_active,
     lazy = false,
     priority = 1000,
     opts = {},
@@ -153,7 +157,7 @@ return {
   -- catppuccin
   {
     "catppuccin/nvim",
-    enabled = COLORSCHEME == "catppuccin",
+    cond = is_colorscheme_active,
     name = "catppuccin",
     priority = 1000, -- load as soon as possible
     dependencies = {
@@ -194,7 +198,7 @@ return {
 
   {
     "Mofiqul/dracula.nvim",
-    enabled = COLORSCHEME == "dracula",
+    cond = is_colorscheme_active,
     opts = {
       italic_comment = true,
     },
@@ -212,7 +216,7 @@ return {
     -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
     -- In Vim, compat mode is turned on as Lush only works in Neovim.
     dependencies = { "rktjmp/lush.nvim" },
-    enabled = COLORSCHEME == "zenbones",
+    cond = is_colorscheme_active,
     lazy = false,
     priority = 1000,
     config = function()
@@ -222,7 +226,7 @@ return {
 
   {
     "olivercederborg/poimandres.nvim",
-    enabled = COLORSCHEME == "poimandres",
+    cond = is_colorscheme_active,
     lazy = false,
     priority = 1000,
     opts = {},
@@ -236,7 +240,7 @@ return {
 
   {
     "sainnhe/sonokai",
-    enabled = COLORSCHEME == "sonokai",
+    cond = is_colorscheme_active,
   },
 
   {

@@ -1,12 +1,12 @@
+local utils = require("lib.utils")
+
 local COLORSCHEME = "catppuccin"
 local COLORSCHEME_FLAVOR = {
   catppuccin = "mocha",
   zenbones = "nordbones", -- "zenbones",
 }
 
-local is_colorscheme_active = function(plugin)
-  return plugin.name == COLORSCHEME
-end
+local is_colorscheme_active = utils.make_is_enabled_predicate(COLORSCHEME)
 
 return {
   {

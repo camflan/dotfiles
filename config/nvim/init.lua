@@ -5,9 +5,12 @@
 -- feel free to use all or part of my init.lua to learn, modify, use. If used
 -- in an init.lua you intend to distribute, please credit appropriately.
 
+-- Prepend mise shims to PATH
+vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
+--
 -- NVIM provider paths
-vim.g.node_host_prog = "$HOME/.asdf-data/shims/neovim-node-host"
-vim.g.python3_host_prog = "$HOME/.asdf-data/shims/python3"
+-- vim.g.node_host_prog = "$HOME/.asdf-data/shims/neovim-node-host"
+-- vim.g.python3_host_prog = "$HOME/.asdf-data/shims/python3"
 
 -- let nvim set window title
 vim.opt.title = true

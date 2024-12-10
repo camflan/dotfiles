@@ -502,7 +502,10 @@ return {
 
       local schemastore = require("schemastore")
 
+      capabilities.textDocument.completion.completionItem.snippetSupport = true
+
       lsp_config.jsonls.setup({
+        capabilities = capabilities,
         settings = {
           json = {
             schemas = schemastore.json.schemas(),

@@ -31,23 +31,28 @@ return {
       -- "stevearc/dressing.nvim", -- Optional: Improves the default Neovim UI
     },
     config = function()
-      local code_companion = require("codecompanion")
-      local adapters = require("codecompanion.adapters")
-
-      code_companion.setup({
+      require("codecompanion").setup({
         adapters = {
-          ollama = adapters.use("ollama", {
-            schema = {
-              model = {
-                default = get_preferred_model(),
+          ollama = function()
+            return require("codecompanion.adapters").extend("ollama", {
+              schema = {
+                model = {
+                  default = get_preferred_model(),
+                },
               },
-            },
-          }),
+            })
+          end,
         },
         strategies = {
-          chat = { adapter = "ollama" },
-          inline = { adapter = "ollama" },
-          agent = { adapter = "ollama" },
+          agent = {
+            adapter = "ollama",
+          },
+          chat = {
+            adapter = "ollama",
+          },
+          inline = {
+            adapter = "ollama",
+          },
         },
       })
     end,
@@ -108,25 +113,25 @@ return {
     opts = {},
   },
 
-    {
-      "milanglacier/minuet-ai.nvim",
-      dependencies = {
-        { "nvim-lua/plenary.nvim" },
-      },
-      cond = false,
-      config = function()
-        local minuet = require("minuet")
+  {
+    "milanglacier/minuet-ai.nvim",
+    dependencies = {
+      { "nvim-lua/plenary.nvim" },
+    },
+    cond = false,
+    config = function()
+      local minuet = require("minuet")
 
-        minuet.setup({
-          provider = "openai_compatible",
-          provider_options = {
-            openai_compatible = {
-              model = get_preferred_model(),
-              end_point = "http://127.0.0.1:11434/chat/completions",
-              name = "Ollama",
-            },
+      minuet.setup({
+        provider = "openai_compatible",
+        provider_options = {
+          openai_compatible = {
+            model = get_preferred_model(),
+            end_point = "http://127.0.0.1:11434/chat/completions",
+            name = "Ollama",
           },
-        })
-      end,
+        },
+      })
+    end,
   },
 }

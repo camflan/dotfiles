@@ -35,7 +35,7 @@ uv_venv_auto = true
 
 [settings.status]
 show_env = true
-show_tools = true
+show_tools = false
 
 [settings.swift]
 gpg_verify = true

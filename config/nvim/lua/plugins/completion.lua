@@ -59,7 +59,14 @@ return {
       -- elsewhere in your config, without redefining it, via `opts_extend`
       sources = {
         completion = {
-          enabled_providers = { "lsp", "path", "snippets", "buffer", "ripgrep", "markdown" },
+          enabled_providers = {
+            "lsp",
+            "path",
+            "snippets",
+            "buffer",
+            -- "ripgrep",
+            -- "markdown"
+          },
         },
 
         providers = {

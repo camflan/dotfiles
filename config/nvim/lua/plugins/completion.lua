@@ -6,7 +6,7 @@ local is_cmp_enabled = utils.make_is_enabled_predicate(COMPLETION_ENGINE)
 return {
   {
     "saghen/blink.cmp",
-    cond = is_cmp_enabled,
+    -- cond = is_cmp_enabled,
     lazy = false, -- lazy loading handled internally
     -- optional: provides snippets for the snippet source
     dependencies = {
@@ -59,11 +59,12 @@ return {
       -- elsewhere in your config, without redefining it, via `opts_extend`
       sources = {
         completion = {
-          enabled_providers = { "lsp", "path", "snippets", "buffer", "ripgrep" },
+          enabled_providers = { "lsp", "path", "snippets", "buffer", "ripgrep", "markdown" },
         },
 
         providers = {
-          -- 👇🏻👇🏻 add the ripgrep provider config below
+          markdown = { name = "RenderMarkdown", module = "render-markdown.integ.blink" },
+
           ripgrep = {
             module = "blink-ripgrep",
             name = "Ripgrep",
@@ -76,7 +77,7 @@ return {
 
               -- the minimum length of the current word to start searching
               -- (if the word is shorter than this, the search will not start)
-              prefix_min_len = 3,
+              prefix_min_len = 5,
 
               -- The number of lines to show around each match in the preview window
               context_size = 5,

@@ -16,6 +16,9 @@
 [includeIf "gitdir:~/dotfiles/"]
   path = config-personal
 
+[includeIf "gitdir:~/src/github.com/camflan/"]
+  path = config-personal
+
 [includeIf "gitdir:~/src/"]
   path = config-personal
 

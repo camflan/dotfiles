@@ -701,4 +701,39 @@ return {
       })
     end,
   },
+
+  {
+    "elixir-tools/elixir-tools.nvim",
+    version = "*",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    config = function()
+      local elixir = require("elixir")
+      local elixirls = require("elixir.elixirls")
+
+      local common = require("plugins.lsp.common")
+
+      elixir.setup({
+        nextls = { enable = false },
+        elixirls = {
+          enable = true,
+          settings = elixirls.settings({
+            dialyzerEnabled = false,
+            enableTestLenses = false,
+          }),
+          handlers = common.handlers,
+          on_attach = function(client, bufnr)
+            vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", { buffer = true, noremap = true })
+            vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", { buffer = true, noremap = true })
+            vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", { buffer = true, noremap = true })
+
+            common.on_attach(client, bufnr)
+          end,
+        },
+        projectionist = {
+          enable = false,
+        },
+      })
+    end,
+  },
 }

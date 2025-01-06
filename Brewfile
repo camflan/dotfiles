@@ -4,15 +4,22 @@ tap "homebrew/bundle"
 tap "oven-sh/bun"
 tap "ramiawar/dataline"
 tap "superfly/tap"
-tap "version-fox/tap"
+# tap "version-fox/tap"
 
 # V-fox https://vfox.lhan.me/guides/quick-start.html
-brew "vfox"
+# brew "vfox"
+
+# ghostty terminal
+# https://ghostty.org/docs/install/binary#macos
+cask "ghostty"
 
 # Mise.
 # asdf/vfox/direnv replacement
 # https://mise.jdx.dev/installing-mise.html#homebrew
 brew "mise"
+
+# kegworks: Makes wine wrappers for Windows apps
+cask "gcenx/wine/kegworks", args: { no_quarantine: true }
 
 brew "dataline"
 brew "starship"
@@ -27,7 +34,7 @@ cask "ollamac"
 cask "wezterm"
 
 # https://github.com/Itaybre/CameraController
-cask "cameracontroller"
+# cask "cameracontroller"
 
 # Ungoogled Chromium
 cask "eloston-chromium", args: { no_quarantine: true }
@@ -37,7 +44,7 @@ cask "librewolf", args: { no_quarantine: true }
 
 # Markdown editor
 # https://github.com/MarkEdit-app/MarkEdit
-cask "markedit"
+# cask "markedit"
 
 # JQ like, data selector and multi-format converter
 # JSON,YAML,etc
@@ -179,3 +186,7 @@ cask "betterzip"
 cask "provisionql"
 cask "qlstephen"
 cask "quicklook-json"
+
+
+# cloudflare zero-trust tunnels
+brew "cloudflared"

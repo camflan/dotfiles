@@ -1,0 +1,15 @@
+theme = "tokyonight"
+
+font-family = "IBM Plex Mono"
+font-family-bold = "IBM Plex Mono"
+font-family-italic = "IBM Plex Mono"
+font-family-bold-italic = "IBM Plex Mono"
+
+# toggle Zooming current split
+keybind = all:cmd+shift+enter=toggle_split_zoom
+
+# Split navigation - hopefully replace with smart-splits integration?
+keybind = all:cmd+ctrl+h=goto_split:left
+keybind = all:cmd+ctrl+j=goto_split:bottom
+keybind = all:cmd+ctrl+k=goto_split:top
+keybind = all:cmd+ctrl+l=goto_split:right

@@ -17,6 +17,7 @@ local flags = {
 
 local lsps = {
   "cssmodules_ls",
+  "elixirls",
   "eslint",
   "flake8",
   "gopls",

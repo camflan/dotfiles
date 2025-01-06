@@ -22,6 +22,7 @@
     ~/.zshenv: zshenv
     ~/.tmux.conf: tmux.conf
     ~/.vimrc: vimrc  # for legacy vim support - I use neovim by default
+    ~/.cloudflared: cloudflared
     ~/.config/:
       #
       # NOTE: there's an issue when there is only a single matched file
@@ -55,15 +56,15 @@
       path: config/zsh/*
       prefix: .  # add a '.' to each filename
       create: true
-    ~/.tool-versions:
-      path: ./.tool-versions
-      create: true
-    ~/.version-fox/.tool-versions:
-      path: ./.tool-versions
-      create: true
-    ~/.version-fox/config.yaml:
-      path: ./version-fox-config.yaml
-      create: true
+    # ~/.tool-versions:
+    #   path: ./.tool-versions
+    #   create: true
+    # ~/.version-fox/.tool-versions:
+    #   path: ./.tool-versions
+    #   create: true
+    # ~/.version-fox/config.yaml:
+    #   path: ./version-fox-config.yaml
+    #   create: true
 
     # XDG paths
     ~/.cache:

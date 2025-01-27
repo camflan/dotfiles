@@ -15,3 +15,7 @@ keybind = all:cmd+ctrl+h=goto_split:left
 keybind = all:cmd+ctrl+j=goto_split:bottom
 keybind = all:cmd+ctrl+k=goto_split:top
 keybind = all:cmd+ctrl+l=goto_split:right
+
+# split-divider-color = "white"
+
+macos-option-as-alt = "right"

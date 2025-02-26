@@ -693,6 +693,11 @@ return {
           },
         },
         settings = {
+          separate_diagnostic_server = true,
+          publish_diagnostic_on = "insert_leave",
+          code_lens = "off",
+          disabled_member_code_lens = true,
+          complete_function_calls = false,
           jsx_close_tag = {
             enable = true,
             filetypes = { "javascriptreact", "typescriptreact" },

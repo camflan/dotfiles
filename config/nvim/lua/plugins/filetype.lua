@@ -44,6 +44,10 @@ return {
   },
 
   {
+    "bfontaine/Brewfile.vim",
+  },
+
+  {
     -- "iamcco/markdown-preview.nvim",
     dir = "/Users/camron/src/github.com/camflan/markdown-preview.nvim",
     enabled = false,

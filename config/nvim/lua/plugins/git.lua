@@ -2,7 +2,7 @@ return {
   -- Nicer 3-way merge handling
   {
     "sindrets/diffview.nvim",
-    cmd = {'DiffviewOpen'},
+    cmd = { "DiffviewOpen" },
     keys = {
       {
         "<leader>od",
@@ -34,7 +34,7 @@ return {
       -- github extension for fugitive
       "tpope/vim-rhubarb",
     },
-    event = {"VeryLazy"},
+    event = { "VeryLazy" },
   },
 
   {
@@ -308,6 +308,22 @@ return {
           },
         },
       })
+    end,
+  },
+
+  {
+    "pwntester/octo.nvim",
+    cmd = { "Octo" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "ibhagwan/fzf-lua",
+      "nvim-tree/nvim-web-devicons",
+    },
+    opts = {
+      picker = "fzf-lua",
+    },
+    config = function(_, opts)
+      require("octo").setup(opts)
     end,
   },
 }

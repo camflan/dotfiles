@@ -58,6 +58,18 @@ return {
   },
 
   {
+    "vague2k/vague.nvim",
+    cond = is_colorscheme_active,
+    lazy = false,
+    name = "vague",
+    priority = 1000,
+    -- opts = {},
+    config = function(_, opts)
+      require("vague").setup(opts)
+    end,
+  },
+
+  {
     "EdenEast/nightfox.nvim",
     cond = is_colorscheme_active,
     priority = 1000, -- load as soon as possible

@@ -6,10 +6,7 @@ local is_cmp_enabled = utils.make_is_enabled_predicate(COMPLETION_ENGINE)
 return {
   {
     "saghen/blink.cmp",
-    dependencies = {
-      "rafamadriz/friendly-snippets",
-      "mikavilpas/blink-ripgrep.nvim",
-    },
+    dependencies = { "rafamadriz/friendly-snippets" },
 
     -- use a release tag to download pre-built binaries
     version = "*",
@@ -37,10 +34,34 @@ return {
         nerd_font_variant = "mono",
       },
 
+      completion = {
+        accept = {
+          auto_brackets = {
+            enabled = false,
+          },
+        },
+
+        documentation = {
+          auto_show = true,
+          auto_show_delay_ms = 250,
+        },
+      },
+
+      signature = { enabled = true },
+
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
         default = { "lsp", "path", "snippets", "buffer" },
+
+        min_keyword_length = function(ctx)
+          -- only applies when typing a command, doesn't apply to arguments
+          if ctx.mode == "cmdline" and string.find(ctx.line, " ") == nil then
+            return 2 -- autocomplete after 2 characters
+          end
+
+          return 0
+        end,
       },
     },
     opts_extend = { "sources.default" },

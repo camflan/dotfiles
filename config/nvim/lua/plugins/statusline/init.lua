@@ -2,7 +2,8 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    event = { "VeryLazy" },
+    -- event = { "VeryLazy" },
+    -- cond = false,
     opts = {
       extensions = {
         "fugitive",

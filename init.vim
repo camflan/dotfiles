@@ -179,6 +179,7 @@ if v:version > 703 || v:version == 703 && has('patch541')
 endif
 
 let mapleader = "\<Space>"                                          "set leader to spacebar
+let maplocalleader = "\\"                                           "set localleader to \
 
 set timeoutlen=300                                                   " shorten key chord timeout len from 1000 to 300ms
 

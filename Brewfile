@@ -4,14 +4,18 @@ tap "homebrew/bundle"
 tap "oven-sh/bun"
 tap "ramiawar/dataline"
 tap "superfly/tap"
-# tap "version-fox/tap"
 
-# V-fox https://vfox.lhan.me/guides/quick-start.html
-# brew "vfox"
+brew "bun"
+
+# docker replacement https://orbstack.dev/download
+cask "orbstack"
 
 # ghostty terminal
 # https://ghostty.org/docs/install/binary#macos
 cask "ghostty"
+
+# Mac/linux VM manager using MacOS hypervisor
+tap "trycua/lume"
 
 # Mise.
 # asdf/vfox/direnv replacement
@@ -29,12 +33,12 @@ brew "starship"
 cask "rsyncui"
 
 cask "1password-cli"
+# local machine tunnels
 cask "ngrok"
+# LLM server
 cask "ollamac"
+# Terminal
 cask "wezterm"
-
-# https://github.com/Itaybre/CameraController
-# cask "cameracontroller"
 
 # Ungoogled Chromium
 cask "eloston-chromium", args: { no_quarantine: true }
@@ -44,7 +48,7 @@ cask "librewolf", args: { no_quarantine: true }
 
 # Markdown editor
 # https://github.com/MarkEdit-app/MarkEdit
-# cask "markedit"
+cask "markedit"
 
 # JQ like, data selector and multi-format converter
 # JSON,YAML,etc
@@ -180,13 +184,66 @@ brew "whalebrew"
 # https://github.com/JoeDog/siege
 brew "siege"
 
-# quicklook plugins
-cask "betterzip"
-# provisioning certificates
-cask "provisionql"
-cask "qlstephen"
-cask "quicklook-json"
-
-
 # cloudflare zero-trust tunnels
 brew "cloudflared"
+
+
+# Mac app store
+# mas "1Password for Safari"
+# mas "About"
+# mas "Bitwarden"
+# mas "Boop"
+# mas "Button Creator"
+# mas "Byword"
+# mas "Calca"
+# mas "CotEditor"
+# mas "CrystalClear Switcher"
+# mas "DaisyDisk"
+# mas "Darkroom"
+# mas "Deliveries"
+# mas "Dice"
+# mas "Downlink"
+# mas "Drafts"
+# mas "Due"
+# mas "Figr"
+# mas "Flighty"
+# mas "Flow"
+# mas "GarageBand"
+# mas "Gifski"
+# mas "Hand Mirror"
+# mas "HomeBot"
+# mas "HomeControl"
+# mas "Hush"
+# mas "Ice Cubes"
+# mas "Kagi Search"
+# mas "Keynote"
+# mas "Little Snitch Mini"
+# mas "Mic Drop"
+# mas "Mini Metro+"
+# mas "Mini Motorways"
+# mas "Name Mangler"
+# mas "Noizio"
+# mas "Numbers"
+# mas "Omnivore"
+# mas "PCalc"
+# mas "Pages"
+# mas "Parcel"
+# mas "PiPifier"
+# mas "Pixelmator Pro"
+# mas "Poolsuite FM"
+# mas "Save to Raindrop.io"
+# mas "Shortery"
+# mas "Soulver 2"
+# mas "Speedtest"
+# mas "Swift Playground"
+# mas "TestFlight"
+# mas "Things"
+# mas "Todoist"
+# mas "Tomato 2"
+# mas "Tomito"
+# mas "Tot"
+# mas "Turnip Timer"
+# mas "Weathergraph"
+# mas "Xcode"
+# mas "fullmoon"
+# mas "iMovie"

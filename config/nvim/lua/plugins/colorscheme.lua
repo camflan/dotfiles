@@ -1,8 +1,8 @@
 local utils = require("lib.utils")
 
-local COLORSCHEME = "tokyonight"
+local COLORSCHEME = "catppuccin"
 local COLORSCHEME_FLAVOR = {
-  catppuccin = "mocha",
+  catppuccin = "latte",
   zenbones = "nordbones", -- "zenbones",
 }
 

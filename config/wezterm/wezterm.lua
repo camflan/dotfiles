@@ -23,8 +23,12 @@ local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smar
 local constants = require("constants")
 local utils = require("utils")
 
+-- Set to "Light", "Dark", or "System"
+local apperance_mode = "System"
+
 -- appearance
-config.color_scheme = utils.scheme_for_appearance(constants.color_schemes[1], constants.color_schemes[2])
+config.color_scheme =
+	utils.scheme_for_appearance(constants.color_schemes[12], constants.color_schemes[2], apperance_mode)
 
 -- fonts
 local desired_font = constants.fonts[1]

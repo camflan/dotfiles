@@ -28,6 +28,7 @@ uv = "latest"
 vault = "latest"
 
 [settings]
+go_default_packages_file = "./default-go-packages"
 
 [settings.node]
 gpg_verify = true

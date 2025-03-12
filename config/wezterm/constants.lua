@@ -15,10 +15,11 @@ return {
 		"Pandora",
 		"Builtin Solarized Dark",
 		"Broadcast",
+		"Github (Gogh)",
 
 		-- Commented out until I can fix the FZF/bat highlighting in neovim properly
 		-- Light themes
-		-- "Solarized Light (Gogh)",
+		"Solarized Light (Gogh)",
 	},
 
 	fonts = {

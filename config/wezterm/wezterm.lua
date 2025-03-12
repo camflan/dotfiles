@@ -28,7 +28,7 @@ local apperance_mode = "System"
 
 -- appearance
 config.color_scheme =
-	utils.scheme_for_appearance(constants.color_schemes[12], constants.color_schemes[2], apperance_mode)
+	utils.scheme_for_appearance(constants.color_schemes[17], constants.color_schemes[2], apperance_mode)
 
 -- fonts
 local desired_font = constants.fonts[1]

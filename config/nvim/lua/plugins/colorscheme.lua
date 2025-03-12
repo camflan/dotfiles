@@ -1,8 +1,9 @@
 local utils = require("lib.utils")
 
-local COLORSCHEME = "catppuccin"
+local COLORSCHEME = "solarized"
 local COLORSCHEME_FLAVOR = {
   catppuccin = "latte",
+  github = "github_light",
   zenbones = "nordbones", -- "zenbones",
 }
 
@@ -20,7 +21,7 @@ return {
       end,
       set_light_mode = function()
         vim.api.nvim_set_option("background", "light")
-        vim.cmd("colorscheme solarized-flat")
+        -- vim.cmd("colorscheme solarized-flat")
       end,
     },
   },
@@ -29,7 +30,7 @@ return {
     "ishan9299/nvim-solarized-lua",
     name = "solarized",
     cond = is_colorscheme_active,
-    lazy = true,
+    lazy = false,
     priority = 1000,
     config = function()
       vim.cmd("colorscheme solarized")
@@ -144,13 +145,14 @@ return {
   -- github
   {
     "projekt0n/github-nvim-theme",
+    name = "github",
     cond = is_colorscheme_active,
     lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
     opts = {},
     config = function(_, opts)
       require("github-theme").setup(opts)
-      vim.cmd("colorscheme github_dark")
+      vim.cmd("colorscheme " .. COLORSCHEME_FLAVOR.github)
     end,
   },
 

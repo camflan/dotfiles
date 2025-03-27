@@ -24,7 +24,7 @@ local constants = require("constants")
 local utils = require("utils")
 
 -- Set to "Light", "Dark", or "System"
-local apperance_mode = "System"
+local apperance_mode = "Dark" -- "System"
 
 -- appearance
 config.color_scheme =

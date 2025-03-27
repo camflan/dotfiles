@@ -9,7 +9,7 @@
 "pipx:yq" = "latest"
 "ubi:ghostty-org/ghostty" = "latest"
 adr-tools = "latest"
-awscli = "latest"
+# awscli = "latest"
 elixir = "latest"
 erlang = "latest"
 gcloud = "latest"
@@ -29,6 +29,7 @@ vault = "latest"
 
 [settings]
 go_default_packages_file = "./default-go-packages"
+experimental = true
 
 [settings.node]
 gpg_verify = true

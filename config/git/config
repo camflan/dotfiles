@@ -28,6 +28,9 @@
 [includeIf "gitdir:~/src/uplift/"]
   path = config-uplift
 
+[includeIf "gitdir:~/src/github.com/uplift-interview/"]
+  path = config-uplift
+
 [includeIf "gitdir:~/src/github.com/uplift-ltd/"]
   path = config-uplift
 

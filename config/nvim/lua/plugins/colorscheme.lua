@@ -1,8 +1,8 @@
 local utils = require("lib.utils")
 
-local COLORSCHEME = "tokyonight"
+local COLORSCHEME = "dracula"
 local COLORSCHEME_FLAVOR = {
-  catppuccin = "latte",
+  catppuccin = "macchiato",
   github = "github_light",
   zenbones = "nordbones", -- "zenbones",
 }
@@ -212,6 +212,7 @@ return {
 
   {
     "Mofiqul/dracula.nvim",
+    name = "dracula",
     cond = is_colorscheme_active,
     opts = {
       italic_comment = true,

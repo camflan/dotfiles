@@ -17,6 +17,3 @@
 [submodule "lib/dotbot-rust"]
 	path = lib/dotbot-rust
 	url = https://github.com/alexcormier/dotbot-rust
-[submodule "dotbot-brew"]
-	path = dotbot-brew
-	url = https://github.com/mariovagomarzal/dotbot-brew.git

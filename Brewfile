@@ -188,6 +188,10 @@ brew "siege"
 brew "cloudflared"
 
 
+# needed by aws
+brew "groff"
+
+
 # Mac app store
 # mas "1Password for Safari"
 # mas "About"

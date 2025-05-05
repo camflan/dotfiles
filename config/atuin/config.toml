@@ -13,7 +13,7 @@
 # dialect = "us"
 
 ## enable or disable automatic sync
-# auto_sync = true
+auto_sync = false
 
 ## enable or disable automatic update checks
 update_check = false
@@ -34,7 +34,7 @@ workspaces = true
 
 ## which filter mode to use
 ## possible values: global, host, session, directory
-# filter_mode = "global"
+filter_mode = "directory"
 
 ## which filter mode to use when atuin is invoked from a shell up-key binding
 ## the accepted values are identical to those of "filter_mode"
@@ -75,3 +75,9 @@ scroll_context_lines = 3
 #   "^secret-cmd",
 #   "^innocuous-cmd .*--secret=.+"
 # ]
+
+[dotfiles]
+enabled = false
+
+[sync]
+records = false

@@ -3,12 +3,9 @@
 #
 
 - defaults:
-    brew:
+    homebrew:
       stderr: true
       stdout: true
-    brewfile:
-      stdout: true
-      stderr: true
     git:
       stderr: true
       stdout: true

@@ -28,10 +28,6 @@ cask "gcenx/wine/kegworks", args: { no_quarantine: true }
 brew "dataline"
 brew "starship"
 
-# UI for rsync tasks
-# https://github.com/rsyncOSX/RsyncUI
-cask "rsyncui"
-
 cask "1password-cli"
 # local machine tunnels
 cask "ngrok"
@@ -41,7 +37,7 @@ cask "ollamac"
 cask "wezterm"
 
 # Ungoogled Chromium
-cask "eloston-chromium", args: { no_quarantine: true }
+# cask "eloston-chromium", args: { no_quarantine: true }
 
 # Librewolf browser: https://librewolf.net/
 cask "librewolf", args: { no_quarantine: true }

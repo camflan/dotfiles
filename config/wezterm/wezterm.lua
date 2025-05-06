@@ -20,21 +20,20 @@ local config = wezterm.config_builder()
 -- integration with neovim
 local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
 
-local constants = require("constants")
+local colorscheme = require("constants.colorscheme")
+local fonts = require("constants.fonts")
 local utils = require("utils")
 
 -- Set to "Light", "Dark", or "System"
 local apperance_mode = "Dark" -- "System"
 
 -- appearance
-config.color_scheme =
-	utils.scheme_for_appearance(constants.color_schemes[17], constants.color_schemes[5], apperance_mode)
+config.color_scheme = utils.scheme_for_appearance(colorscheme.light_mode, colorscheme.dark_mode, apperance_mode)
 
 -- fonts
-local desired_font = constants.fonts[1]
-local font_metrics = utils.get_font_config(desired_font.family)
+config.font = fonts.font
+local font_metrics = fonts.font_metrics
 
-config.font = wezterm.font_with_fallback(constants.fonts)
 config.font_size = font_metrics.font_size
 config.line_height = font_metrics.line_height
 

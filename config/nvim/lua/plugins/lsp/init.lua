@@ -617,10 +617,69 @@ return {
       })
 
       if constants.flags.USE_TAILWIND_LS then
+        local tailwindcss_flags = { unpack(common.flags) }
+        tailwindcss_flags.debounce_text_changes = 1000
+
         lsp_config.tailwindcss.setup({
           capabilities = capabilities,
+          filetypes = {
+            -- html
+            "aspnetcorerazor",
+            "astro",
+            "astro-markdown",
+            "blade",
+            "clojure",
+            "django-html",
+            "htmldjango",
+            "edge",
+            "eelixir", -- vim ft
+            "elixir",
+            "ejs",
+            "erb",
+            "eruby", -- vim ft
+            "gohtml",
+            "gohtmltmpl",
+            "haml",
+            "handlebars",
+            "hbs",
+            "html",
+            "htmlangular",
+            "html-eex",
+            "heex",
+            "jade",
+            "leaf",
+            "liquid",
+            "markdown",
+            "mdx",
+            "mustache",
+            "njk",
+            "nunjucks",
+            "php",
+            "razor",
+            "slim",
+            "twig",
+            -- css
+            "css",
+            "less",
+            "postcss",
+            "sass",
+            "scss",
+            "stylus",
+            "sugarss",
+            -- js
+            -- 'javascript',
+            "javascriptreact",
+            "reason",
+            "rescript",
+            -- 'typescript',
+            "typescriptreact",
+            -- mixed
+            "vue",
+            "svelte",
+            "templ",
+          },
+          flags = tailwindcss_flags,
           on_attach = common.on_attach,
-          flags = common.flags,
           settings = {
             tailwindCSS = {
               classAttributes = {

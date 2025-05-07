@@ -446,38 +446,40 @@ return {
         })
       end
 
-      local eslint_flags = { unpack(common.flags) }
-      eslint_flags.allow_incremental_sync = false
-      eslint_flags.debounce_text_changes = 1000
+      if constants.flags.ESLINT_LSP == "eslint" then
+        local eslint_flags = { unpack(common.flags) }
+        eslint_flags.allow_incremental_sync = false
+        eslint_flags.debounce_text_changes = 1000
 
-      lsp_config.eslint.setup({
-        capabilities = capabilities,
-        filetypes = {
-          "astro",
-          "graphql",
-          "javascript",
-          "javascript.jsx",
-          "javascriptreact",
-          "svelte",
-          "typescript",
-          "typescript.tsx",
-          "typescriptreact",
-          "vue",
-        },
-        flags = eslint_flags,
-        on_attach = function(client, bufnr)
-          if constants.flags.USE_ESLINT_FIX_ON_SAVE then
-            -- Fix on save
-            vim.api.nvim_create_autocmd("BufWritePre", {
-              buffer = bufnr,
-              command = "EslintFixAll",
-            })
-          end
+        lsp_config.eslint.setup({
+          capabilities = capabilities,
+          filetypes = {
+            "astro",
+            "graphql",
+            "javascript",
+            "javascript.jsx",
+            "javascriptreact",
+            "svelte",
+            "typescript",
+            "typescript.tsx",
+            "typescriptreact",
+            "vue",
+          },
+          flags = eslint_flags,
+          on_attach = function(client, bufnr)
+            if constants.flags.USE_ESLINT_FIX_ON_SAVE then
+              -- Fix on save
+              vim.api.nvim_create_autocmd("BufWritePre", {
+                buffer = bufnr,
+                command = "EslintFixAll",
+              })
+            end
 
-          -- workspace_diagnostics.populate_workspace_diagnostics(client, bufnr)
-          common.on_attach(client, bufnr)
-        end,
-      })
+            -- workspace_diagnostics.populate_workspace_diagnostics(client, bufnr)
+            common.on_attach(client, bufnr)
+          end,
+        })
+      end
 
       lsp_config.graphql.setup({
         capabilities = capabilities,
@@ -756,6 +758,7 @@ return {
         init_options = {
           npmLocation = "$HOME/.asdf-data/shims/npm",
           preferences = {
+            importModuleSpecifierPreference = "non-relative",
             -- includeInlayParameterNameHints = "all",
             -- includeInlayParameterNameHintsWhenArgumentMatchesName = true,
             -- includeInlayFunctionParameterTypeHints = true,
@@ -763,19 +766,19 @@ return {
             -- includeInlayPropertyDeclarationTypeHints = true,
             -- includeInlayFunctionLikeReturnTypeHints = true,
             -- includeInlayEnumMemberValueHints = true,
-            importModuleSpecifierPreference = "non-relative",
           },
         },
         settings = {
-          separate_diagnostic_server = true,
-          publish_diagnostic_on = "insert_leave",
           code_lens = "off",
-          disabled_member_code_lens = true,
           complete_function_calls = false,
+          disabled_member_code_lens = true,
+          expose_as_code_action = "all",
           jsx_close_tag = {
             enable = true,
             filetypes = { "javascriptreact", "typescriptreact" },
           },
+          publish_diagnostic_on = "insert_leave",
+          separate_diagnostic_server = true,
         },
       })
     end,

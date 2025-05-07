@@ -3,6 +3,7 @@
 local flags = {
   USE_BIOME = false,
   USE_CSS_MODULES_LS = false,
+  ESLINT_LSP = false,
   USE_ESLINT_FIX_ON_SAVE = true,
   USE_FASTACTIONS_FOR_CODE_ACTIONS = true,
   USE_HARPER = false,
@@ -19,7 +20,6 @@ local flags = {
 local lsps = {
   "cssmodules_ls",
   "elixirls",
-  "eslint",
   "flake8",
   "gopls",
   "graphql",
@@ -38,6 +38,10 @@ local lsps = {
   "vim-language-server",
   "yaml-language-server",
 }
+
+if flags.ESLINT_LSP == "eslint" then
+  table.insert(lsps, "eslint")
+end
 
 if flags.USE_BIOME then
   table.insert(lsps, "biome")

@@ -20,6 +20,13 @@ return {
   },
 
   {
+    "Chaitanyabsprip/fastaction.nvim",
+    lazy = true,
+    ---@type FastActionConfig
+    opts = {},
+  },
+
+  {
     "rachartier/tiny-inline-diagnostic.nvim",
     cond = constants.flags.USE_TINY_INLINE_DIAGNOSTIC,
     event = "VeryLazy",
@@ -322,6 +329,7 @@ return {
       "b0o/schemastore.nvim",
       "dmmulroy/ts-error-translator.nvim",
       "folke/neodev.nvim",
+      "Chaitanyabsprip/fastaction.nvim",
 
       "saghen/blink.cmp",
       -- "hrsh7th/nvim-cmp",

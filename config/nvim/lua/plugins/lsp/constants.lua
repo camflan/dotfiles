@@ -4,6 +4,7 @@ local flags = {
   USE_BIOME = false,
   USE_CSS_MODULES_LS = false,
   USE_ESLINT_FIX_ON_SAVE = true,
+  USE_FASTACTIONS_FOR_CODE_ACTIONS = true,
   USE_HARPER = false,
   USE_PYLYZER = true,
   USE_PYRIGHT = true,

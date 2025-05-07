@@ -1,5 +1,6 @@
 -- Common LSP functions and config
 --
+local constants = require("plugins.lsp.constants")
 
 -- Fn to toggle inlay_hints for LSPs
 local toggle_inlay_hints = function(bufnr)
@@ -32,7 +33,18 @@ return {
     local keymap_opts = { buffer = bufnr, noremap = true, silent = true }
 
     -- See `:help vim.lsp.*` for documentation on any of the below functions
-    vim.keymap.set({ "n", "v" }, "<leader>da", "<cmd>lua vim.lsp.buf.code_action()<CR>", keymap_opts)
+
+    if constants.flags.USE_FASTACTIONS_FOR_CODE_ACTIONS then
+      vim.keymap.set(
+        { "n", "x" },
+        "<leader>da",
+        '<cmd>lua require("fastaction").code_action()<CR>',
+        { desc = "Display code actions", buffer = bufnr }
+      )
+    else
+      vim.keymap.set({ "n", "v" }, "<leader>da", "<cmd>lua vim.lsp.buf.code_action()<CR>", keymap_opts)
+    end
+
     vim.keymap.set("n", "<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", keymap_opts)
     vim.keymap.set("n", "<leader>i", "<Cmd>lua vim.lsp.buf.hover()<CR>", keymap_opts)
     vim.keymap.set("n", "<leader>j", "<cmd>lua vim.diagnostic.goto_next()<CR>", keymap_opts)

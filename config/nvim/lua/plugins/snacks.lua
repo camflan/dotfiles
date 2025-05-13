@@ -8,14 +8,22 @@ return {
       bigfile = { enabled = true },
       indent = {
         enabled = true,
-        only_current = true,
 
-        scope = {
+        animate = {
           enabled = false,
         },
 
         chunks = {
-          enabled = false,
+          enabled = true,
+        },
+
+        indent = {
+          enabled = true,
+          only_current = true,
+        },
+
+        scope = {
+          enabled = true,
         },
       },
       input = {

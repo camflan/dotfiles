@@ -38,6 +38,9 @@ local font_metrics = {
 	[fonts.plex] = {
 		font_size = 13,
 	},
+    [fonts.recursive] = {
+        font_size = 14,
+    },
 	[fonts.sf] = {
 		font_size = 13,
 	},

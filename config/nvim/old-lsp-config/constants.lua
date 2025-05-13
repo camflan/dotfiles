@@ -6,7 +6,7 @@ local flags = {
   ESLINT_LSP = false,
   USE_ESLINT_FIX_ON_SAVE = true,
   USE_FASTACTIONS_FOR_CODE_ACTIONS = true,
-  USE_HARPER = false,
+  -- USE_HARPER = false,
   USE_PYLYZER = true,
   USE_PYRIGHT = true,
   USE_RUFF = false,
@@ -47,10 +47,10 @@ if flags.USE_BIOME then
   table.insert(lsps, "biome")
 end
 
-if flags.USE_HARPER then
-  -- grammar lsp https://github.com/elijah-potter/harper
-  table.insert(lsps, "harper-ls")
-end
+-- if flags.USE_HARPER then
+--   -- grammar lsp https://github.com/elijah-potter/harper
+--   table.insert(lsps, "harper-ls")
+-- end
 
 if flags.USE_PYLYZER then
   table.insert(lsps, "pylyzer")

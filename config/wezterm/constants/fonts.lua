@@ -35,12 +35,15 @@ local font_metrics = {
 		font_size = 15,
 		line_height = 1.1,
 	},
+	[fonts.intel] = {
+		line_height = 0.95,
+	},
 	[fonts.plex] = {
 		font_size = 13,
 	},
-    [fonts.recursive] = {
-        font_size = 14,
-    },
+	[fonts.recursive] = {
+		font_size = 14,
+	},
 	[fonts.sf] = {
 		font_size = 13,
 	},

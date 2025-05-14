@@ -19,6 +19,8 @@ vim.opt.titlestring = "%t%( %M%)%( (%{getcwd()})%)%( %a%)"
 
 -- spacebar as leader
 vim.g.mapleader = " "
+-- \ as localleader
+vim.g.maplocalleader = "\\"
 
 -- shorten key chord timeout len from 1000ms
 vim.opt.timeoutlen = 300
@@ -70,40 +72,8 @@ vim.keymap.set({ "n", "v" }, ";", ":", { desc = "Fast access to :", remap = fals
 -- tree view style for Explore/NetRw
 vim.g.netrw_liststyle = 3
 
--- LAZY
--- https://github.com/folke/lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
+-- load Skeleton AutoCmds
+require("skeletons.init")
 
-require("lazy").setup("plugins", {
-  install = {
-    -- install missing plugins on startup. This doesn't increase startup time.
-    missing = true,
-    -- try to load one of these colorschemes when starting an installation during startup
-    colorscheme = {
-      "tokyonight",
-      "dracula",
-      "poimandres",
-      "catpuccin",
-      "nord",
-      "oxocarbon",
-      "nightfox",
-      "sonokai",
-      "solarized",
-      "koehler",
-    },
-    diff = {
-      cmd = "diffview.nvim",
-    },
-  },
-})
+-- load lazy.nvim
+require("config.lazy")

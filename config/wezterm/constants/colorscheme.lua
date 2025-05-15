@@ -14,9 +14,13 @@ local schemes = {
 	broadcast = "Broadcast",
 	github = "Github (Gogh)",
 	solarized_light = "Solarized Light (Gogh)",
+	kanagawa = "Kanagawa (Gogh)",
+	everforest_dark = "Everforest Dark (Gogh)",
+	nightfox = "nightfox",
+	rosepine = "rose-pine",
 }
 
 return {
 	light_mode = schemes.solarized_light,
-	dark_mode = schemes.dracula,
+	dark_mode = schemes.rosepine,
 }

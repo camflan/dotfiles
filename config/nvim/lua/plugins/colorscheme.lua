@@ -1,9 +1,12 @@
 local utils = require("lib.utils")
 
-local COLORSCHEME = "dracula"
+local COLORSCHEME = "rose-pine"
 local COLORSCHEME_FLAVOR = {
   catppuccin = "macchiato",
   github = "github_light",
+  onedark = "dark", -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+  nightfox = "nightfox", -- "nightfox", "dayfox", "dawnfox", "duskfox", "nordfox", "terafox", "carbonfox"
+  tokyonight = "moon", -- "moon", "storm", "night", and "day"
   zenbones = "nordbones", -- "zenbones",
 }
 
@@ -18,6 +21,20 @@ return {
     priority = 1000,
     config = function()
       vim.cmd("colorscheme solarized")
+    end,
+  },
+
+  -- https://github.com/sainnhe/everforest/blob/master/doc/everforest.txt
+  {
+    "sainnhe/everforest",
+    cond = is_colorscheme_active,
+    lazy = false,
+    priority = 1000,
+    config = function()
+      -- directly inside the plugin declaration.
+      vim.g.everforest_better_performance = true
+      vim.g.everforest_enable_italic = true
+      vim.cmd.colorscheme("everforest")
     end,
   },
 
@@ -59,7 +76,7 @@ return {
     cond = is_colorscheme_active,
     priority = 1000, -- load as soon as possible
     config = function()
-      vim.cmd("colorscheme nightfox")
+      vim.cmd("colorscheme " .. COLORSCHEME_FLAVOR["nightfox"])
     end,
   },
 
@@ -70,9 +87,11 @@ return {
     cond = is_colorscheme_active,
     lazy = false,
     priority = 1000,
+    ---@module "tokyonight"
+    ---@type tokyonight.Config
     opts = {
-      style = "storm",
       light_style = "day",
+      style = COLORSCHEME_FLAVOR["tokyonight"],
       transparent = false,
     },
     config = function(_, opts)
@@ -245,6 +264,50 @@ return {
   {
     "altercation/vim-colors-solarized",
     lazy = true,
+  },
+
+  -- Using Lazy
+  {
+    "navarasu/onedark.nvim",
+    priority = 1000, -- make sure to load this before all the other start plugins
+    cond = is_colorscheme_active,
+    config = function()
+      require("onedark").setup({
+        style = COLORSCHEME_FLAVOR["onedark"],
+      })
+      -- Enable theme
+      require("onedark").load()
+    end,
+  },
+
+  -- lua/plugins/rose-pine.lua
+  {
+    "rose-pine/neovim",
+    name = "rose-pine",
+    cond = is_colorscheme_active,
+    lazy = false,
+    priority = 1000,
+    opts = {
+      variant = "auto",
+      dark_variant = "main",
+    },
+    config = function(_, opts)
+      require("rose-pine").setup(opts)
+      vim.cmd("colorscheme rose-pine")
+    end,
+  },
+
+  {
+    "rebelot/kanagawa.nvim",
+    name = "kanagawa",
+    cond = is_colorscheme_active,
+    lazy = false,
+    priority = 1000,
+    opts = {},
+    config = function(_, opts)
+      require("kanagawa").setup(opts)
+      vim.cmd("colorscheme kanagawa")
+    end,
   },
 
   {

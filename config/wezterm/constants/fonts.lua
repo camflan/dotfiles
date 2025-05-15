@@ -23,6 +23,8 @@ local fonts = {
 	fantasque = { family = "FantasqueSansM Nerd Font Mono", style = "Normal", weight = "Regular" },
 }
 
+local font = fonts.plex
+
 local font_metrics = {
 	default = {
 		font_size = 14,
@@ -51,8 +53,6 @@ local font_metrics = {
 		font_size = 13,
 	},
 }
-
-local font = fonts.plex
 
 return {
 	font = wezterm.font_with_fallback({ font, fonts.sf }),

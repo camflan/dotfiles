@@ -10,7 +10,11 @@ return {
         desc = "Open DiffView",
       },
     },
-    opts = {},
+    ---@module "diffview"
+    ---@type DiffviewConfig
+    opts = {
+      enhanced_diff_hl = true,
+    },
   },
 
   -- Nice diff/conflict highlights

@@ -38,7 +38,7 @@ local formatters_by_ft = {
   yaml = { "yamlfix", "injected" },
 
   -- all files
-  ["*"] = { "trim_whitespace" },
+  -- ["*"] = { "trim_whitespace" },
   -- files without any formatters available
   ["_"] = { "trim_whitespace" },
 }

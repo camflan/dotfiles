@@ -38,7 +38,7 @@ return {
       -- github extension for fugitive
       "tpope/vim-rhubarb",
     },
-    event = { "VeryLazy" },
+    cmd = { "G" },
   },
 
   {
@@ -89,6 +89,13 @@ return {
   -- NEOGIT
   {
     "NeogitOrg/neogit",
+    keys = {
+      {
+        "<leader>oG",
+        "<cmd>Neogit<CR>",
+        desc = "Open Neogit",
+      },
+    },
     dependencies = {
       "nvim-lua/plenary.nvim",
       "sindrets/diffview.nvim",

@@ -25,6 +25,8 @@ return {
 
   {
     "rcarriga/nvim-dap-ui",
+    -- only enable for languages we have set up debug adapters for
+    ft = { "go" },
     dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio", "leoluz/nvim-dap-go" },
     opts = {},
     config = function(_, opts)

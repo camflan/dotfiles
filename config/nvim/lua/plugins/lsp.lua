@@ -48,6 +48,7 @@ vim.lsp.config("*", {
 return {
   {
     "mason-org/mason-lspconfig.nvim",
+    event = { "VeryLazy" },
     dependencies = {
       "b0o/schemastore.nvim",
       "neovim/nvim-lspconfig",

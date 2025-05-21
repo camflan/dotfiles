@@ -8,6 +8,7 @@ local formatters = {
   injected = true,
   isort = true,
   markdownlint = true,
+  mix = true,
   pg_format = false,
   prettier = true,
   ruff_fix = true,
@@ -21,6 +22,7 @@ local formatters = {
 
 ---@type table<string, Formatter[] | table<Formatter, any>>
 local formatters_by_ft = {
+  elixir = { "mix", "injected" },
   -- go = { "gofmt" },
   graphql = { "prettier" },
   javascript = { "prettier", "injected" },
@@ -145,17 +147,21 @@ return {
               return
             end
 
-            if slow_format_filetypes[vim.bo[bufnr].filetype] then
-              return
-            end
+            return { timeout_ms = 250, lsp_format = "fallback" }
 
-            local function on_format(err)
-              if err and err:match("timeout$") then
-                slow_format_filetypes[vim.bo[bufnr].filetype] = true
-              end
-            end
-
-            return { timeout_ms = 200, lsp_format = "fallback" }, on_format
+            -- Enable if we're going to run slow formatters async
+            -- if slow_format_filetypes[vim.bo[bufnr].filetype] then
+            --   return
+            -- end
+            --
+            -- local function on_format(err)
+            --   if err and err:match("timeout$") then
+            --     slow_format_filetypes[vim.bo[bufnr].filetype] = true
+            --   end
+            -- end
+            --
+            -- Enable if we're going to run slow formatters async
+            -- return { timeout_ms = 200, lsp_format = "fallback" }, on_format
           end,
 
           format_after_save = function(bufnr)

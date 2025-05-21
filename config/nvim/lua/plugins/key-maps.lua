@@ -109,11 +109,6 @@ return {
             "<cmd>FzfLua<CR>",
             desc = "Open FzfLua",
           },
-          {
-            "<leader>oG",
-            "<cmd>LazyGit<CR>",
-            desc = "Open Lazygit",
-          },
           -- diffview keymaps set in git.lua
           -- {
           --   "<leader>od",

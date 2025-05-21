@@ -7,6 +7,7 @@ return {
       check_ts = true,
     },
   },
+
   {
     "windwp/nvim-ts-autotag",
     event = { "BufReadPre", "BufNewFile" },

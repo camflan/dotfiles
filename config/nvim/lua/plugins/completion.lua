@@ -7,6 +7,7 @@ return {
   {
     "saghen/blink.cmp",
     dependencies = { "rafamadriz/friendly-snippets" },
+    event = { "VeryLazy" },
 
     -- use a release tag to download pre-built binaries
     version = "*",
@@ -53,8 +54,12 @@ return {
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
         default = {
-                    "lazydev",
-                    "lsp", "path", "snippets", "buffer" },
+          "lazydev",
+          "lsp",
+          "path",
+          "snippets",
+          "buffer",
+        },
 
         providers = {
           lazydev = {

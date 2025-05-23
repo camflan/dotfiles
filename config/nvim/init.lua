@@ -58,6 +58,9 @@ vim.opt.tabstop = 4
 vim.opt.breakindent = true
 vim.opt.showbreak = "↪"
 
+-- make Esc work in :terminal
+vim.keymap.set({ "t" }, "<Esc>", "<C-\\><C-n>", { remap = false })
+
 -- search
 vim.opt.ignorecase = true
 vim.opt.smartcase = true

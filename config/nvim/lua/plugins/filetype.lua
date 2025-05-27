@@ -15,7 +15,7 @@ vim.filetype.add({
 return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
-    ft = { "markdown", "codecompanion" },
+    ft = { "markdown", "codecompanion", "Avante" },
     opts = {
       heading = {
         width = "full",

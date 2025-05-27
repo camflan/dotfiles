@@ -28,6 +28,7 @@ usage = "latest"
 uv = "latest"
 vault = "latest"
 aws-sam-cli = "latest"
+java = "openjdk-17"
 
 [settings]
 go_default_packages_file = "./default-go-packages"

@@ -126,4 +126,20 @@ return {
     "neovim/nvim-lspconfig",
     lazy = true,
   },
+
+  -- Workspace-wide TSC
+  {
+    "dmmulroy/tsc.nvim",
+    keys = {
+      {
+        "<leader>dT",
+        "<cmd>TSC<CR>",
+        desc = "Run TSC on entire workspace",
+      },
+    },
+    opts = {
+      auto_start_watch_mode = true,
+    },
+    cmd = { "TSC" },
+  },
 }

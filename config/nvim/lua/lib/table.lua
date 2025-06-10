@@ -110,4 +110,50 @@ M.includes = function(t, needle)
   return false
 end
 
+---@generic T, K, V {[K]: V}
+---@param t T
+---@param condition fun(key: K, value: V): boolean
+M.filter = function(t, condition)
+  local new_tbl = {}
+
+  for k, v in ipairs(t) do
+    if condition(k, v) then
+      new_tbl[k] = v
+    end
+  end
+
+  return new_tbl
+end
+
+---@param t table
+---@param values table
+M.without_values = function(t, values)
+  local values_set = {}
+
+  for _, v in ipairs(values) do
+    values_set[v] = true
+  end
+
+  return M.filter(t, function(_, value)
+    if values_set[value] then
+      return false
+    else
+      return true
+    end
+  end)
+end
+
+M.print = function(tbl, indent)
+  indent = indent or 0
+  for k, v in pairs(tbl) do
+    local formatting = string.rep("  ", indent) .. k .. ": "
+    if type(v) == "table" then
+      print(formatting)
+      M.print(v, indent + 1)
+    else
+      print(formatting .. tostring(v))
+    end
+  end
+end
+
 return M

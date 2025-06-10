@@ -12,7 +12,7 @@ local function get_hostname()
 end
 
 local function get_preferred_model()
-  local preferred_ollama_model = "qwen3:30b"
+  local preferred_ollama_model = "devstral:24b" -- "qwen3:30b"
 
   if get_hostname() == "mando" then
     preferred_ollama_model = "starcoder2:3b"

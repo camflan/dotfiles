@@ -1,7 +1,21 @@
+local table_utils = require("lib.table")
 local utils = require("lib.utils")
 
 local COMPLETION_ENGINE = "saghen/blink.cmp"
 local is_cmp_enabled = utils.make_is_enabled_predicate(COMPLETION_ENGINE)
+
+local default_blink_sources = {
+  "lazydev",
+  "lsp",
+  "path",
+  "snippets",
+  "buffer",
+}
+
+local blink_sources = {
+  default = default_blink_sources,
+  terraform = table_utils.without_values(default_blink_sources, { "snippets" }),
+}
 
 return {
   {
@@ -46,6 +60,15 @@ return {
           auto_show = true,
           auto_show_delay_ms = 250,
         },
+
+        menu = {
+          draw = {
+            columns = {
+              { "kind_icon" },
+              { "label", "label_description", gap = 1 },
+            },
+          },
+        },
       },
 
       signature = { enabled = true },
@@ -53,13 +76,17 @@ return {
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = {
-          "lazydev",
-          "lsp",
-          "path",
-          "snippets",
-          "buffer",
-        },
+        default = function()
+          local filetype_sources = blink_sources[vim.bo.filetype]
+          print(filetype_sources)
+
+          if filetype_sources then
+            print("returning filetype_sources")
+            return filetype_sources
+          end
+
+          return blink_sources.default
+        end,
 
         providers = {
           lazydev = {

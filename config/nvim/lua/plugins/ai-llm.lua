@@ -15,7 +15,7 @@ local function get_preferred_model()
   local preferred_ollama_model = "qwen3:30b"
 
   if get_hostname() == "mando" then
-    preferred_ollama_model = "starcoder2:3b"
+    preferred_ollama_model = "devstral"
   end
 
   return preferred_ollama_model
@@ -175,7 +175,7 @@ return {
 
   {
     "nomnivore/ollama.nvim",
-    cond = false,
+    cond = true,
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -215,17 +215,11 @@ return {
       -- add any opts here
       -- for example
       provider = "ollama",
-      ollama = {
-        model = "qwen3:30b",
-        stream = true,
-      },
-      openai = {
-        endpoint = "https://api.openai.com/v1",
-        model = "gpt-4o", -- your desired model (or use gpt-4o, etc.)
-        timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
-        temperature = 0,
-        max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
-        --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
+      providers = {
+        ollama = {
+          model = get_preferred_model(),
+          stream = true,
+        },
       },
       selector = {
         provider = "fzf_lua",

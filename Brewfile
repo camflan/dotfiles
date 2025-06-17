@@ -5,7 +5,11 @@ tap "oven-sh/bun"
 tap "ramiawar/dataline"
 tap "superfly/tap"
 
-brew "bun"
+# Trying to use from mise instead for now
+# brew "bun"
+
+# Trying to use from mise instead for now
+# brew "neovim"
 
 # docker replacement https://orbstack.dev/download
 cask "orbstack"
@@ -154,7 +158,6 @@ brew "mysql"
 brew "mysql-client"
 # interactive cheatsheet for cli commands
 brew "navi"
-brew "neovim"
 # colors! find/change/modify/etc
 brew "pastel"
 brew "podman"

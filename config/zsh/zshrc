@@ -6,6 +6,8 @@
 environment_manager=mise
 # direnv | mise
 local_env_manager=mise
+# atuin | mcfly
+history_manager=atuin
 
 
 # setup wezterm shell integration: https://wezfurlong.org/wezterm/shell-integration.html
@@ -134,20 +136,22 @@ if [[ -s "${ZDOTDIR:-$HOME}/.docker/init-zsh.sh" ]]; then
 fi
 
 
-# atuin (shell history)
-# https://atuin.sh/
-# https://github.com/ellie/atuin
-#
-# Don't let atuin auto-bind to up and ctrl-r
-# The current full UI "up" implementation is too bloated and incongruous
-export ATUIN_NOBIND="true"
-eval "$(atuin init zsh)"
-# ctrl+r for full atuin view
-bindkey '^r' _atuin_search_widget
+if [[ "$history_manager" == "atuin" ]]; then
+    # atuin (shell history)
+    # https://atuin.sh/
+    # https://github.com/ellie/atuin
+    #
+    # Don't let atuin auto-bind to up and ctrl-r
+    # The current full UI "up" implementation is too bloated and incongruous
+    export ATUIN_NOBIND="true"
+    eval "$(atuin init zsh)"
+    # ctrl+r for full atuin view
+    bindkey '^r' _atuin_search_widget
+fi
 
-# Disabling for now, not sure I'm actually using it (April 2024)
-# # PKGX integration
-# eval "$(pkgx --shellcode)"  #docs.pkgx.sh/shellcode
+if [[ "$history_manager" == "mcfly" ]]; then
+    eval "$(mcfly init zsh)"
+fi
 
 if [[ "$local_env_manager" == "direnv" ]]; then
     # direnv

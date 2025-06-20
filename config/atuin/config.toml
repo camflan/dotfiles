@@ -76,6 +76,9 @@ scroll_context_lines = 3
 #   "^innocuous-cmd .*--secret=.+"
 # ]
 
+[daemon]
+enabled = false
+
 [dotfiles]
 enabled = false
 

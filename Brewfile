@@ -5,14 +5,25 @@ tap "oven-sh/bun"
 tap "ramiawar/dataline"
 tap "superfly/tap"
 
-# Trying to use from mise instead for now
-# brew "bun"
+# backups
+# https://restic.readthedocs.io/en/stable/020_installation.html
+brew "restic"
 
-# Trying to use from mise instead for now
+# Mise.
+# asdf/vfox/direnv replacement
+# https://mise.jdx.dev/installing-mise.html#homebrew
+brew "mise"
+
+# Trying to use from mise for these
+# brew "bun"
 # brew "neovim"
 
 # docker replacement https://orbstack.dev/download
 cask "orbstack"
+
+# Bartender replacement
+# https://github.com/jordanbaird/Ice
+cask "jordanbaird-ice"
 
 # ghostty terminal
 # https://ghostty.org/docs/install/binary#macos
@@ -20,11 +31,6 @@ cask "ghostty"
 
 # Mac/linux VM manager using MacOS hypervisor
 tap "trycua/lume"
-
-# Mise.
-# asdf/vfox/direnv replacement
-# https://mise.jdx.dev/installing-mise.html#homebrew
-brew "mise"
 
 # kegworks: Makes wine wrappers for Windows apps
 cask "gcenx/wine/kegworks", args: { no_quarantine: true }
@@ -59,9 +65,6 @@ brew "dasel"
 brew "atuin"
 
 brew "ffmpeg"
-
-# simon wilisons cli utility: https://github.com/simonw/llm
-brew "llm"
 
 # pipe viewer, inspect unix pipe progress: http://www.ivarch.com/programs/pv.shtml
 brew "pv"
@@ -170,7 +173,9 @@ brew "qt@5"
 brew "sad"
 # fly.io cli
 brew "superfly/tap/flyctl"
-brew "tldr"
+# tldr replacement
+# https://tealdeer-rs.github.io/tealdeer/installing.html
+brew "tealdeer"
 brew "trash"
 # network diagnostics https://trippy.cli.rs
 brew "trippy"

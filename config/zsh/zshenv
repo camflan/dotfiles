@@ -82,3 +82,8 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 # Ollama
 export OLLAMA_API_BASE=http://127.0.0.1:11434
+
+# Mcfly
+# https://github.com/cantino/mcfly
+export MCFLY_FUZZY=2
+export MCFLY_INTERFACE_VIEW=BOTTOM

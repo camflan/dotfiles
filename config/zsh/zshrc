@@ -172,3 +172,7 @@ fi
 if hash uvx &> /dev/null; then
     eval "$(uvx --generate-shell-completion zsh)"
 fi
+
+if hash op &> /dev/null; then
+    eval $(op inject -i $ZDOTDIR/.zshenv.private)
+fi

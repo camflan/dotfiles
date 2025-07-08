@@ -16,10 +16,13 @@
 - clean: ['~']
 
 - link:
-    ~/.zshenv: zshenv
+    ~/.aider.conf.yml: aider.conf.yml
+    ~/.aider.model.settings.yml: aider.model.settings.yml
+    ~/.cloudflared: cloudflared
     ~/.tmux.conf: tmux.conf
     ~/.vimrc: vimrc  # for legacy vim support - I use neovim by default
-    ~/.cloudflared: cloudflared
+    ~/.zshenv: zshenv
+
     ~/.config/:
       #
       # NOTE: there's an issue when there is only a single matched file
@@ -31,22 +34,6 @@
       path: config/*
       relink: true
       exclude: [config/asdf, config/zsh]  # handled later
-    #
-    # ASDF-vm stuff
-    ~/.config/asdf/asdfrc:
-      path: config/asdf/asdfrc
-      create: true
-    #
-    # link asdf .default-XXXX-packages files
-    ~/:
-      glob: true
-      path: config/asdf/default-*
-      prefix: .  # add a '.' to each filename
-    #
-    # FIXME: Source doesn't exist when running this script
-    # 1password ssh agent: https://developer.1password.com/docs/ssh/get-started
-    # ~/.1password/agent.sock:
-    #   path: ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
 
     ~/.config/zsh/:
       glob: true

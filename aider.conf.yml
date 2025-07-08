@@ -2,4 +2,6 @@
 # Configuration for aider-chat
 # https://aider.chat/docs/config.html
 
-model: ollama/llama3:70b
+model: ollama/qwen2.5-coder:32b
+# model: ollama/gemma3n:e4b
+# model: openrouter/meta-llama/llama-4-maverick:free

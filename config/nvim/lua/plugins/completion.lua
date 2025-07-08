@@ -7,6 +7,7 @@ local is_cmp_enabled = utils.make_is_enabled_predicate(COMPLETION_ENGINE)
 local default_blink_sources = {
   "lazydev",
   "lsp",
+  "minuet",
   "path",
   "snippets",
   "buffer",
@@ -20,7 +21,10 @@ local blink_sources = {
 return {
   {
     "saghen/blink.cmp",
-    dependencies = { "rafamadriz/friendly-snippets" },
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+      "milanglacier/minuet-ai.nvim",
+    },
     event = { "VeryLazy" },
 
     -- use a release tag to download pre-built binaries
@@ -94,6 +98,15 @@ return {
             module = "lazydev.integrations.blink",
             -- make lazydev completions top priority (see `:h blink.cmp`)
             score_offset = 100,
+          },
+          minuet = {
+            name = "minuet",
+            module = "minuet.blink",
+            async = true,
+            -- Should match minuet.config.request_timeout * 1000,
+            -- since minuet.config.request_timeout is in seconds
+            timeout_ms = 3000,
+            score_offset = 50, -- Gives minuet higher priority among suggestions
           },
         },
 

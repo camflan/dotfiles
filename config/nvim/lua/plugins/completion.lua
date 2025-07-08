@@ -71,6 +71,7 @@ return {
               { "kind_icon" },
               { "label", "label_description", gap = 1 },
             },
+            treesitter = { "lsp" },
           },
         },
       },

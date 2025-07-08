@@ -1,5 +1,8 @@
-local lsps = {
-  "biome",
+local table_utils = require("lib.table")
+
+local USE_TSGO = false
+
+local global_lsps_to_install = {
   "elixirls",
   "eslint",
   "graphql",
@@ -7,9 +10,23 @@ local lsps = {
   "lua_ls",
   "tailwindcss",
   "terraformls",
-  "vtsls",
   "yamlls",
 }
+
+local project_local_lsps = {
+  "biome",
+  "gopls",
+  "pyrefly",
+  "ty",
+}
+
+if USE_TSGO then
+  table.insert(project_local_lsps, "tsgo")
+else
+  table.insert(global_lsps_to_install, "vtsls")
+end
+
+local lsps = table_utils.concat(global_lsps_to_install, project_local_lsps, true)
 
 vim.lsp.config("*", {
   on_attach = function(_, bufnr)
@@ -33,7 +50,14 @@ vim.lsp.config("*", {
     vim.keymap.set("n", "<leader>k", "<cmd>lua vim.diagnostic.goto_prev()<CR>", keymap_opts)
     vim.keymap.set("n", "<leader>u", "<cmd>lua vim.diagnostic.open_float()<CR>", keymap_opts)
 
-    vim.diagnostic.config({ virtual_text = true })
+    vim.diagnostic.config({
+      float = {
+        severity_sort = true,
+        source = "if_many",
+      },
+      severity_sort = true,
+      virtual_text = false,
+    })
 
     -- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     --     vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -45,6 +69,8 @@ vim.lsp.config("*", {
   end,
 })
 
+vim.lsp.enable(lsps)
+
 return {
   {
     "mason-org/mason-lspconfig.nvim",
@@ -55,9 +81,33 @@ return {
       "williamboman/mason.nvim",
     },
     opts = {
-      automatic_enable = true,
-      ensure_installed = lsps,
+      automatic_enable = lsps,
+      ensure_installed = global_lsps_to_install,
     },
+  },
+
+  {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = { "LspAttach" }, -- Or `LspAttach`
+    priority = 1000, -- needs to be loaded in first
+    config = function()
+      require("tiny-inline-diagnostic").setup({
+        preset = "powerline",
+
+        options = {
+          multilines = {
+            enabled = true,
+            always_show = true,
+            trim_whitespaces = true,
+          },
+          show_source = {
+            enabled = true,
+            if_many = true,
+          },
+        },
+      })
+      vim.diagnostic.config({ virtual_text = false }) -- Only if needed in your configuration, if you already have native LSP diagnostics
+    end,
   },
 
   {

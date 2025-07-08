@@ -74,6 +74,7 @@
   "switch.vim": { "branch": "main", "commit": "df58397cfa36d2f428ddc2652ba32d1db2af6d02" },
   "template-string.nvim": { "branch": "main", "commit": "da5f326b65fb74fd068aa1d8b55461b64c8fb23b" },
   "time-tracker.nvim": { "branch": "master", "commit": "c84998bbadb1afca8e09943b1c14bafe1711bb9a" },
+  "tiny-inline-diagnostic.nvim": { "branch": "main", "commit": "7c1595733366d25ddd3a6785cf6327e2e460bae9" },
   "todo-comments.nvim": { "branch": "main", "commit": "304a8d204ee787d2544d8bc23cd38d2f929e7cc5" },
   "tokyonight": { "branch": "main", "commit": "057ef5d260c1931f1dffd0f052c685dcd14100a3" },
   "trouble.nvim": { "branch": "main", "commit": "85bedb7eb7fa331a2ccbecb9202d8abba64d37b3" },

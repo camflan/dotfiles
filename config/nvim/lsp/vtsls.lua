@@ -75,8 +75,4 @@ vim.api.nvim_create_autocmd("LspDetach", {
   end,
 })
 
-vim.lsp.config("vtsls", {
-  reuse_client = function()
-    return true
-  end,
-})
+return {}

@@ -2,7 +2,6 @@
 
 [tools]
 "asdf:awscli" = "latest"
-# "cargo:logria" = "latest"
 "cargo:rep-grep" = "latest"
 "pipx:httpie" = "latest"
 "pipx:llm" = "latest"

@@ -11,14 +11,29 @@ local function get_hostname()
   return hostname
 end
 
-local function get_preferred_model()
-  local preferred_ollama_model = "devstral:24b" -- "qwen3:30b"
+---@enum  LlmModel
+local models = {
+  deepseekr1 = "deepseek-r1:14b",
+  devstral = "devstral:24b",
+  gemma3 = "gemma3:4b-it-q4_K_M",
+  gemma3n = "gemma3n:e4b",
+  llama32 = "llama3.2:latest",
+  llama4scout = "llama4:scout",
+  mistral = "mistral:7b",
+  qwen25coder_small = "qwen2.5-coder:1.5b",
+  qwen25coder = "qwen2.5-coder:7b",
+  qwen25coder_huge = "qwen2.5-coder:32b",
+  qwen3 = "qwen3:30b",
+  sqlcoder = "sqlcoder:latest",
+}
 
+---@return LlmModel
+local function get_preferred_model()
   if get_hostname() == "mando" then
-    preferred_ollama_model = "qwen2.5-coder:1.5b"
+    return models.qwen25coder_small
   end
 
-  return preferred_ollama_model
+  return models.qwen25coder_huge
 end
 
 local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }

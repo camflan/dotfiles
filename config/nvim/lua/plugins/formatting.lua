@@ -60,6 +60,15 @@ local function first(bufnr, ...)
   return select(1, ...)
 end
 
+---@param bufnr integer
+local ecma_formatters = function(bufnr)
+  if require("conform").get_formatter_info("biome-check", bufnr).available then
+    return { first(bufnr, "biome-check", "prettier"), "injected" }
+  end
+
+  return { "prettier", "injected" }
+end
+
 return {
   {
     "stevearc/conform.nvim",
@@ -94,6 +103,11 @@ return {
             lsp_format = "fallback",
           },
           formatters_by_ft = table_utils.assign(formatters_by_ft, {
+            javascript = ecma_formatters,
+            javascriptreact = ecma_formatters,
+            typescript = ecma_formatters,
+            typescriptreact = ecma_formatters,
+
             ---@param bufnr number
             ---@return Formatter[]
             python = function(bufnr)

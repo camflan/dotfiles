@@ -25,7 +25,8 @@ local fonts = require("constants.fonts")
 local utils = require("utils")
 
 -- Set to "Light", "Dark", or "System"
-local apperance_mode = "Dark" -- "System"
+---@type "Dark" | "Light" | "System"
+local apperance_mode = "Dark"
 
 -- appearance
 config.color_scheme = utils.scheme_for_appearance(colorscheme.light_mode, colorscheme.dark_mode, apperance_mode)

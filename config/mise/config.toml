@@ -9,9 +9,8 @@
 "pipx:pipenv" = "latest"
 "pipx:tiptop" = "latest"
 "pipx:yq" = "latest"
-"ubi:ghostty-org/ghostty" = "latest"
+
 adr-tools = "latest"
-# awscli = "latest"
 aws-sam-cli = "latest"
 bun = "latest"
 elixir = "latest"

@@ -6,8 +6,11 @@
 "pipx:httpie" = "latest"
 "pipx:llm" = "latest"
 "pipx:pipenv" = "latest"
+"pipx:litellm" = { version = "latest", extras = "proxy" }
 "pipx:tiptop" = "latest"
 "pipx:yq" = "latest"
+
+"ubi:sst/opencode" = "latest"
 
 adr-tools = "latest"
 aws-sam-cli = "latest"

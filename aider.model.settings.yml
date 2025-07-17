@@ -1,0 +1,2 @@
+# - name: ollama/gemma3:4b-it-q4_K_M
+- name: ollama/qwen2.5-coder:32b

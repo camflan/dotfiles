@@ -1,0 +1,6 @@
+[env]
+NVIM_APPNAME = "nvim-12"
+
+[tools]
+neovim = "nightly"
+

@@ -83,10 +83,8 @@ return {
       sources = {
         default = function()
           local filetype_sources = blink_sources[vim.bo.filetype]
-          print(filetype_sources)
 
           if filetype_sources then
-            print("returning filetype_sources")
             return filetype_sources
           end
 
@@ -107,7 +105,7 @@ return {
             -- Should match minuet.config.request_timeout * 1000,
             -- since minuet.config.request_timeout is in seconds
             timeout_ms = 3000,
-            score_offset = 50, -- Gives minuet higher priority among suggestions
+            score_offset = 20, -- Gives minuet higher priority among suggestions
           },
         },
 

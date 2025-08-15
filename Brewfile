@@ -3,11 +3,6 @@ tap "dustinblackman/tap"
 tap "homebrew/bundle"
 tap "oven-sh/bun"
 tap "ramiawar/dataline"
-tap "superfly/tap"
-
-# backups
-# https://restic.readthedocs.io/en/stable/020_installation.html
-brew "restic"
 
 # Mise.
 # asdf/vfox/direnv replacement
@@ -39,6 +34,7 @@ brew "dataline"
 brew "starship"
 
 cask "1password-cli"
+
 # local machine tunnels
 cask "ngrok"
 # LLM server
@@ -50,7 +46,7 @@ cask "wezterm"
 # cask "eloston-chromium", args: { no_quarantine: true }
 
 # Librewolf browser: https://librewolf.net/
-cask "librewolf", args: { no_quarantine: true }
+# cask "librewolf", args: { no_quarantine: true }
 
 # Markdown editor
 # https://github.com/MarkEdit-app/MarkEdit
@@ -78,20 +74,19 @@ brew "btop"
 brew "bottom"
 # terminal image viewer
 brew "chafa"
+# containerd runtime
 brew "colima"
 # container top
 brew "ctop"
-# loads envrc and .env files automatically when entering a directory
-brew "direnv"
+# digital ocean cli
 brew "doctl"
-# oatmeal is an llm interface
-brew "dustinblackman/tap/oatmeal"
 # enhanced dig
 brew "dog"
 # DNS client https://doggo.mrkaran.dev/docs/intro/installation/
 brew "doggo"
 # disk space analyzer and rm helper
 brew "dua-cli"
+# run commands on file changes
 brew "entr"
 # enhanced ls
 brew "eza"
@@ -171,8 +166,6 @@ brew "qemu"
 brew "qt@5"
 # spaceage sed https://github.com/ms-jpq/sad
 brew "sad"
-# fly.io cli
-brew "superfly/tap/flyctl"
 # tldr replacement
 # https://tealdeer-rs.github.io/tealdeer/installing.html
 brew "tealdeer"

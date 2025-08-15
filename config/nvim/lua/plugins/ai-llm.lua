@@ -13,27 +13,45 @@ end
 
 ---@enum  LlmModel
 local models = {
+  codegemma_code = "codegemma:7b-code",
   deepseekr1 = "deepseek-r1:14b",
   devstral = "devstral:24b",
   gemma3 = "gemma3:4b-it-q4_K_M",
   gemma3n = "gemma3n:e4b",
+  gpt_oss_large = "gpt-oss:120b",
+  gpt_oss_small = "gpt-oss:20b",
   llama32 = "llama3.2:latest",
   llama4scout = "llama4:scout",
   mistral = "mistral:7b",
-  qwen25coder_small = "qwen2.5-coder:1.5b",
   qwen25coder = "qwen2.5-coder:7b",
   qwen25coder_huge = "qwen2.5-coder:32b",
+  qwen25coder_small = "qwen2.5-coder:1.5b",
   qwen3 = "qwen3:30b",
+  qwen3coder = "qwen3-coder:latest",
+  qwen3coder_30b_q3 = "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF:Q3_K_XL",
+  qwen3coder_30b_q8 = "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF:Q8_K_XL",
   sqlcoder = "sqlcoder:latest",
 }
 
+---@enum (keys) LlmRequestType
+local llm_request_type = {
+  fill_in_the_middle = "fim",
+  one_shot = "one_shot",
+  chat = "chat",
+}
+
+---@param request_type LlmRequestType the type of request for which to choose a model
 ---@return LlmModel
-local function get_preferred_model()
+local function get_preferred_model(request_type)
   if get_hostname() == "mando" then
     return models.qwen25coder_small
   end
 
-  return models.qwen25coder_huge
+  if request_type == "fim" then
+    return models.qwen3coder
+  end
+
+  return models.qwen3coder_30b_q8
 end
 
 local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
@@ -128,19 +146,25 @@ return {
     config = true,
   },
 
-  {
-    "mozanunal/sllm.nvim",
-    dependencies = {
-      "folke/snacks.nvim",
-    },
-    config = function()
-      require("sllm").setup({
-        default_model = get_preferred_model(),
-        notify_func = require("snacks.notifier").notify,
-        pick_func = require("snacks.picker").select,
-      })
-    end,
-  },
+  -- {
+  --   "mozanunal/sllm.nvim",
+  --   dependencies = {
+  --     "folke/snacks.nvim",
+  --   },
+  --   lazy = true,
+  --   keys = {
+  --     {
+  --       "<leader>ss",
+  --     },
+  --   },
+  --   config = function()
+  --     require("sllm").setup({
+  --       default_model = get_preferred_model(llm_request_type.chat),
+  --       notify_func = require("snacks.notifier").notify,
+  --       pick_func = require("snacks.picker").select,
+  --     })
+  --   end,
+  -- },
 
   {
     "olimorris/codecompanion.nvim",
@@ -156,7 +180,7 @@ return {
           return require("codecompanion.adapters").extend("ollama", {
             schema = {
               model = {
-                default = get_preferred_model(),
+                default = get_preferred_model(llm_request_type.chat),
               },
             },
           })
@@ -255,28 +279,6 @@ return {
     opts = {},
   },
 
-  -- {
-  --   "milanglacier/minuet-ai.nvim",
-  --   dependencies = {
-  --     { "nvim-lua/plenary.nvim" },
-  --   },
-  --   cond = false,
-  --   config = function()
-  --     local minuet = require("minuet")
-  --
-  --     minuet.setup({
-  --       provider = "openai_compatible",
-  --       provider_options = {
-  --         openai_compatible = {
-  --           model = get_preferred_model(),
-  --           end_point = "http://127.0.0.1:11434/chat/completions",
-  --           name = "Ollama",
-  --         },
-  --       },
-  --     })
-  --   end,
-  -- },
-
   {
     "milanglacier/minuet-ai.nvim",
     lazy = true,
@@ -291,7 +293,7 @@ return {
       -- of 512, serves as an good starting point to estimate your computing
       -- power. Once you have a reliable estimate of your local computing power,
       -- you should adjust the context window to a larger value.
-      context_window = 512,
+      context_window = 1024,
       provider_options = {
         openai_fim_compatible = {
           -- For Windows users, TERM may not be present in environment variables.
@@ -299,9 +301,9 @@ return {
           api_key = "TERM",
           name = "Ollama",
           end_point = "http://localhost:11434/v1/completions",
-          model = "qwen2.5-coder:1.5b",
+          model = get_preferred_model(llm_request_type.fill_in_the_middle),
           optional = {
-            max_tokens = 56,
+            max_tokens = 512,
             top_p = 0.9,
           },
         },
@@ -326,7 +328,7 @@ return {
       provider = "ollama",
       providers = {
         ollama = {
-          model = get_preferred_model(),
+          model = get_preferred_model(llm_request_type.chat),
           stream = true,
         },
       },

@@ -1,12 +1,17 @@
 # "$schema" = "https://mise.jdx.dev/schema/mise.json"
-
 [tools]
 "asdf:awscli" = "latest"
+
+# interactive rg replacer
 "cargo:rep-grep" = "latest"
+
+"npm:@charmland/crush" = "latest"
+"npm:@qwen-code/qwen-code" = "latest"
+
 "pipx:httpie" = "latest"
+"pipx:litellm" = { version = "latest", extras = "proxy" }
 "pipx:llm" = "latest"
 "pipx:pipenv" = "latest"
-"pipx:litellm" = { version = "latest", extras = "proxy" }
 "pipx:tiptop" = "latest"
 "pipx:yq" = "latest"
 
@@ -17,6 +22,7 @@ aws-sam-cli = "latest"
 bun = "latest"
 elixir = "latest"
 erlang = "latest"
+flyctl = "latest"
 gcloud = "latest"
 go = "latest"
 helm = "latest"
@@ -55,3 +61,4 @@ show_tools = false
 
 [settings.swift]
 gpg_verify = true
+

@@ -38,3 +38,7 @@ Thumbs.db
 # Editor files #
 ################
 .vscode
+
+# Environment/project local settings #
+######################################
+mise.local.toml

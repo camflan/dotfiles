@@ -39,6 +39,7 @@ terraform = "latest"
 usage = "latest"
 uv = "latest"
 vault = "latest"
+tree-sitter = "latest"
 
 [settings]
 go_default_packages_file = "./default-go-packages"

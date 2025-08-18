@@ -1,17 +1,7 @@
 vim.pack.add({
+    { src = "https://github.com/b0o/schemastore.nvim" },
     { src = "https://github.com/neovim/nvim-lspconfig" }
 })
-
-local lsps = {
-  "elixirls",
-  "eslint",
-  "graphql",
-  "jsonls",
-  "lua_ls",
-  "tailwindcss",
-  "terraformls",
-  "yamlls",
-}
 
 vim.lsp.config("*", {
   on_attach = function(_, bufnr)
@@ -30,7 +20,7 @@ vim.lsp.config("*", {
     )
     -- vim.keymap.set({ "n", "v" }, "<leader>da", "<cmd>lua vim.lsp.buf.code_action()<CR>", keymap_opts)
     vim.keymap.set("n", "<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", keymap_opts)
-    vim.keymap.set("n", "<leader>i", "<Cmd>lua vim.lsp.buf.hover()<CR>", keymap_opts)
+    vim.keymap.set("n", "<leader>i", "<cmd>lua vim.lsp.buf.hover()<CR>", keymap_opts)
     vim.keymap.set("n", "<leader>j", "<cmd>lua vim.diagnostic.goto_next()<CR>", keymap_opts)
     vim.keymap.set("n", "<leader>k", "<cmd>lua vim.diagnostic.goto_prev()<CR>", keymap_opts)
     vim.keymap.set("n", "<leader>u", "<cmd>lua vim.diagnostic.open_float()<CR>", keymap_opts)
@@ -54,4 +44,14 @@ vim.lsp.config("*", {
   end,
 })
 
-vim.lsp.enable(lsps)
+vim.lsp.enable({
+  "elixirls",
+  "eslint",
+  "graphql",
+  "jsonls",
+  "lua_ls",
+  "tailwindcss",
+  "terraformls",
+  "yamlls",
+})
+

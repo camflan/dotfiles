@@ -7,7 +7,9 @@ vim.pack.add({
         load = function (o)
             if o.spec.name == "lazydev.nvim" then
                 utils.load_on_filetype("lua", function ()
-                    require("lazydev").setup({
+                    local lazydev = require("lazydev")
+
+                    lazydev.setup({
                         library = {
                             -- See the configuration section for more details
                             -- Load luvit types when the `vim.uv` word is found
@@ -20,8 +22,12 @@ vim.pack.add({
                             { path = "wezterm-types", mods = { "wezterm" } },
                         },
                     })
+
+                    vim.lsp.enable('lua_ls')
+                    vim.lsp.config('lua_ls', { root_dir = function(bufnr, on_dir) on_dir(lazydev.find_workspace(bufnr)) end })
+
                 end
-                )
+                )(o.spec)
             end
         end
     }

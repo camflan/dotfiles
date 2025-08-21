@@ -62,4 +62,4 @@ vim.keymap.set({ "n", "v" }, ";", ":", { desc = "Fast access to :", remap = fals
 vim.g.netrw_liststyle = 3
 vim.keymap.set({ "n" }, "-", "<cmd>Explore<cr>")
 
-vim.keymap.set({ "n" }, "<leader>/", "<cmd>set hlsearch!<cr>", { desc = "Toggle search highlights" })
+vim.keymap.set({ "n" }, "<leader>/", "<cmd>silent nohlsearch<cr>", { desc = "Toggle search highlights" })

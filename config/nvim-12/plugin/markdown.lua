@@ -2,9 +2,7 @@ vim.pack.add({
     { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" }
 })
 
-local md = require("render-markdown")
-
-md.setup({
+require("render-markdown").setup({
     heading = {
         width = "full"
     }

@@ -13,6 +13,7 @@ end
 
 ---@enum  LlmModel
 local models = {
+    codestral = "codestral:22b",
   codegemma_code = "codegemma:7b-code",
   deepseekr1 = "deepseek-r1:14b",
   devstral = "devstral:24b",
@@ -48,7 +49,7 @@ local function get_preferred_model(request_type)
   end
 
   if request_type == "fim" then
-    return models.qwen3coder
+    return models.codestral
   end
 
   return models.qwen3coder_30b_q8

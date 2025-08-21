@@ -4,6 +4,10 @@ vim.g.switch_custom_definitions = {
 }
 
 vim.pack.add(
-    { { src = "https://github.com/AndrewRadev/switch.vim" } }, 
-    { load = true }
+    {
+        { src = "https://github.com/AndrewRadev/switch.vim" }
+    },
+    {
+        load = true
+    }
 )

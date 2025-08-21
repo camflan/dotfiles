@@ -19,7 +19,6 @@ local skeletons = {
 }
 
 local dirname = string.sub(debug.getinfo(1).source, 2, string.len("/plugin/skeletons.lua") * -1)
-
 local group = vim.api.nvim_create_augroup("cf_skeletons", { clear = true })
 
 ---@param pattern string

@@ -40,6 +40,9 @@ alias cat="bat"
 
 alias -s html=open
 
+# temporary alias to my neovim 12 config
+alias n12="mise r neovim-nightly"
+
 setopt inc_append_history
 setopt share_history
 setopt bang_hist

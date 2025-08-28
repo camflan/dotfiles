@@ -1,13 +1,17 @@
 # "$schema" = "https://mise.jdx.dev/schema/mise.json"
+
 [tools]
 "asdf:awscli" = "latest"
 
 # interactive rg replacer
 "cargo:rep-grep" = "latest"
 
+# npm
 "npm:@charmland/crush" = "latest"
 "npm:@qwen-code/qwen-code" = "latest"
+"npm:@vtsls/language-server" = "latest"
 
+# pipx/uvx
 "pipx:httpie" = "latest"
 "pipx:litellm" = { version = "latest", extras = "proxy" }
 "pipx:llm" = "latest"
@@ -28,6 +32,7 @@ go = "latest"
 helm = "latest"
 java = "openjdk-17"
 kubectl = "latest"
+lua-language-server = "latest"
 mage = "latest"
 neovim = "latest"
 node = "lts"
@@ -36,12 +41,10 @@ python = "3.12"
 ruby = "latest"
 rust = "stable"
 terraform = "latest"
+tree-sitter = "latest"
 usage = "latest"
 uv = "latest"
 vault = "latest"
-tree-sitter = "latest"
-lua-language-server = "latest"
-"npm:@vtsls/language-server" = "latest"
 
 [settings]
 go_default_packages_file = "./default-go-packages"
@@ -65,3 +68,15 @@ show_tools = false
 [settings.swift]
 gpg_verify = true
 
+# TODO: remove?
+# [plugins]
+# asdf-awscli = "https://github.com/MetricMike/asdf-awscli.git"
+# clang = "https://github.com/mise-plugins/mise-llvm.git"
+# cmake = "https://github.com/mise-plugins/mise-cmake.git"
+# gcloud = "https://github.com/jthegedus/asdf-gcloud.git"
+# maven = "https://github.com/mise-plugins/asdf-maven.git"
+# nasm = "https://github.com/mise-plugins/mise-nasm.git"
+# pipx = "https://github.com/yozachar/asdf-pipx.git"
+# poetry = "https://github.com/mise-plugins/mise-poetry.git"
+# postgres = "https://github.com/smashedtoatoms/asdf-postgres.git"
+# yarn = "https://github.com/mise-plugins/asdf-yarn.git"

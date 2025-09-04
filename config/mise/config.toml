@@ -10,6 +10,7 @@
 "npm:@charmland/crush" = "latest"
 "npm:@qwen-code/qwen-code" = "latest"
 "npm:@vtsls/language-server" = "latest"
+"npm:vscode-langservers-extracted" = "latest"
 
 # pipx/uvx
 "pipx:httpie" = "latest"
@@ -40,13 +41,12 @@ pkl = "latest"
 python = "3.12"
 ruby = "latest"
 rust = "stable"
+taplo = "latest"
 terraform = "latest"
 tree-sitter = "latest"
 usage = "latest"
 uv = "latest"
 vault = "latest"
-"npm:vscode-langservers-extracted" = "latest"
-taplo = "latest"
 
 [settings]
 go_default_packages_file = "./default-go-packages"

@@ -63,3 +63,7 @@ vim.g.netrw_liststyle = 3
 vim.keymap.set({ "n" }, "-", "<cmd>Explore<cr>")
 
 vim.keymap.set({ "n" }, "<leader>/", "<cmd>silent nohlsearch<cr>", { desc = "Toggle search highlights" })
+
+-- Vim Pack
+vim.keymap.set({ "n" }, "<leader>Pl", function () vim.pack.get() end, { desc = "Get plugins info" })
+vim.keymap.set({ "n" }, "<leader>Pu", function () vim.pack.update() end, { desc = "Update plugins" })

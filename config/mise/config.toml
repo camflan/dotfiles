@@ -45,6 +45,8 @@ tree-sitter = "latest"
 usage = "latest"
 uv = "latest"
 vault = "latest"
+"npm:vscode-langservers-extracted" = "latest"
+taplo = "latest"
 
 [settings]
 go_default_packages_file = "./default-go-packages"

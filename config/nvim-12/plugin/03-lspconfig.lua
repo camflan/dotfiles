@@ -73,6 +73,7 @@ vim.lsp.enable({
     "graphql",
     "jsonls",
     "tailwindcss",
+    "taplo",
     "terraformls",
     "vtsls",
     "yamlls",

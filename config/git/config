@@ -70,6 +70,7 @@
 
 [branch]
     autosetupmerge = true
+	sort = -committerdate
 
 [pager]
     diff = delta
@@ -182,3 +183,9 @@
 
 [init]
     defaultBranch = main
+[rerere]
+	enabled = true
+[column]
+	ui = auto
+[maintenance]
+	repo = /Users/camron/src/github.com/camflan/livekit-egress-bus

@@ -1,0 +1,12 @@
+{
+  "extraCsp": {
+    "hosts": ["http://127.0.0.1:11434"]
+  },
+  "featureFlags": {
+    "rules": true,
+    "ws3": true
+  },
+  "telemetry": {
+    "appDistinctId": "user_36281"
+  }
+}

@@ -135,3 +135,6 @@ config/npm/npmrc
 *.pyc
 
 .aider*
+
+cloudflared/*df401.json
+cloudflared/cert.pem

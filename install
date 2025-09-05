@@ -19,13 +19,6 @@ DOTBOT_BIN="bin/dotbot"
 DOTBOT_DIR="${DOTBOT_LIB_DIR}/dotbot"
 DOTBOT_CMD="${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}"
 
-echo "Updating plugins…"
-cd "${BASEDIR}"
-git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
-git submodule update --init --recursive "${DOTBOT_DIR}"
-echo "done"
-echo
-
 # automatically find/add dotbot plugins to script
 PLUGIN_DIR_OPTS=
 for plug in $DOTBOT_PLUGIN_GLOB; do

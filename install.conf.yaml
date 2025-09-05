@@ -23,6 +23,11 @@
     ~/.vimrc: vimrc  # for legacy vim support - I use neovim by default
     ~/.zshenv: zshenv
 
+    ~/Library/Application Support/:
+      glob: true
+      path: "Application Support/*"
+      relink: true
+
     ~/.config/:
       #
       # NOTE: there's an issue when there is only a single matched file
@@ -30,25 +35,16 @@
       # the issue
       # https://github.com/anishathalye/dotbot/issues/315
       #
+      exclude: [config/asdf, config/zsh]  # handled later
       glob: true
       path: config/*
       relink: true
-      exclude: [config/asdf, config/zsh]  # handled later
 
     ~/.config/zsh/:
+      create: true
       glob: true
       path: config/zsh/*
       prefix: .  # add a '.' to each filename
-      create: true
-    # ~/.tool-versions:
-    #   path: ./.tool-versions
-    #   create: true
-    # ~/.version-fox/.tool-versions:
-    #   path: ./.tool-versions
-    #   create: true
-    # ~/.version-fox/config.yaml:
-    #   path: ./version-fox-config.yaml
-    #   create: true
 
     # XDG paths
     ~/.cache:
@@ -57,25 +53,14 @@
 - git:
     ~/.config/zsh/.zprezto:
       description: Install zprezto
-      url: https://github.com/sorin-ionescu/prezto.git
       recursive: true
+      url: https://github.com/sorin-ionescu/prezto.git
 
 - shell:
     # Update all of our submodules (dotbot, dotbot plugins)
-    - command: git submodule update --init --recursive
+    - command: git submodule update --remote --merge
       description: Installing submodules
       stderr: true
-
-    - command: ./scripts/install-krew.sh
-      description: Install kubectl plugin manager `krew`
-      stdlog: true
-      stderr: true
-    #
-    # Installed with 'mise'. Remove this if mise works well as replacement for asdf
-    # - command: ./scripts/install-pkl.sh
-    #   description: Install pkl
-    #   stdlog: true
-    #   stderr: true
 
 # HOMEBREW
 - install-brew: true

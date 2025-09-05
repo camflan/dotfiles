@@ -187,3 +187,5 @@
 	enabled = true
 [column]
 	ui = auto
+[maintenance]
+	repo = /Users/camron/src/github.com/camflan/livekit-egress-bus

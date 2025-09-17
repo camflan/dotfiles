@@ -70,6 +70,7 @@ vim.lsp.config("*", {
 vim.lsp.enable({
     "elixirls",
     "eslint",
+    "gopls",
     "graphql",
     "jsonls",
     "tailwindcss",

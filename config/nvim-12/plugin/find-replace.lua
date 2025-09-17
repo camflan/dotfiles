@@ -6,6 +6,6 @@ utils.ensure_installed({
 
 vim.pack.add({
     { src = "https://github.com/MagicDuck/grug-far.nvim" }
-})
+}, { load = true })
 
 require('grug-far').setup({})

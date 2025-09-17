@@ -7,6 +7,10 @@
     "typescript": {
       "command": "typescript-language-server",
       "args": ["--stdio"]
+    },
+    "vtsls": {
+      "command": "vtsls",
+      "args": ["--stdio"]
     }
   },
   "providers": {

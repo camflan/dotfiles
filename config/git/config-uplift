@@ -1,3 +1,6 @@
 # vim:ft=ini
 [user]
     email = camron@uplift.ltd
+
+[core]
+    excludesfile = ignore-uplift

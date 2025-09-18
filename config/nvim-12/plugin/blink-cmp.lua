@@ -1,13 +1,42 @@
-vim.pack.add({
-    { src = "https://github.com/rafamadriz/friendly-snippets" },
-    { src = "https://github.com/milanglacier/minuet-ai.nvim" },
-    { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("^1") }
-})
+vim.pack.add(
+    {
+        { src = "https://github.com/nvim-lua/plenary.nvim" },
+        { src = "https://github.com/rafamadriz/friendly-snippets" },
+        { src = "https://github.com/milanglacier/minuet-ai.nvim" },
+        { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("^1") }
+    },
+    {
+        load = true
+    })
+
+
+---@enum  LlmModelName
+local models = {
+    codestral = "codestral:22b",
+  codegemma_code = "codegemma:7b-code",
+  deepseekr1 = "deepseek-r1:14b",
+  devstral = "devstral:24b",
+  gemma3 = "gemma3:4b-it-q4_K_M",
+  gemma3n = "gemma3n:e4b",
+  gpt_oss_large = "gpt-oss:120b",
+  gpt_oss_small = "gpt-oss:20b",
+  llama32 = "llama3.2:latest",
+  llama4scout = "llama4:scout",
+  mistral = "mistral:7b",
+  qwen25coder = "qwen2.5-coder:7b",
+  qwen25coder_huge = "qwen2.5-coder:32b",
+  qwen25coder_small = "qwen2.5-coder:1.5b",
+  qwen3 = "qwen3:30b",
+  qwen3coder = "qwen3-coder:latest",
+  qwen3coder_30b_q3 = "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF:Q3_K_XL",
+  qwen3coder_30b_q8 = "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF:Q8_K_XL",
+  sqlcoder = "sqlcoder:latest",
+}
 
 local default_blink_sources = {
     -- "lazydev",
     "lsp",
-    -- "minuet",
+    "minuet",
     "path",
     "snippets",
     "buffer",
@@ -22,8 +51,27 @@ local blink_sources = {
     },
 }
 
+
+local minuet_request_timeout_seconds = 10
+
+require("minuet").setup({
+    provider = "openai_fim_compatible",
+    n_completions = 3, -- recommend for local model for resource saving
+    context_window = 16000,
+    context_ratio = 0.7,
+    request_timeout = minuet_request_timeout_seconds,
+    provider_options = {
+        openai_fim_compatible = {
+            api_key = "TERM",
+            name = "Ollama",
+            end_point = "http://localhost:11434/v1/completions",
+            model = models.qwen25coder_small,
+        },
+    },
+})
+
 require("blink.cmp").setup({
-    fuzzy = { 
+    fuzzy = {
         implementation = 'prefer_rust',
         prebuilt_binaries = {
             download = true,
@@ -105,7 +153,7 @@ require("blink.cmp").setup({
                 async = true,
                 -- Should match minuet.config.request_timeout * 1000,
                 -- since minuet.config.request_timeout is in seconds
-                timeout_ms = 3000,
+                timeout_ms = minuet_request_timeout_seconds * 1000,
                 score_offset = 20, -- Gives minuet higher priority among suggestions
             },
         },

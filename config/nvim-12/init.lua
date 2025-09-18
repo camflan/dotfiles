@@ -64,6 +64,10 @@ vim.keymap.set({ "n" }, "-", "<cmd>Explore<cr>")
 
 vim.keymap.set({ "n" }, "<leader>/", "<cmd>silent nohlsearch<cr>", { desc = "Toggle search highlights" })
 
+-- Move lines up/down
+vim.keymap.set({ "v" }, "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selected lines down" })
+vim.keymap.set({ "v" }, "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selected lines up" })
+
 -- Vim Pack
-vim.keymap.set({ "n" }, "<leader>Pl", function () vim.pack.get() end, { desc = "Get plugins info" })
+vim.keymap.set({ "n" }, "<leader>Pl", function () vim.pack.get() end, { desc = "Get plugins info" }) -- doesn't work?
 vim.keymap.set({ "n" }, "<leader>Pu", function () vim.pack.update() end, { desc = "Update plugins" })

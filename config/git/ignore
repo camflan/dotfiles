@@ -42,3 +42,5 @@ Thumbs.db
 # Environment/project local settings #
 ######################################
 mise.local.toml
+
+**/.claude/settings.local.json

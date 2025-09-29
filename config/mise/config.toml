@@ -47,6 +47,9 @@ tree-sitter = "latest"
 usage = "latest"
 uv = "latest"
 vault = "latest"
+"npm:@neovate/code" = "latest"
+"npm:@astrojs/language-server" = "latest"
+"npm:@anthropic-ai/claude-code" = "latest"
 
 [settings]
 go_default_packages_file = "./default-go-packages"

@@ -13,6 +13,12 @@
       "args": ["--stdio"]
     }
   },
+  "options": {
+    "disable_metrics": true
+  },
+  "permissions": {
+    "allowed_tools": ["grep", "ls", "view"]
+  },
   "providers": {
     "jan": {
       "name": "Jan",

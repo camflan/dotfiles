@@ -50,6 +50,7 @@ vault = "latest"
 "npm:@neovate/code" = "latest"
 "npm:@astrojs/language-server" = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
+"pipx:claude-monitor" = "latest"
 
 [settings]
 go_default_packages_file = "./default-go-packages"

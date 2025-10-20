@@ -3,6 +3,9 @@
 #
 
 - defaults:
+    crontab:
+      stderr: true
+      stdout: true
     homebrew:
       stderr: true
       stdout: true
@@ -14,6 +17,13 @@
       stderr: true
 
 - clean: ['~']
+
+- crontab:
+  # Claude code runs in 5 hour session windows. This starts a session early in the morning
+  # so that I can fit 3 sessions in, vs 2
+  # every day at 5am
+  - command: claude -p "Good morning"
+    time: 0 5 * * *
 
 - link:
     ~/.aider.conf.yml: aider.conf.yml

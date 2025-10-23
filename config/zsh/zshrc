@@ -1,7 +1,6 @@
 # ENV
 # loaded from .zshenv
 
-
 # asdf | mise | vfox
 environment_manager=mise
 # direnv | mise
@@ -9,61 +8,14 @@ local_env_manager=mise
 # atuin | mcfly
 history_manager=atuin
 
+# prefixing these files with dot because of my dotbot config, maybe change this later
+source "$ZDOTDIR/.aliases.zsh"
+source "$ZDOTDIR/.options.zsh"
 
 # setup wezterm shell integration: https://wezfurlong.org/wezterm/shell-integration.html
 . "$CBFDOTFILES_DIR/config/wezterm/shell-integration.sh"
 
-export PATH="$CBFDOTFILES_DIR/config/zsh/zfunctions:$PATH"
-
-# aliases
-alias oh="open ."
-
-alias ls="eza --long --grid --header --classify --all --group-directories-first --git"
-alias lsv="/bin/ls"
-alias ll="ls -lahL"
-
-# foregrounds a backgrounded job
-alias fg1="fg %1"
-alias fg2="fg %2"
-alias fg3="fg %3"
-
-alias sbook="cd $HOME/src/srcbook; npm run start"
-
-# opens oil in neovim
-alias oil="nvim -c Oil"
-
-alias dc="docker compose"
-alias nr="npm run"
-
-# bat supports paging, syntax highlighting, searching, etc
-alias cat="bat"
-
-alias -s html=open
-
-# temporary alias to my neovim 12 config
-alias n12="mise r neovim-nightly"
-
-setopt inc_append_history
-setopt share_history
-setopt bang_hist
-setopt hist_verify
-
-setopt autopushd pushdminus pushdsilent pushdtohome
-setopt autocd
-setopt cdable_vars
-
-setopt complete_in_word
-setopt list_ambiguous
-setopt glob_complete
-setopt rec_exact
-
-setopt bad_pattern
-setopt equals
-setopt extended_glob
-setopt glob_dots
-
-setopt noclobber
-setopt correct
+export PATH="$CBFDOTFILES_DIR/config/zsh/zfunctions:$CBFDOTFILES_DIR/bin:$PATH"
 
 # homebrew
 BREW_DIR=/opt/homebrew

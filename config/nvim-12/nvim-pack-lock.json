@@ -1,0 +1,89 @@
+{
+  "plugins": {
+    "blink.cmp": {
+      "version": "1.0.0 - 2.0.0"
+    },
+    "command.nvim": [],
+    "fastaction.nvim": [],
+    "fidget.nvim": {
+      "rev": "3f54759"
+    },
+    "friendly-snippets": [],
+    "fzf-lua": {
+      "rev": "9244bd4"
+    },
+    "gitsigns.nvim": {
+      "rev": "20ad441"
+    },
+    "grug-far.nvim": {
+      "rev": "3e72397"
+    },
+    "hop.nvim": [],
+    "iswap.nvim": [],
+    "lazydev.nvim": {
+      "rev": "01bc2aa"
+    },
+    "lualine.nvim": {
+      "rev": "3946f01"
+    },
+    "minuet-ai.nvim": {
+      "rev": "3fb81e1"
+    },
+    "nui.nvim": [],
+    "nvim-autopairs": {
+      "rev": "7a2c97c"
+    },
+    "nvim-chainsaw": {
+      "rev": "88f6f44"
+    },
+    "nvim-lspconfig": {
+      "rev": "ececa53"
+    },
+    "nvim-surround": {
+      "rev": "0cadeb0"
+    },
+    "nvim-treesitter": [],
+    "nvim-ts-autotag": [],
+    "nvim-web-devicons": {
+      "rev": "b8221e4"
+    },
+    "plenary.nvim": [],
+    "render-markdown.nvim": {
+      "rev": "475d3ad"
+    },
+    "schemastore.nvim": {
+      "rev": "54994d5"
+    },
+    "smart-splits.nvim": {
+      "rev": "9a26145"
+    },
+    "switch.vim": [],
+    "template-string.nvim": [],
+    "todo-comments.nvim": {
+      "rev": "19d461d"
+    },
+    "tokyonight.nvim": {
+      "rev": "1199c0e"
+    },
+    "tsc.nvim": [],
+    "twoslash-queries.nvim": {
+      "rev": "1262c20"
+    },
+    "undotree": {
+      "rev": "0f1c981"
+    },
+    "vim-abolish": [],
+    "vim-characterize": [],
+    "vim-fugitive": [],
+    "vim-repeat": [],
+    "vim-rsi": [],
+    "vim-speeddating": [],
+    "vim-unimpaired": [],
+    "wezterm-types": {
+      "rev": "39000e4"
+    },
+    "wtf.nvim": {
+      "rev": "6243721"
+    }
+  }
+}

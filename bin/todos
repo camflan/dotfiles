@@ -1,0 +1,427 @@
+#!/bin/sh
+#
+# Check for new TODO/FIXME/etc comments added in commits on the current branch
+#
+# Usage:
+#   todos [options] [base_branch]
+#
+# Options:
+#   -i, --interactive    Prompt to continue/abort after showing results
+#   -c N, --context N    Show N lines of context around each match (default: 3)
+#   -h, --help           Show this help message
+#
+# If base_branch is not provided, it will compare against the remote tracking
+# branch, or fall back to origin/main or origin/master.
+#
+# Exit codes:
+#   0 - No new comments found or user chose to continue
+#   1 - New comments found (non-interactive) or user chose to abort
+#   2 - Error (e.g., not in a git repository)
+
+# Keywords to search for (case-insensitive)
+keywords="TODO|FIXME|XXX|HACK|NOTE|BUG"
+
+# Color codes for output
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+GRAY='\033[0;90m'
+NC='\033[0m' # No Color
+
+# Default options
+interactive=false
+context_lines=3
+check_uncommitted=false
+base_branch=""
+
+# Show help
+show_help() {
+    cat << EOF
+Usage: todos [options] [base_branch]
+
+Check for new TODO/FIXME/etc comments added in commits on the current branch.
+
+Options:
+  -i, --interactive    Prompt to continue/abort after showing results
+  -c N, --context N    Show N lines of context around each match (default: 3)
+  -u, --uncommitted    Also check tracked but uncommitted files (staged/unstaged)
+  -h, --help           Show this help message
+
+Arguments:
+  base_branch          Branch to compare against (default: auto-detect from
+                       upstream or origin/main or origin/master)
+
+Examples:
+  todos                           # Check current branch (non-interactive)
+  todos -i                        # Check and prompt
+  todos -c 5                      # Show 5 lines of context
+  todos -u                        # Check commits and uncommitted changes
+  todos -i -c 1 origin/develop    # Interactive, 1 line context, compare to develop
+
+Exit codes:
+  0 - No new comments found or user chose to continue
+  1 - New comments found (non-interactive) or user chose to abort
+  2 - Error (e.g., not in a git repository)
+
+EOF
+}
+
+# Parse arguments
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -i|--interactive)
+            interactive=true
+            shift
+            ;;
+        -c|--context)
+            if [ -z "$2" ] || ! [ "$2" -eq "$2" ] 2>/dev/null; then
+                echo "${RED}Error: -c requires a numeric argument${NC}" >&2
+                exit 2
+            fi
+            context_lines="$2"
+            shift 2
+            ;;
+        -u|--uncommitted)
+            check_uncommitted=true
+            shift
+            ;;
+        -h|--help)
+            show_help
+            exit 0
+            ;;
+        -*)
+            echo "${RED}Error: Unknown option '$1'${NC}" >&2
+            echo "Use -h for help" >&2
+            exit 2
+            ;;
+        *)
+            # Assume it's the base branch
+            base_branch="$1"
+            shift
+            ;;
+    esac
+done
+
+# Check if we're in a git repository
+if ! git rev-parse --git-dir > /dev/null 2>&1; then
+    echo "${RED}Error: Not in a git repository${NC}" >&2
+    exit 2
+fi
+
+# Determine the base branch to compare against
+if [ -z "$base_branch" ]; then
+    # Try to get the upstream branch
+    upstream=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null)
+
+    if [ -n "$upstream" ]; then
+        base_branch="$upstream"
+    else
+        # Fall back to origin/main or origin/master
+        main_branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')
+        if [ -z "$main_branch" ]; then
+            if git rev-parse --verify origin/main >/dev/null 2>&1; then
+                main_branch="main"
+            elif git rev-parse --verify origin/master >/dev/null 2>&1; then
+                main_branch="master"
+            else
+                echo "${RED}Error: Could not determine base branch${NC}" >&2
+                echo "Usage: todos [base_branch]" >&2
+                exit 2
+            fi
+        fi
+        base_branch="origin/$main_branch"
+    fi
+fi
+
+# Verify the base branch exists
+if ! git rev-parse --verify "$base_branch" >/dev/null 2>&1; then
+    echo "${RED}Error: Base branch '$base_branch' not found${NC}" >&2
+    exit 2
+fi
+
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+# Get the current HEAD
+current_head=$(git rev-parse HEAD)
+
+# Create comparison range
+range="$base_branch..$current_head"
+
+# Check if there are any commits in the range
+if ! git rev-list "$range" >/dev/null 2>&1; then
+    echo "${GREEN}✓ No commits to check${NC}"
+    exit 0
+fi
+
+commit_count=$(git rev-list --count "$range")
+if [ "$commit_count" -eq 0 ]; then
+    echo "${GREEN}✓ No new commits since $base_branch${NC}"
+    exit 0
+fi
+
+# Track if we found any comments
+found_comments=false
+
+# Get list of commits in the range
+commits=$(git rev-list --reverse "$range")
+
+# Create temp file for storing results
+temp_results=$(mktemp)
+
+# Process each commit to find TODOs
+for commit_sha in $commits; do
+    commit_date=$(git show -s --format=%ai "$commit_sha" | cut -d' ' -f1)
+    commit_msg=$(git log -1 --format=%s "$commit_sha")
+
+    # Get the diff for this commit and find lines with keywords
+    git show --format="" --unified=0 "$commit_sha" | \
+    grep -n "^+" | \
+    grep -v "^[0-9]*:+++" | \
+    grep -iE "$keywords" | \
+    while IFS=: read -r line_in_diff content; do
+        # We found a match - now extract file and line info
+        # We need to find which file this is in by looking backwards in the diff
+
+        # Get the full diff again to find file context
+        file_info=$(git show --format="" --unified=0 "$commit_sha" | head -n "$line_in_diff" | grep "^+++" | tail -1)
+
+        if [ -n "$file_info" ]; then
+            filename=$(echo "$file_info" | sed 's|^+++ b/||')
+
+            # Get the line number from the diff hunk header
+            hunk_header=$(git show --format="" --unified=0 "$commit_sha" | head -n "$line_in_diff" | grep "^@@" | tail -1)
+
+            # Extract the starting line number from the hunk header (format: @@ -old +new @@)
+            new_line=$(echo "$hunk_header" | sed 's/.*+\([0-9]*\).*/\1/')
+
+            # Count how many + lines we've seen since the hunk header to calculate exact line
+            lines_since_hunk=$(git show --format="" --unified=0 "$commit_sha" | \
+                head -n "$line_in_diff" | \
+                awk -v hunk="$hunk_header" '
+                    $0 == hunk { found=1; count=0; next }
+                    found && /^[+]/ && !/^[+]{3}/ { count++ }
+                    END { print count }
+                ')
+
+            actual_line=$((new_line + lines_since_hunk - 1))
+
+            # Store the result
+            echo "$commit_sha|$commit_date|$filename|$actual_line|$content" >> "$temp_results"
+        fi
+    done
+done
+
+# Update found_comments flag if we have any results from commits
+commits_with_todos=0
+if [ -s "$temp_results" ]; then
+    found_comments=true
+    # Count unique commits in results
+    commits_with_todos=$(cut -d'|' -f1 "$temp_results" | sort -u | wc -l | tr -d ' ')
+fi
+
+# Check for uncommitted changes if requested
+uncommitted_count=0
+if [ "$check_uncommitted" = true ]; then
+    # Create temp file for uncommitted results
+    temp_uncommitted=$(mktemp)
+
+    # Function to process diff and extract TODOs
+    process_diff() {
+        local diff_cmd="$1"
+        local status_label="$2"
+
+        $diff_cmd | \
+        grep -n "^+" | \
+        grep -v "^[0-9]*:+++" | \
+        grep -iE "($keywords)" | \
+        while IFS=: read -r line_in_diff content; do
+            # Find which file this is in by looking backwards in the diff
+            file_info=$($diff_cmd | head -n "$line_in_diff" | grep "^+++" | tail -1)
+
+            if [ -n "$file_info" ]; then
+                filename=$(echo "$file_info" | sed 's|^+++ b/||')
+
+                # Get the line number from the diff hunk header
+                hunk_header=$($diff_cmd | head -n "$line_in_diff" | grep "^@@" | tail -1)
+
+                # Extract the starting line number from the hunk header
+                new_line=$(echo "$hunk_header" | sed 's/.*+\([0-9]*\).*/\1/')
+
+                # Count how many + lines we've seen since the hunk header
+                lines_since_hunk=$($diff_cmd | \
+                    head -n "$line_in_diff" | \
+                    awk -v hunk="$hunk_header" '
+                        $0 == hunk { found=1; count=0; next }
+                        found && /^[+]/ && !/^[+]{3}/ { count++ }
+                        END { print count }
+                    ')
+
+                actual_line=$((new_line + lines_since_hunk - 1))
+
+                # Store the result with special marker for uncommitted
+                echo "UNCOMMITTED|$status_label|$filename|$actual_line|$content" >> "$temp_uncommitted"
+            fi
+        done
+    }
+
+    # Check staged changes (including new files)
+    process_diff "git diff --cached --unified=0" "staged"
+
+    # Check unstaged changes in tracked files
+    process_diff "git diff --unified=0" "unstaged"
+
+    # Append uncommitted results to main results and update counts
+    if [ -s "$temp_uncommitted" ]; then
+        cat "$temp_uncommitted" >> "$temp_results"
+        uncommitted_count=$(wc -l < "$temp_uncommitted")
+        found_comments=true
+    fi
+    rm -f "$temp_uncommitted"
+fi
+
+# If we found comments, display them
+if [ "$found_comments" = true ]; then
+    echo ""
+    echo "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+
+    # Build the message based on what we found
+    if [ "$commits_with_todos" -gt 0 ] && [ "$uncommitted_count" -gt 0 ]; then
+        echo "${YELLOW}⚠  Found new TODO/FIXME comments in $commits_with_todos commit(s) + uncommitted changes:${NC}"
+    elif [ "$commits_with_todos" -gt 0 ]; then
+        echo "${YELLOW}⚠  Found new TODO/FIXME comments in $commits_with_todos commit(s):${NC}"
+    elif [ "$uncommitted_count" -gt 0 ]; then
+        echo "${YELLOW}⚠  Found new TODO/FIXME comments in uncommitted changes:${NC}"
+    fi
+
+    echo "${YELLOW}   Comparing: ${BLUE}$base_branch${YELLOW}..${BLUE}$current_branch${NC}"
+    echo "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+
+    # Group results by commit
+    current_commit=""
+    while IFS='|' read -r commit_sha commit_date filename line_num content; do
+        # Check if this is an uncommitted change
+        if [ "$commit_sha" = "UNCOMMITTED" ]; then
+            # commit_date field contains the status (staged/unstaged)
+            status="$commit_date"
+
+            if [ "$current_commit" != "UNCOMMITTED" ]; then
+                if [ -n "$current_commit" ]; then
+                    echo ""
+                fi
+                current_commit="UNCOMMITTED"
+                echo "${CYAN}Uncommitted changes${NC}"
+                echo ""
+            fi
+
+            echo "  ${GREEN}$filename:$line_num${NC} ${GRAY}($status)${NC}"
+
+            # Show context lines from working directory
+            if [ -f "$filename" ]; then
+                start_line=$((line_num - context_lines))
+                if [ $start_line -lt 1 ]; then
+                    start_line=1
+                fi
+                end_line=$((line_num + context_lines))
+
+                # Extract and display the lines with context
+                awk -v start="$start_line" -v end="$end_line" -v target="$line_num" '
+                    NR >= start && NR <= end {
+                        if (NR == target) {
+                            printf "    %4d: ➜ %s\n", NR, $0
+                        } else {
+                            printf "    %4d:   %s\n", NR, $0
+                        }
+                    }
+                ' "$filename"
+            else
+                # File might have been deleted
+                clean_line=$(echo "$content" | sed 's/^+//')
+                echo "    ${CYAN}➜${NC} $clean_line"
+            fi
+            echo ""
+        else
+            # Regular commit
+            if [ "$commit_sha" != "$current_commit" ]; then
+                if [ -n "$current_commit" ]; then
+                    echo ""
+                fi
+                current_commit="$commit_sha"
+                commit_msg=$(git log -1 --format=%s "$commit_sha")
+                echo "${BLUE}Commit: $commit_sha${NC} ${GRAY}($commit_date)${NC}"
+                echo "${GRAY}  $commit_msg${NC}"
+                echo ""
+            fi
+
+            echo "  ${GREEN}$filename:$line_num${NC}"
+
+            # Show context lines around the match
+            # First, get the file content at this commit
+            if git show "$commit_sha:$filename" >/dev/null 2>&1; then
+                start_line=$((line_num - context_lines))
+                if [ $start_line -lt 1 ]; then
+                    start_line=1
+                fi
+                end_line=$((line_num + context_lines))
+
+                # Extract and display the lines with context
+                git show "$commit_sha:$filename" | \
+                awk -v start="$start_line" -v end="$end_line" -v target="$line_num" '
+                    NR >= start && NR <= end {
+                        if (NR == target) {
+                            printf "    %4d: ➜ %s\n", NR, $0
+                        } else {
+                            printf "    %4d:   %s\n", NR, $0
+                        }
+                    }
+                '
+            else
+                # File might have been renamed or deleted, just show the content from diff
+                clean_line=$(echo "$content" | sed 's/^+//')
+                echo "    ${CYAN}➜${NC} $clean_line"
+            fi
+            echo ""
+        fi
+    done < "$temp_results"
+
+    echo "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+fi
+
+# Clean up
+rm -f "$temp_results"
+
+# Handle interactive prompt or exit
+if [ "$found_comments" = true ]; then
+    if [ "$interactive" = true ]; then
+        echo ""
+        printf "${YELLOW}Continue?${NC} [y/N] "
+
+        # Read from terminal
+        if [ -t 0 ]; then
+            read -r response
+        else
+            read -r response < /dev/tty
+        fi
+
+        case "$response" in
+            [yY][eE][sS]|[yY])
+                echo "${GREEN}✓ Continuing...${NC}"
+                exit 0
+                ;;
+            *)
+                echo "${RED}✗ Aborted${NC}"
+                exit 1
+                ;;
+        esac
+    else
+        # Non-interactive mode, just exit with code 1
+        exit 1
+    fi
+else
+    echo ""
+    echo "${GREEN}✓ No new TODO/FIXME comments found${NC}"
+fi
+
+exit 0

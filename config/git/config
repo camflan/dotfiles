@@ -65,6 +65,7 @@
     attributesfile = /Users/camron/.gitattributes
     editor = nvim
     excludesfile = /Users/camron/.gitignore_global
+    hooksPath = ~/.config/git/hooks
     pager = delta
     trustctime = false
 

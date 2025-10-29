@@ -51,6 +51,8 @@ vault = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
 "pipx:claude-monitor" = "latest"
 jj = "latest"
+fnox = "latest"
+age = "latest"
 
 [settings]
 go_default_packages_file = "./default-go-packages"

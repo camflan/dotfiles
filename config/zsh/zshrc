@@ -7,6 +7,8 @@ environment_manager=mise
 local_env_manager=mise
 # atuin | mcfly
 history_manager=atuin
+# "fnox" | "none"
+secrets_manager=fnox
 
 # prefixing these files with dot because of my dotbot config, maybe change this later
 source "$ZDOTDIR/.aliases.zsh"
@@ -45,6 +47,10 @@ elif [ "$environment_manager" = "mise" ]; then
     eval "$(mise activate zsh)"
 fi
 
+if [ "$secrets_manager" = "fnox" ]; then
+    # https://fnox.jdx.dev
+    eval "$(fnox activate zsh)"
+fi
 
 # FASD
 # Quick jump to directories/etc

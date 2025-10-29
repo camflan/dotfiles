@@ -19,7 +19,7 @@
 #   2 - Error (e.g., not in a git repository)
 
 # Keywords to search for (case-insensitive)
-keywords="TODO|FIXME|XXX|HACK|NOTE|BUG"
+keywords="TODO|FIXME|BUG"
 
 # Color codes for output
 RED='\033[0;31m'

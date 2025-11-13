@@ -53,6 +53,7 @@ vault = "latest"
 jj = "latest"
 fnox = "latest"
 age = "latest"
+"ubi:block/goose" = "latest"
 
 [settings]
 go_default_packages_file = "./default-go-packages"

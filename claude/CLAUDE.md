@@ -10,18 +10,24 @@ Be as concise as possible, even at the expense of grammar.
 - Prefer file-level constants to magic numbers/strings, lift to project-level contants that load from env if needed in several places or if it's an important setting that can vary between environments
 
 # Git
-- Use branches named like `camron/my-new-branch-name`
+- Name new branches starting with `camron/`. If working a ticket/issue, add the issue number after the `/`
 - Use `gh` for all github actions
+- Prefer rebasing to merges
 
 # TypeScript
-- Prefer declarative functions, Array/iterable methods to declaring an array and pushing onto it
+- Prefer declarative functions and immutable data structures as much as possible
+- Prefer Array/iterable methods instead of declaring an array and pushing onto it
 - Prefer flatMap instead of filter + map to save iterations
 - Prefer types to interfaces where possible
 - Always export types for exported functions
+- Prefer named exports to default
+- Avoid barrel files
+- Derive types from other types, schemas, etc as much as possible
 - Prefer named types to anonymous types
 - Avoid Enums and use string unions unless absolutely necessary
-- File level function declarations should use the function keyword
+- File level function declarations should use the function keyword and utility functions should be placed at the end of the file
 - Avoid JSDocs when there are typescript types. Add comments to TS types instead
+- Avoid return type annotations where possible
 
 # Workflow
 - After each group of steps, commit changes with descriptive, but concise, commit message

@@ -36,7 +36,7 @@ vim.pack.add(
 local default_blink_sources = {
     -- "lazydev",
     "lsp",
-    "minuet",
+    -- "minuet",
     "path",
     "snippets",
     "buffer",
@@ -59,30 +59,30 @@ local mlx_models = {
 
 local minuet_model = mlx_models.deepseek_coder
 
-local minuet_request_timeout_seconds = 10
-
-require("minuet").setup({
-    notify = "debug",
-    provider = "openai_fim_compatible",
-    n_completions = 3, -- recommend for local model for resource saving
-    context_window = 1024,
-    context_ratio = 0.7,
-    request_timeout = minuet_request_timeout_seconds,
-    provider_options = {
-        -- openai_fim_compatible = {
-        --     api_key = "TERM",
-        --     name = "Ollama",
-        --     end_point = "http://localhost:11434/v1/completions",
-        --     model = models.qwen25coder_small,
-        -- },
-        openai_fim_compatible = {
-            api_key = "TERM",
-            name = "MLX",
-            end_point = "http://localhost:1234/v1/completions",
-            model = minuet_model,
-        },
-    },
-})
+-- local minuet_request_timeout_seconds = 10
+--
+-- require("minuet").setup({
+--     notify = "debug",
+--     provider = "openai_fim_compatible",
+--     n_completions = 3, -- recommend for local model for resource saving
+--     context_window = 1024,
+--     context_ratio = 0.7,
+--     request_timeout = minuet_request_timeout_seconds,
+--     provider_options = {
+--         -- openai_fim_compatible = {
+--         --     api_key = "TERM",
+--         --     name = "Ollama",
+--         --     end_point = "http://localhost:11434/v1/completions",
+--         --     model = models.qwen25coder_small,
+--         -- },
+--         openai_fim_compatible = {
+--             api_key = "TERM",
+--             name = "MLX",
+--             end_point = "http://localhost:1234/v1/completions",
+--             model = minuet_model,
+--         },
+--     },
+-- })
 
 require("blink.cmp").setup({
     fuzzy = {
@@ -161,15 +161,15 @@ require("blink.cmp").setup({
                 -- make lazydev completions top priority (see `:h blink.cmp`)
                 score_offset = 100,
             },
-            minuet = {
-                name = "minuet",
-                module = "minuet.blink",
-                async = true,
-                -- Should match minuet.config.request_timeout * 1000,
-                -- since minuet.config.request_timeout is in seconds
-                timeout_ms = minuet_request_timeout_seconds * 1000,
-                score_offset = 20, -- Gives minuet higher priority among suggestions
-            },
+            -- minuet = {
+            --     name = "minuet",
+            --     module = "minuet.blink",
+            --     async = true,
+            --     -- Should match minuet.config.request_timeout * 1000,
+            --     -- since minuet.config.request_timeout is in seconds
+            --     timeout_ms = minuet_request_timeout_seconds * 1000,
+            --     score_offset = 20, -- Gives minuet higher priority among suggestions
+            -- },
         },
 
         min_keyword_length = function(ctx)

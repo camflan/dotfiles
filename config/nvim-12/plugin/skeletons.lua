@@ -7,6 +7,9 @@
 
 ---@type table<string, SkeletonConfig>
 local skeletons = {
+    ["*.html"] = {
+        skeleton = "index.html"
+    },
     ["*.sh"] = {
         skeleton = "skeleton.sh",
     },

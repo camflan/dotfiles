@@ -1,4 +1,6 @@
 # "$schema" = "https://mise.jdx.dev/schema/mise.json"
+[env]
+NVIM_APPNAME = "nvim-12"
 
 [tools]
 "asdf:awscli" = "latest"
@@ -25,6 +27,8 @@
 "pipx:tiptop" = "latest"
 "pipx:yq" = "latest"
 
+"ubi:RhetTbull/osxphotos" = "latest"
+"ubi:achristmascarl/rainfrog" = "latest"
 "ubi:block/goose" = "latest"
 "ubi:sst/opencode" = "latest"
 
@@ -44,7 +48,7 @@ jj = "latest"
 kubectl = "latest"
 lua-language-server = "latest"
 mage = "latest"
-neovim = "latest"
+neovim = "ref:nightly"
 node = "lts"
 pkl = "latest"
 python = "3.12"

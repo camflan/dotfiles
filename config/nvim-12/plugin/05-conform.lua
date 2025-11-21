@@ -17,9 +17,17 @@ conform.setup({
         -- Elixir - mix format is the standard
         elixir = { "mix" },
 
+        -- Python - prefer ruff (fast), fallback to traditional toolchain
+        python = function(bufnr)
+            if conform.get_formatter_info("ruff_format", bufnr).available then
+                return { "ruff_format", "ruff_fix" }
+            else
+                return { "isort", "black", "ssort" }
+            end
+        end,
+
         -- Other languages
         lua = { "stylua" },
-        python = { "ruff_format", "ruff_fix" },
         go = { "gofmt" },
         rust = { "rustfmt" },
         terraform = { "terraform_fmt" },

@@ -1,198 +1,426 @@
+# ==============================================================================
+# HOMEBREW TAPS
+# ==============================================================================
+
 tap "1password/tap"
 tap "dustinblackman/tap"
 tap "homebrew/bundle"
+tap "k1LoW/tap"
+tap "oven-sh/bun"
 tap "ramiawar/dataline"
+tap "trycua/lume"  # Mac/Linux VM manager using macOS hypervisor
 
-# Mise.
-# asdf/vfox/direnv replacement
+
+# ==============================================================================
+# PACKAGE & VERSION MANAGERS
+# ==============================================================================
+
+# Mise - Modern asdf/vfox/direnv replacement
+# Universal tool version manager and task runner
 # https://mise.jdx.dev/installing-mise.html#homebrew
 brew "mise"
 
-# Trying to use from mise for these
-# brew "bun"
-# brew "neovim"
+# Note: The following are managed via mise instead of brew:
+# - bun
+# - neovim
 
-# docker replacement https://orbstack.dev/download
+
+# ==============================================================================
+# CONTAINERS & VIRTUALIZATION
+# ==============================================================================
+
+# OrbStack - Docker Desktop replacement
+# Fast, lightweight Docker & Linux VMs for macOS
+# https://orbstack.dev/download
 cask "orbstack"
 
-# Bartender replacement
-# https://github.com/jordanbaird/Ice
-cask "jordanbaird-ice"
+# Colima - Container runtime for macOS
+# Alternative lightweight container runtime
+brew "colima"
 
-# ghostty terminal
+# Lima - Linux virtual machines
+# Simple VM management for macOS
+# https://lima-vm.io
+brew "lima"
+
+# Podman - Daemonless container engine
+# Docker alternative
+brew "podman"
+
+# QEMU - Generic machine emulator and virtualizer
+brew "qemu"
+
+
+# ==============================================================================
+# TERMINALS
+# ==============================================================================
+
+# Ghostty - Modern GPU-accelerated terminal emulator
 # https://ghostty.org/docs/install/binary#macos
 cask "ghostty"
 
-# Mac/linux VM manager using MacOS hypervisor
-tap "trycua/lume"
+# WezTerm - GPU-accelerated cross-platform terminal emulator
+# Highly configurable Rust-based terminal
+cask "wezterm"
 
-# kegworks: Makes wine wrappers for Windows apps
-cask "gcenx/wine/kegworks", args: { no_quarantine: true }
 
-brew "dataline"
-brew "starship"
+# ==============================================================================
+# GUI APPLICATIONS
+# ==============================================================================
 
-cask "1password-cli"
+# Ice - Menu bar management tool
+# Open-source Bartender replacement
+# https://github.com/jordanbaird/Ice
+cask "jordanbaird-ice"
 
-# local machine tunnels
-cask "ngrok"
-# LLM server
-cask "ollamac"
-# Terminal
-cask "wezterm@nightly", args: { greedy: true }
-
-# Ungoogled Chromium
-# cask "eloston-chromium", args: { no_quarantine: true }
-
-# Librewolf browser: https://librewolf.net/
-# Based on Firefox
-# cask "librewolf", args: { no_quarantine: true }
-
-# Markdown editor
+# MarkEdit - Native markdown editor
+# Fast, minimal Markdown editor for macOS
 # https://github.com/MarkEdit-app/MarkEdit
 cask "markedit"
 
-# JQ like, data selector and multi-format converter
-# JSON,YAML,etc
+# Ollamac - LLM server
+# Local large language model server for macOS
+cask "ollamac"
+
+# Kegworks - Wine wrappers for Windows apps
+# Run Windows applications on macOS
+cask "gcenx/wine/kegworks", args: { no_quarantine: true }
+
+# Alternative browsers (commented out for now)
+# cask "eloston-chromium", args: { no_quarantine: true }  # Ungoogled Chromium
+# cask "librewolf", args: { no_quarantine: true }        # Privacy-focused Firefox fork
+
+
+# ==============================================================================
+# VERSION CONTROL & GIT TOOLS
+# ==============================================================================
+
+# Git - Distributed version control system
+brew "git"
+
+# GitHub CLI - Official GitHub command-line tool
+brew "gh"
+
+# GHQ - Manage remote repository clones
+# Clones repos into organized directory structure (e.g., ~/src/github.com/org/repo)
+brew "ghq"
+
+# Difftastic - Structural diff tool
+# Syntax-aware diffing for better change visualization
+# https://difftastic.wilfred.me.uk
+brew "difftastic"
+
+# Git Delta - Enhanced diff viewer
+# Syntax-highlighted pager for git, diff, and grep output
+brew "git-delta"
+
+
+# ==============================================================================
+# TEXT & DATA PROCESSING
+# ==============================================================================
+
+# JQ - Command-line JSON processor
+# The essential JSON query and manipulation tool
+brew "jq"
+
+# IJQ - Interactive JQ
+# Terminal UI for exploring and experimenting with jq
+brew "ijq"
+
+# Dasel - Data selector and format converter
+# Query and modify JSON, YAML, TOML, XML, CSV with unified syntax
 # https://daseldocs.tomwright.me/installation
 brew "dasel"
 
+# Miller - Like awk, sed, cut, join, and sort for data formats
+# Process CSV, TSV, JSON, and more with SQL-like syntax
+brew "miller"
+
+# Sad - Space-age sed
+# Batch file editing with preview and safety features
+# https://github.com/ms-jpq/sad
+brew "sad"
+
+
+# ==============================================================================
+# SYSTEM MONITORING & PERFORMANCE
+# ==============================================================================
+
+# Btop - Resource monitor
+# Beautiful and feature-rich system monitor (C++ rewrite of bpytop)
+brew "btop"
+
+# Bottom - System monitor
+# Cross-platform graphical process/system monitor
+# https://github.com/ClementTsang/bottom#installation
+brew "bottom"
+
+# Htop - Interactive process viewer
+# Classic improved alternative to top
+brew "htop"
+
+# Ctop - Container metrics and monitoring
+# Top-like interface for container metrics
+brew "ctop"
+
+# DUA - Disk Usage Analyzer
+# Fast disk space analyzer with cleanup capabilities
+brew "dua-cli"
+
+
+# ==============================================================================
+# ENHANCED CLI REPLACEMENTS
+# ==============================================================================
+
+# Bat - Cat with syntax highlighting and git integration
+brew "bat"
+
+# Eza - Modern ls replacement
+# Feature-rich ls alternative with colors, icons, and git awareness
+brew "eza"
+
+# Fd - Fast and user-friendly find alternative
+brew "fd"
+
+# Ripgrep - Fast recursive grep
+# Lightning-fast search tool respecting .gitignore
+brew "ripgrep"
+
+# FZF - Fuzzy finder
+# Command-line fuzzy finder for files, history, processes, etc.
+brew "fzf"
+
+# FASD - Fast directory switching
+# Quick access to frequently used files and directories (z.sh replacement)
+brew "fasd"
+
+# Trash - Safe rm replacement
+# Move files to trash instead of permanent deletion
+brew "trash"
+
+# Walk - Interactive directory tree tool
+# Terminal file manager with tree view
+brew "walk"
+
+
+# ==============================================================================
+# NETWORK TOOLS
+# ==============================================================================
+
+# Dog - Enhanced dig
+# Modern DNS client with colorful output
+brew "dog"
+
+# Doggo - DNS client
+# Modern command-line DNS client
+# https://doggo.mrkaran.dev/docs/intro/installation/
+brew "doggo"
+
+# Gping - Ping with graphs
+# Visual ping tool with real-time charts
+brew "gping"
+
+# Trippy - Network diagnostic tool
+# Advanced traceroute and network diagnostics
+# https://trippy.cli.rs
+brew "trippy"
+
+# ngrok - Local tunnel creation
+# Expose local servers to the internet for testing
+cask "ngrok"
+
+# Cloudflared - Cloudflare Zero Trust tunnels
+# Create secure tunnels to origin servers
+brew "cloudflared"
+
+# DOctl - DigitalOcean CLI
+# Official DigitalOcean command-line client
+brew "doctl"
+
+# Rclone - Cloud storage sync
+# Sync files to/from cloud storage providers
+# https://rclone.org/install/#macos-brew
+brew "rclone"
+
+# Siege - HTTP load testing
+# HTTP regression testing and benchmarking utility
+# https://github.com/JoeDog/siege
+brew "siege"
+
+
+# ==============================================================================
+# DEVELOPMENT TOOLS
+# ==============================================================================
+
+# Starship - Cross-shell prompt
+# Fast, customizable prompt for any shell
+brew "starship"
+
+# Helix - Post-modern modal text editor
+# Rust-based modal editor with built-in LSP support
+# https://docs.helix-editor.com/install.html#macos
+brew "helix"
+
+# Entr - Run commands on file changes
+# File watcher that executes commands when files change
+brew "entr"
+
+# Hyperfine - Command-line benchmarking tool
+# Statistical benchmarking for command execution
+brew "hyperfine"
+
+# Hurl - HTTP testing tool
+# Test HTTP requests defined in simple text files
+brew "hurl"
+
+# Act - Run GitHub Actions locally
+# Test GitHub Actions workflows on your machine
+brew "act"
+
+# Whalebrew - Homebrew for Docker images
+# Run Docker images as if they were native commands
+brew "whalebrew"
+
+# Watchman - File watching service
+# Efficient file change monitoring (used by React Native, Jest, etc.)
+brew "watchman"
+
+# Grex - Regular expression generator
+# Generate regex patterns from test cases
+brew "grex"
+
+
+# ==============================================================================
+# DATABASES
+# ==============================================================================
+
+# MySQL - Open-source relational database
+brew "mysql"
+
+# MySQL Client - MySQL client libraries and tools
+brew "mysql-client"
+
+# TBLS - Database documentation tool
+# Automatic schema documentation generator
+brew "k1LoW/tap/tbls"
+
+
+# ==============================================================================
+# MEDIA TOOLS
+# ==============================================================================
+
+# FFmpeg - Multimedia framework
+# Record, convert, and stream audio/video
+brew "ffmpeg"
+
+# Chafa - Terminal image viewer
+# Display images in the terminal with high quality
+brew "chafa"
+
+
+# ==============================================================================
+# SECURITY & AUTHENTICATION
+# ==============================================================================
+
+# 1Password CLI - Command-line password manager
+# Secure credential management from the terminal
+cask "1password-cli"
+
+# GnuPG - Encryption and signing tool
+# OpenPGP implementation for secure communication
+brew "gnupg"
+
+
+# ==============================================================================
+# DOCUMENTATION & HELP
+# ==============================================================================
+
+# Navi - Interactive cheatsheet tool
+# Browse and execute command-line snippets
+brew "navi"
+
+# Tealdeer - Fast tldr client
+# Simplified man pages with practical examples
+# https://tealdeer-rs.github.io/tealdeer/installing.html
+brew "tealdeer"
+
+
+# ==============================================================================
+# PRODUCTIVITY & UTILITIES
+# ==============================================================================
+
+# Atuin - Enhanced shell history
+# Searchable, encrypted shell history sync
 # https://github.com/atuinsh/atuin
 brew "atuin"
 
-brew "ffmpeg"
+# McFly - Better terminal history
+# Neural network-powered command history search
+brew "mcfly"
 
-# pipe viewer, inspect unix pipe progress: http://www.ivarch.com/programs/pv.shtml
+# Dataline - Data visualization tool
+brew "dataline"
+
+# PV - Pipe Viewer
+# Monitor data progress through Unix pipes
+# http://www.ivarch.com/programs/pv.shtml
 brew "pv"
-# github actions runner
-brew "act"
-# improved cat
-brew "bat"
-# improvted top
-brew "btop"
-# another top: https://github.com/ClementTsang/bottom#installation
-brew "bottom"
-# terminal image viewer
-brew "chafa"
-# containerd runtime
-brew "colima"
-# container top
-brew "ctop"
-# digital ocean cli
-brew "doctl"
-# enhanced dig
-brew "dog"
-# DNS client https://doggo.mrkaran.dev/docs/intro/installation/
-brew "doggo"
-# disk space analyzer and rm helper
-brew "dua-cli"
-# run commands on file changes
-brew "entr"
-# enhanced ls
-brew "eza"
-# "z.sh" replacement for fast directory switching
-brew "fasd"
+
+# Pastel - Color manipulation tool
+# Generate, analyze, and manipulate colors from the command line
+brew "pastel"
+
+# MAS - Mac App Store CLI
+# Install and update Mac App Store apps from the command line
+brew "mas"
+
+# Groff - GNU troff text formatter
+# Required by AWS CLI and other tools
+brew "groff"
+
+
+# ==============================================================================
+# LIBRARIES & DEPENDENCIES
+# ==============================================================================
+
+# Facebook/Meta libraries
 brew "fb303"
 brew "fbthrift"
-# enhanced find
-brew "fd"
 brew "fizz"
 brew "folly"
-# FZF, fuzzy list filtering
-brew "fzf"
+brew "wangle"
+
+# Geographic/spatial libraries
 brew "gdal"
 brew "geoip"
 brew "geos"
-# github cli
-brew "gh"
-# install/clone git repos similarly to `go get`. eg, will clone to `~/src/github.com/org/reponame`
-brew "ghq"
-brew "git"
-# syntactical diffing: https://difftastic.wilfred.me.uk
-brew "difftastic"
-# enhanced diff
-brew "git-delta"
+brew "libspatialite"
+
+# Core libraries
 brew "glib"
-brew "gnupg"
 brew "gnutls"
-# ping, with charts
-brew "gping"
-# regex helper/constructor
-brew "grex"
 brew "harfbuzz"
 brew "hdf5"
-# helix modal editor: https://docs.helix-editor.com/install.html#macos
-brew "helix"
-# improvted top
-brew "htop"
-# file based curl thingy
-brew "hurl"
-# benchmarking util
-brew "hyperfine"
-# interactive jq
-brew "ijq"
-# json filtering
-brew "jq"
-# Schema introspection
-brew "k1LoW/tap/tbls"
 brew "libdap"
 brew "libffi"
 brew "libidn2"
 brew "libmemcached"
 brew "libslirp"
-brew "libspatialite"
-# https://lima-vm.io (linux virtual machines)
-brew "lima"
+
+# Lua libraries
 brew "luajit"
-# libuv bindings for lua
-brew "luv"
-# mac app store cli
-brew "mas"
-# better terminal history
-brew "mcfly"
-# sed/cut/awk/etc
-brew "miller"
-brew "mysql"
-brew "mysql-client"
-# interactive cheatsheet for cli commands
-brew "navi"
-# colors! find/change/modify/etc
-brew "pastel"
-brew "podman"
-# https://rclone.org/install/#macos-brew
-brew "rclone"
-brew "ripgrep"
-brew "qemu"
+brew "luv"  # libuv bindings for Lua
+
+# Qt framework
 brew "qt@5"
-# spaceage sed https://github.com/ms-jpq/sad
-brew "sad"
-# tldr replacement
-# https://tealdeer-rs.github.io/tealdeer/installing.html
-brew "tealdeer"
-brew "trash"
-# network diagnostics https://trippy.cli.rs
-brew "trippy"
-# interactive directory tree tool
-brew "walk"
-brew "wangle"
-brew "watchman"
-brew "whalebrew"
-
-# https://github.com/JoeDog/siege
-brew "siege"
-
-# cloudflare zero-trust tunnels
-brew "cloudflared"
-
-# Pearcleaner (clean my mac alternative)
-# https://github.com/alienator88/Pearcleaner
-cask "pearcleaner"
-
-# needed by aws
-brew "groff"
 
 
-# Mac app store
+# ==============================================================================
+# MAC APP STORE APPLICATIONS (Commented Out)
+# ==============================================================================
+# Uncomment the apps you want to install from the Mac App Store
+# Use 'mas search "app name"' to find app IDs
+#
 # mas "1Password for Safari"
 # mas "About"
 # mas "Bitwarden"

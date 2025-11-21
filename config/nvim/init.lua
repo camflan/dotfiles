@@ -1,29 +1,16 @@
--- init.lua
--- camron flanders <me@camronflanders.com>
--- last update: November 2023:CBF
---
--- feel free to use all or part of my init.lua to learn, modify, use. If used
--- in an init.lua you intend to distribute, please credit appropriately.
-
 -- Prepend mise shims to PATH
 vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
---
--- NVIM provider paths
--- vim.g.node_host_prog = "$HOME/.asdf-data/shims/neovim-node-host"
--- vim.g.python3_host_prog = "$HOME/.asdf-data/shims/python3"
+
+local opt = vim.opt
 
 -- let nvim set window title
-vim.opt.title = true
-vim.opt.titlestring = "%t%( %M%)%( (%{getcwd()})%)%( %a%)"
--- vim.opt.titlestring = '%t%( %M%)%( (%{expand("%:~:p")})%)%( %a%)'
+opt.title = true
+opt.titlestring = "%t%( %M%)%( (%{getcwd()})%)%( %a%)"
 
 -- spacebar as leader
 vim.g.mapleader = " "
 -- \ as localleader
 vim.g.maplocalleader = "\\"
-
--- shorten key chord timeout len from 1000ms
-vim.opt.timeoutlen = 300
 
 -- auto-read changes to files
 vim.opt.autoread = true
@@ -64,7 +51,6 @@ vim.keymap.set({ "t" }, "<Esc>", "<C-\\><C-n>", { remap = false })
 -- search
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.keymap.set("n", "<leader>/", "<cmd>silent nohlsearch<CR>", { desc = "Toggle search highlights", remap = false })
 
 -- jj to exit normal mode
 vim.keymap.set("i", "jj", "<C-[>", { desc = "ergo exit instead of esc", remap = false })
@@ -74,9 +60,14 @@ vim.keymap.set({ "n", "v" }, ";", ":", { desc = "Fast access to :", remap = fals
 
 -- tree view style for Explore/NetRw
 vim.g.netrw_liststyle = 3
+vim.keymap.set({ "n" }, "-", "<cmd>Explore<cr>")
 
--- load Skeleton AutoCmds
-require("skeletons.init")
+vim.keymap.set({ "n" }, "<leader>/", "<cmd>silent nohlsearch<cr>", { desc = "Toggle search highlights" })
 
--- load lazy.nvim
-require("config.lazy")
+-- Move lines up/down
+vim.keymap.set({ "v" }, "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selected lines down" })
+vim.keymap.set({ "v" }, "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selected lines up" })
+
+-- Vim Pack
+vim.keymap.set({ "n" }, "<leader>Pl", function () vim.pack.get() end, { desc = "Get plugins info" }) -- doesn't work?
+vim.keymap.set({ "n" }, "<leader>Pu", function () vim.pack.update() end, { desc = "Update plugins" })

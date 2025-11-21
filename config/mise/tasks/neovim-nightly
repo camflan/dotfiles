@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-#MISE description="Run neovim nightly with nvim-12 configuration"
-
-export NVIM_APPNAME=nvim-12
+#MISE description="Run neovim nightly"
 
 # use the cwd where we called the script, not where the script is configured
 cd "$MISE_ORIGINAL_CWD"

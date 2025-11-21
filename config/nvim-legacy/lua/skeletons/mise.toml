@@ -1,4 +1,0 @@
-# "$schema" = "https://mise.jdx.dev/schema/mise.json"
-
-[env]
-_.file = '.env'

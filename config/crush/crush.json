@@ -16,6 +16,21 @@
     "options": {
         "disable_metrics": true
     },
+    "vtsls": {
+      "command": "vtsls",
+      "args": ["--stdio"]
+    }
+  },
+  "options": {
+    "disable_metrics": true
+  },
+  "permissions": {
+    "allowed_tools": ["grep", "ls", "view"]
+  },
+  "providers": {
+    "jan": {
+      "name": "Jan",
+      "base_url": "http://localhost:1337/v1/",
     "permissions": {
         "allowed_tools": ["grep", "ls", "view"]
     },

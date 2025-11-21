@@ -179,7 +179,7 @@ for commit_sha in $commits; do
     git show --format="" --unified=0 "$commit_sha" | \
     grep -n "^+" | \
     grep -v "^[0-9]*:+++" | \
-    grep -iE "$keywords" | \
+    grep -iE "$keywords:" | \
     while IFS=: read -r line_in_diff content; do
         # We found a match - now extract file and line info
         # We need to find which file this is in by looking backwards in the diff

@@ -22,7 +22,7 @@
   # Claude code runs in 5 hour session windows. This starts a session early in the morning
   # so that I can fit 3 sessions in, vs 2
   # every day at 5am
-  - command: claude -p "Good morning"
+  - command: ~/.local/share/mise/shims/claude -p "hi"
     time: 0 5 * * *
 
 - link:

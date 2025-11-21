@@ -3,4 +3,4 @@
 
 # use the cwd where we called the script, not where the script is configured
 cd "$MISE_ORIGINAL_CWD"
-mise exec neovim@nightly -- nvim
+mise exec neovim@ref:nightly -- nvim $@

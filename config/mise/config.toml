@@ -27,6 +27,7 @@ tree-sitter = "latest"
 usage = "latest"
 uv = "latest"
 vault = "latest"
+"npm:@google/gemini-cli" = "latest"
 
 "asdf:awscli" = "latest"
 

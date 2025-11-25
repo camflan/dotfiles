@@ -1,37 +1,5 @@
 # "$schema" = "https://mise.jdx.dev/schema/mise.json"
-[env]
-NVIM_APPNAME = "nvim-12"
-
 [tools]
-"asdf:awscli" = "latest"
-
-# interactive rg replacer
-"cargo:rep-grep" = "latest"
-
-# npm
-"npm:@anthropic-ai/claude-code" = "latest"
-"npm:@astrojs/language-server" = "latest"
-"npm:@charmland/crush" = "latest"
-"npm:@neovate/code" = "latest"
-"npm:@qwen-code/qwen-code" = "latest"
-"npm:@vtsls/language-server" = "latest"
-"npm:vscode-langservers-extracted" = "latest"
-
-# pipx/uvx
-"pipx:claude-monitor" = "latest"
-"pipx:httpie" = "latest"
-"pipx:litellm" = { version = "latest", extras = "proxy" }
-"pipx:llm" = "latest"
-"pipx:mlx-omni-server" = "latest"
-"pipx:pipenv" = "latest"
-"pipx:tiptop" = "latest"
-"pipx:yq" = "latest"
-
-"ubi:RhetTbull/osxphotos" = "latest"
-"ubi:achristmascarl/rainfrog" = "latest"
-"ubi:block/goose" = "latest"
-"ubi:sst/opencode" = "latest"
-
 adr-tools = "latest"
 age = "latest"
 aws-sam-cli = "latest"
@@ -59,6 +27,35 @@ tree-sitter = "latest"
 usage = "latest"
 uv = "latest"
 vault = "latest"
+
+"asdf:awscli" = "latest"
+
+# interactive rg replacer
+"cargo:rep-grep" = "latest"
+
+# npm
+"npm:@anthropic-ai/claude-code" = "latest"
+"npm:@astrojs/language-server" = "latest"
+"npm:@charmland/crush" = "latest"
+"npm:@neovate/code" = "latest"
+"npm:@qwen-code/qwen-code" = "latest"
+"npm:@vtsls/language-server" = "latest"
+"npm:vscode-langservers-extracted" = "latest"
+
+# pipx/uvx
+"pipx:claude-monitor" = "latest"
+"pipx:httpie" = "latest"
+"pipx:litellm" = { version = "latest", extras = "proxy" }
+"pipx:llm" = "latest"
+# "pipx:mlx-omni-server" = "latest"
+"pipx:pipenv" = "latest"
+"pipx:tiptop" = "latest"
+"pipx:yq" = "latest"
+
+"ubi:RhetTbull/osxphotos" = "latest"
+"ubi:achristmascarl/rainfrog" = "latest"
+"ubi:block/goose" = "latest"
+"ubi:sst/opencode" = "latest"
 
 [settings]
 go_default_packages_file = "./default-go-packages"

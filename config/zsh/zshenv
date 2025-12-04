@@ -91,3 +91,7 @@ export MCFLY_INTERFACE_VIEW=BOTTOM
 # Fnox
 # https://fnox.jdx.dev
 export FNOX_AGE_KEY_FILE=~/.ssh/id_rsa
+
+# PLS
+# https://pls.cli.rs/reference/conf/
+export PLS_CONFIG=$HOME/.config/pls/pls.yml

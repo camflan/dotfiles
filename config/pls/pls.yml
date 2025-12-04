@@ -1,0 +1,16 @@
+icons:
+  python: "" # nf-seti-python
+specs:
+  - pattern: \.py$
+    icons:
+      - python
+    style: rgb(255,212,59)
+  - pattern: ^pyproject\.toml$
+    icons:
+      - package
+  - pattern: ^pdm\.lock$
+    icons:
+      - lock
+    importance: -1
+    collapse:
+      name: pyproject.toml

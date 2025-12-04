@@ -57,6 +57,7 @@ vault = "latest"
 "ubi:achristmascarl/rainfrog" = "latest"
 "ubi:block/goose" = "latest"
 "ubi:sst/opencode" = "latest"
+"ubi:pls-rs/pls" = "v0.0.1-beta.9"
 
 [settings]
 go_default_packages_file = "./default-go-packages"

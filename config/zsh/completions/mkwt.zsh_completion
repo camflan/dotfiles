@@ -1,0 +1,19 @@
+# Shell function wrapper for mkwt that auto-cd's into the created worktree
+# To use this, the completion file must be in fpath and sourced
+
+mkwt() {
+    local output
+    output=$(command mkwt "$@")
+    local exit_code=$?
+
+    echo "$output"
+
+    if [[ $exit_code -eq 0 ]]; then
+        local wt_path=$(echo "$output" | grep "^WORKTREE_PATH:" | cut -d: -f2-)
+        if [[ -n "$wt_path" ]]; then
+            cd "$wt_path"
+        fi
+    fi
+
+    return $exit_code
+}

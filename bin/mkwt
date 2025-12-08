@@ -1,0 +1,292 @@
+#!/usr/bin/env bash
+set -e
+set -u
+set -o pipefail
+
+# Color codes for output
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+NC='\033[0m'
+
+# Default configuration
+DEFAULT_WORKTREE_DIR="../worktrees"
+
+# Word lists for random name generation
+ADJECTIVES=(
+  bold brave bright calm clear clever cool cosmic daring deep
+  epic fair fast fine fleet free fresh giant glad golden grand
+  great happy keen light long merry mighty noble proud quick
+  quiet rapid rich royal sharp silver smooth solid swift vast
+  warm wild wise witty young
+)
+
+NOUNS=(
+  bear bird cloud dream eagle flame forest frost glade hawk
+  lion maple meadow moon ocean pearl peak pine river robin
+  shadow sky spark star stone stream summit thunder tiger
+  valley wave wind wolf
+)
+
+show_help() {
+    cat << EOF
+Usage: mkwt [options] [name]
+
+Create a new git worktree from main branch with automatic config file copying.
+
+Options:
+  -d, --dir DIR        Parent directory for worktrees (default: ../worktrees)
+  -b, --branch BRANCH  Base branch to create from (default: auto-detect)
+  -h, --help           Show this help message
+
+Arguments:
+  name                 Name for worktree directory and branch (default: random)
+
+Environment Variables:
+  WORKTREE_DIR         Default parent directory
+  WORKTREE_BASE_BRANCH Override base branch
+
+Examples:
+  mkwt                          # Random name from main
+  mkwt feature-auth             # Named worktree
+  mkwt -d ~/worktrees           # Custom parent directory
+  mkwt -b develop my-feature    # Base from develop branch
+
+EOF
+}
+
+generate_random_name() {
+    local adj="${ADJECTIVES[$RANDOM % ${#ADJECTIVES[@]}]}"
+    local noun="${NOUNS[$RANDOM % ${#NOUNS[@]}]}"
+    echo "${adj}-${noun}"
+}
+
+get_base_branch() {
+    if [[ -n "${WORKTREE_BASE_BRANCH:-}" ]]; then
+        echo "$WORKTREE_BASE_BRANCH"
+        return
+    fi
+
+    if git show-ref --verify --quiet refs/heads/main; then
+        echo "main"
+    elif git show-ref --verify --quiet refs/heads/master; then
+        echo "master"
+    else
+        git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null \
+            | sed 's@^refs/remotes/origin/@@' || echo "main"
+    fi
+}
+
+has_remote() {
+    git remote get-url origin >/dev/null 2>&1
+}
+
+fetch_if_remote() {
+    local base_branch="$1"
+
+    if has_remote; then
+        echo -e "${BLUE}Fetching latest from origin…${NC}" >&2
+        if git fetch origin "$base_branch" 2>/dev/null; then
+            echo "origin/$base_branch"
+        else
+            echo -e "${YELLOW}Note: Could not fetch origin/$base_branch, using local${NC}" >&2
+            echo "$base_branch"
+        fi
+    else
+        echo -e "${YELLOW}No origin remote, using local $base_branch${NC}" >&2
+        echo "$base_branch"
+    fi
+}
+
+get_local_files() {
+    local source_dir="$1"
+
+    find "$source_dir" -maxdepth 1 -type f \( \
+        -name ".env*" -o \
+        -name "mise*" -o \
+        -name ".mise*" -o \
+        -name ".envrc" -o \
+        -name "*.local.*" -o \
+        -name "*.private.*" \
+    \) 2>/dev/null | while read -r file; do
+        if ! git ls-files --error-unmatch "$file" >/dev/null 2>&1; then
+            basename "$file"
+        fi
+    done
+}
+
+copy_local_files() {
+    local source_dir="$1"
+    local dest_dir="$2"
+
+    local files
+    files=$(get_local_files "$source_dir")
+
+    if [[ -z "$files" ]]; then
+        echo -e "${CYAN}No local config files to copy${NC}"
+        return
+    fi
+
+    echo -e "${BLUE}Copying local config files…${NC}"
+    while IFS= read -r filename; do
+        if [[ -n "$filename" ]]; then
+            cp "$source_dir/$filename" "$dest_dir/$filename"
+            echo "  ${filename}"
+        fi
+    done <<< "$files"
+}
+
+get_unique_name() {
+    local parent="$1"
+    local name="$2"
+    local final_name="$name"
+    local counter=1
+    local max_attempts=10
+
+    while [[ -e "$parent/$final_name" ]]; do
+        if [[ $counter -ge $max_attempts ]]; then
+            # Fallback to UUID suffix
+            final_name="${name}-$(uuidgen | tr '[:upper:]' '[:lower:]' | cut -d'-' -f1)"
+            break
+        fi
+        final_name="${name}-${counter}"
+        ((counter++))
+    done
+
+    echo "$final_name"
+}
+
+ensure_worktree_parent() {
+    local parent_dir="$1"
+
+    if [[ ! -d "$parent_dir" ]]; then
+        echo -e "${YELLOW}Creating worktree directory: $parent_dir${NC}"
+        mkdir -p "$parent_dir"
+    fi
+}
+
+cleanup() {
+    local exit_code=$?
+
+    if [[ $exit_code -ne 0 ]] && [[ -n "${worktree_path:-}" ]]; then
+        echo -e "${RED}Error occurred, cleaning up…${NC}" >&2
+
+        if git worktree list 2>/dev/null | grep -q "$worktree_path"; then
+            git worktree remove --force "$worktree_path" 2>/dev/null || true
+        fi
+
+        if [[ -d "$worktree_path" ]] && [[ -z "$(ls -A "$worktree_path" 2>/dev/null)" ]]; then
+            rmdir "$worktree_path" 2>/dev/null || true
+        fi
+    fi
+}
+
+trap cleanup EXIT
+
+# Parse arguments
+worktree_dir="${WORKTREE_DIR:-$DEFAULT_WORKTREE_DIR}"
+base_branch_override=""
+worktree_name=""
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -d|--dir)
+            if [[ -z "${2:-}" ]]; then
+                echo -e "${RED}Error: -d requires an argument${NC}" >&2
+                exit 2
+            fi
+            worktree_dir="$2"
+            shift 2
+            ;;
+        -b|--branch)
+            if [[ -z "${2:-}" ]]; then
+                echo -e "${RED}Error: -b requires an argument${NC}" >&2
+                exit 2
+            fi
+            base_branch_override="$2"
+            shift 2
+            ;;
+        -h|--help)
+            show_help
+            exit 0
+            ;;
+        -*)
+            echo -e "${RED}Error: Unknown option '$1'${NC}" >&2
+            echo "Use -h for help" >&2
+            exit 2
+            ;;
+        *)
+            worktree_name="$1"
+            shift
+            ;;
+    esac
+done
+
+# Validate git repository
+if ! git rev-parse --git-dir >/dev/null 2>&1; then
+    echo -e "${RED}Error: Not in a git repository${NC}" >&2
+    exit 2
+fi
+
+# Get source directory
+source_dir="$(pwd)"
+
+# Determine base branch
+if [[ -n "$base_branch_override" ]]; then
+    base_branch="$base_branch_override"
+else
+    base_branch=$(get_base_branch)
+fi
+
+# Fetch latest from origin if available
+base_ref=$(fetch_if_remote "$base_branch")
+
+# Generate or validate worktree name
+if [[ -z "$worktree_name" ]]; then
+    worktree_name=$(generate_random_name)
+    echo -e "${CYAN}Generated name: ${worktree_name}${NC}"
+fi
+
+# Resolve worktree parent directory
+if [[ "$worktree_dir" = /* ]]; then
+    # Absolute path
+    worktree_parent="$worktree_dir"
+else
+    # Relative path - resolve from source directory
+    worktree_parent="$(cd "$source_dir" && cd "$worktree_dir" 2>/dev/null && pwd || echo "$source_dir/$worktree_dir")"
+fi
+
+# Ensure parent directory exists
+ensure_worktree_parent "$worktree_parent"
+
+# Check for name collisions and resolve
+worktree_name=$(get_unique_name "$worktree_parent" "$worktree_name")
+worktree_path="$worktree_parent/$worktree_name"
+branch_name="$worktree_name"
+
+# Create worktree
+echo -e "${BLUE}Creating worktree at: ${worktree_path}${NC}"
+echo -e "${CYAN}Branch: ${branch_name}${NC}"
+echo -e "${CYAN}Base: ${base_ref}${NC}"
+
+if ! git worktree add -b "$branch_name" "$worktree_path" "$base_ref"; then
+    echo -e "${RED}Failed to create worktree${NC}" >&2
+    exit 1
+fi
+
+# Copy local configuration files
+copy_local_files "$source_dir" "$worktree_path"
+
+# Success message
+echo ""
+echo -e "${GREEN}Worktree created successfully!${NC}"
+echo ""
+echo -e "${CYAN}To navigate to the worktree, run:${NC}"
+echo ""
+echo "  cd \"$worktree_path\""
+echo ""
+
+# Output machine-readable path for wrapper function
+echo "WORKTREE_PATH:$worktree_path"

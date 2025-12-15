@@ -9,7 +9,9 @@
       "Bash(git rev-list:*)",
       "Read(//Users/camron/src/github.com/swoogo/live2/**)",
       "Bash(git show:*)",
-      "Bash(bash -x /Users/camron/dotfiles/bin/todos:*)"
+      "Bash(bash -x /Users/camron/dotfiles/bin/todos:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ],
     "deny": [],
     "ask": []

@@ -1,0 +1,262 @@
+#!/usr/bin/env bash
+set -e
+set -u
+set -o pipefail
+
+# Generate random names for projects, branches, etc.
+
+# Word lists for random name generation
+ADJECTIVES=(
+  bold brave bright calm clear clever cool cosmic daring deep
+  epic fair fast fine fleet free fresh giant glad golden grand
+  great happy keen light long merry mighty noble proud quick
+  quiet rapid rich royal sharp silver smooth solid swift vast
+  warm wild wise witty young
+)
+
+NOUNS=(
+  bear bird cloud dream eagle flame forest frost glade hawk
+  lion maple meadow moon ocean pearl peak pine river robin
+  shadow sky spark star stone stream summit thunder tiger
+  valley wave wind wolf
+)
+
+# Extended word lists
+COLORS=(
+  amber azure bronze copper crimson emerald golden ivory jade
+  onyx pearl ruby sable sapphire scarlet silver topaz violet
+)
+
+CELESTIAL=(
+  comet galaxy meteor nebula nova orbit planet pulsar quasar
+  solar stellar lunar zenith aurora eclipse equinox solstice
+)
+
+NATURE=(
+  avalanche blizzard cascade cliff canyon dune fjord glacier
+  horizon lagoon oasis prairie ravine reef tundra volcano
+  waterfall
+)
+
+MYTHOLOGY=(
+  atlas aurora phoenix titan oracle dragon griffin sphinx
+  hydra pegasus kraken chimera basilisk valkyrie nemesis
+)
+
+show_help() {
+    cat << EOF
+Usage: namegen [options]
+
+Generate random names for projects, branches, files, etc.
+
+Options:
+  -n, --count N        Generate N names (default: 1)
+  -s, --separator SEP  Separator between words (default: -)
+  -w, --words N        Number of words per name (default: 2)
+  -t, --theme THEME    Theme: default, color, space, nature, myth
+  -u, --uppercase      Output in UPPERCASE
+  -c, --camel          Output in camelCase
+  -p, --pascal         Output in PascalCase
+  -k, --kebab          Output in kebab-case (default)
+  -_, --snake          Output in snake_case
+  -h, --help           Show this help message
+
+Examples:
+  namegen                    # bold-eagle
+  namegen -n 5               # Generate 5 names
+  namegen -w 3               # swift-golden-tiger
+  namegen -t space           # cosmic-nebula
+  namegen -t color           # crimson-sapphire
+  namegen -c                 # boldEagle (camelCase)
+  namegen -p                 # BoldEagle (PascalCase)
+  namegen -_ -t nature       # glacier_canyon (snake_case)
+  namegen -u                 # BOLD-EAGLE
+
+EOF
+}
+
+# Generate a random name
+generate_name() {
+    local theme="$1"
+    local word_count="$2"
+    local words=()
+
+    case "$theme" in
+        color)
+            # Color + Noun
+            words+=("${COLORS[$RANDOM % ${#COLORS[@]}]}")
+            for ((i=1; i<word_count; i++)); do
+                words+=("${NOUNS[$RANDOM % ${#NOUNS[@]}]}")
+            done
+            ;;
+        space|celestial)
+            # Celestial words
+            for ((i=0; i<word_count; i++)); do
+                words+=("${CELESTIAL[$RANDOM % ${#CELESTIAL[@]}]}")
+            done
+            ;;
+        nature)
+            # Nature words
+            for ((i=0; i<word_count; i++)); do
+                words+=("${NATURE[$RANDOM % ${#NATURE[@]}]}")
+            done
+            ;;
+        myth*)
+            # Mythology words
+            for ((i=0; i<word_count; i++)); do
+                words+=("${MYTHOLOGY[$RANDOM % ${#MYTHOLOGY[@]}]}")
+            done
+            ;;
+        *)
+            # Default: Adjective + Noun(s)
+            words+=("${ADJECTIVES[$RANDOM % ${#ADJECTIVES[@]}]}")
+            for ((i=1; i<word_count; i++)); do
+                words+=("${NOUNS[$RANDOM % ${#NOUNS[@]}]}")
+            done
+            ;;
+    esac
+
+    # Join words with separator
+    local result=""
+    for word in "${words[@]}"; do
+        if [[ -z "$result" ]]; then
+            result="$word"
+        else
+            result="$result$separator$word"
+        fi
+    done
+
+    echo "$result"
+}
+
+# Convert to camelCase
+to_camel_case() {
+    local input="$1"
+    local sep="$2"
+
+    # Split by separator and capitalize each word except first
+    echo "$input" | awk -F"$sep" '{
+        result = $1
+        for(i=2; i<=NF; i++) {
+            result = result toupper(substr($i,1,1)) substr($i,2)
+        }
+        print result
+    }'
+}
+
+# Convert to PascalCase
+to_pascal_case() {
+    local input="$1"
+    local sep="$2"
+
+    # Split by separator and capitalize each word
+    echo "$input" | awk -F"$sep" '{
+        result = ""
+        for(i=1; i<=NF; i++) {
+            result = result toupper(substr($i,1,1)) substr($i,2)
+        }
+        print result
+    }'
+}
+
+# Default options
+count=1
+separator="-"
+word_count=2
+theme="default"
+case_style="kebab"
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -n|--count)
+            if [[ -z "${2:-}" ]] || ! [[ "$2" =~ ^[0-9]+$ ]]; then
+                echo "Error: -n requires a positive integer" >&2
+                exit 1
+            fi
+            count="$2"
+            shift 2
+            ;;
+        -s|--separator)
+            if [[ -z "${2:-}" ]]; then
+                echo "Error: -s requires an argument" >&2
+                exit 1
+            fi
+            separator="$2"
+            shift 2
+            ;;
+        -w|--words)
+            if [[ -z "${2:-}" ]] || ! [[ "$2" =~ ^[0-9]+$ ]] || [[ "$2" -lt 1 ]]; then
+                echo "Error: -w requires a positive integer" >&2
+                exit 1
+            fi
+            word_count="$2"
+            shift 2
+            ;;
+        -t|--theme)
+            if [[ -z "${2:-}" ]]; then
+                echo "Error: -t requires an argument" >&2
+                exit 1
+            fi
+            theme="$2"
+            shift 2
+            ;;
+        -u|--uppercase)
+            case_style="upper"
+            shift
+            ;;
+        -c|--camel)
+            case_style="camel"
+            shift
+            ;;
+        -p|--pascal)
+            case_style="pascal"
+            shift
+            ;;
+        -k|--kebab)
+            case_style="kebab"
+            separator="-"
+            shift
+            ;;
+        -_|--snake)
+            case_style="snake"
+            separator="_"
+            shift
+            ;;
+        -h|--help)
+            show_help
+            exit 0
+            ;;
+        *)
+            echo "Error: Unknown option '$1'" >&2
+            echo "Use -h for help" >&2
+            exit 1
+            ;;
+    esac
+done
+
+# Generate names
+for ((i=0; i<count; i++)); do
+    name=$(generate_name "$theme" "$word_count")
+
+    # Apply case style
+    case "$case_style" in
+        upper)
+            name=$(echo "$name" | tr '[:lower:]' '[:upper:]')
+            ;;
+        camel)
+            name=$(to_camel_case "$name" "$separator")
+            ;;
+        pascal)
+            name=$(to_pascal_case "$name" "$separator")
+            ;;
+        snake)
+            # Already using _ separator
+            ;;
+        kebab)
+            # Already using - separator
+            ;;
+    esac
+
+    echo "$name"
+done

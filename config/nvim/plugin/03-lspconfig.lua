@@ -23,38 +23,38 @@ require("tsc").setup({
 })
 
 require("wtf").setup({
-  -- Directory for storing chat files 
-  -- chat_dir = vim.fn.stdpath("data"):gsub("/$", "") .. "/wtf/chats",
-  -- Default AI popup type
-  -- popup_type = "popup" | "horizontal" | "vertical",
-  -- The default provider
-  provider = "ollama", -- "anthropic" | "copilot" | "deepseek" | "gemini" | "grok" | "ollama" | "openai",
-  -- Configure providers
-  providers = {
+    -- Directory for storing chat files
+    -- chat_dir = vim.fn.stdpath("data"):gsub("/$", "") .. "/wtf/chats",
+    -- Default AI popup type
+    -- popup_type = "popup" | "horizontal" | "vertical",
+    -- The default provider
+    provider = "ollama", -- "anthropic" | "copilot" | "deepseek" | "gemini" | "grok" | "ollama" | "openai",
+    -- Configure providers
+    providers = {
         ollama = {
             api_key = "TERM",
             model_id = "qwen2.5-coder:7b"
         }
-    -- anthropic = {
-    --   -- An alternative way to set your API key
-    --   api_key = "32lkj23sdjke223ksdlfk" | function() os.getenv("API_KEY") end,
-    --   -- Your preferred model
-    --   model_id = "claude-3-5-sonnet-20241022",
+        -- anthropic = {
+        --   -- An alternative way to set your API key
+        --   api_key = "32lkj23sdjke223ksdlfk" | function() os.getenv("API_KEY") end,
+        --   -- Your preferred model
+        --   model_id = "claude-3-5-sonnet-20241022",
+        -- },
+    },
+    -- Set your preferred language for the response
+    -- language = "english",
+    -- Any additional instructions
+    -- additional_instructions = "Start the reply with 'OH HAI THERE'",
+    -- Default search engine, can be overridden by passing an option to WtfSeatch
+    -- search_engine = "google" | "duck_duck_go" | "stack_overflow" | "github" | "phind" | "perplexity",
+    -- Callbacks
+    -- hooks = {
+    --   request_started = nil,
+    --   request_finished = nil,
     -- },
-  },
-  -- Set your preferred language for the response
-  -- language = "english",
-  -- Any additional instructions
-  -- additional_instructions = "Start the reply with 'OH HAI THERE'",
-  -- Default search engine, can be overridden by passing an option to WtfSeatch
-  -- search_engine = "google" | "duck_duck_go" | "stack_overflow" | "github" | "phind" | "perplexity",
-  -- Callbacks
-  -- hooks = {
-  --   request_started = nil,
-  --   request_finished = nil,
-  -- },
-  -- Add custom colours
-  -- winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
+    -- Add custom colours
+    -- winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
 })
 
 vim.api.nvim_create_autocmd("FileType", {
@@ -109,8 +109,9 @@ vim.lsp.config("*", {
 })
 
 vim.lsp.enable({
-    "elixirls",
+    -- "elixirls",
     "eslint",
+    "expert",
     "gopls",
     "graphql",
     "jsonls",

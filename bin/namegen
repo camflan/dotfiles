@@ -54,23 +54,20 @@ Options:
   -s, --separator SEP  Separator between words (default: -)
   -w, --words N        Number of words per name (default: 2)
   -t, --theme THEME    Theme: default, color, space, nature, myth
-  -u, --uppercase      Output in UPPERCASE
-  -c, --camel          Output in camelCase
-  -p, --pascal         Output in PascalCase
-  -k, --kebab          Output in kebab-case (default)
-  -_, --snake          Output in snake_case
+  -f, --format FORMAT  Output format: kebab, snake, camel, pascal, upper
+                       (default: kebab)
   -h, --help           Show this help message
 
 Examples:
-  namegen                    # bold-eagle
-  namegen -n 5               # Generate 5 names
-  namegen -w 3               # swift-golden-tiger
-  namegen -t space           # cosmic-nebula
-  namegen -t color           # crimson-sapphire
-  namegen -c                 # boldEagle (camelCase)
-  namegen -p                 # BoldEagle (PascalCase)
-  namegen -_ -t nature       # glacier_canyon (snake_case)
-  namegen -u                 # BOLD-EAGLE
+  namegen                      # bold-eagle
+  namegen -n 5                 # Generate 5 names
+  namegen -w 3                 # swift-golden-tiger
+  namegen -t space             # cosmic-nebula
+  namegen -t color             # crimson-sapphire
+  namegen -f camel             # boldEagle
+  namegen -f pascal            # BoldEagle
+  namegen -f snake -t nature   # glacier_canyon
+  namegen -f upper             # BOLD-EAGLE
 
 EOF
 }
@@ -201,27 +198,28 @@ while [[ $# -gt 0 ]]; do
             theme="$2"
             shift 2
             ;;
-        -u|--uppercase)
-            case_style="upper"
-            shift
-            ;;
-        -c|--camel)
-            case_style="camel"
-            shift
-            ;;
-        -p|--pascal)
-            case_style="pascal"
-            shift
-            ;;
-        -k|--kebab)
-            case_style="kebab"
-            separator="-"
-            shift
-            ;;
-        -_|--snake)
-            case_style="snake"
-            separator="_"
-            shift
+        -f|--format)
+            if [[ -z "${2:-}" ]]; then
+                echo "Error: -f requires an argument" >&2
+                exit 1
+            fi
+            case "$2" in
+                kebab|snake|camel|pascal|upper)
+                    case_style="$2"
+                    # Set separator based on format
+                    if [[ "$2" == "snake" ]]; then
+                        separator="_"
+                    elif [[ "$2" == "kebab" ]]; then
+                        separator="-"
+                    fi
+                    ;;
+                *)
+                    echo "Error: Invalid format '$2'" >&2
+                    echo "Valid formats: kebab, snake, camel, pascal, upper" >&2
+                    exit 1
+                    ;;
+            esac
+            shift 2
             ;;
         -h|--help)
             show_help

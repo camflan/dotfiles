@@ -24,6 +24,7 @@ Examples:
 
 Features:
   - Renders markdown files as styled HTML
+  - Auto-reloads browser when files change
   - Supports Mermaid diagrams
   - Tables, code blocks, blockquotes
   - GitHub-flavored styling
@@ -61,6 +62,7 @@ done
 # Markdown rendering server (Python 3 only)
 if [[ "$markdown_mode" == true ]] && hash python3 2>/dev/null; then
     echo "Starting server with markdown rendering on port $port..."
+    echo "Auto-reload enabled - browser will refresh when files change"
     echo "Press Ctrl+C to stop"
     echo ""
 
@@ -70,6 +72,10 @@ import os
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import unquote
 import mimetypes
+import time
+from pathlib import Path
+import threading
+import json
 
 # Try to import markdown library
 try:
@@ -80,10 +86,70 @@ except ImportError:
     print("Warning: 'markdown' library not found. Install with: pip3 install markdown")
     print("Falling back to plain text rendering for .md files\n")
 
+# File watcher for auto-reload
+class FileWatcher:
+    def __init__(self):
+        self.file_times = {}
+        self.lock = threading.Lock()
+        self.changed = False
+
+    def watch_file(self, path):
+        """Track a file and record its modification time"""
+        try:
+            mtime = os.path.getmtime(path)
+            with self.lock:
+                if path not in self.file_times:
+                    self.file_times[path] = mtime
+                elif self.file_times[path] != mtime:
+                    self.file_times[path] = mtime
+                    self.changed = True
+        except OSError:
+            pass
+
+    def check_changes(self):
+        """Check all tracked files for changes"""
+        with self.lock:
+            for path in list(self.file_times.keys()):
+                try:
+                    mtime = os.path.getmtime(path)
+                    if self.file_times[path] != mtime:
+                        self.file_times[path] = mtime
+                        self.changed = True
+                except OSError:
+                    # File deleted
+                    del self.file_times[path]
+                    self.changed = True
+
+            if self.changed:
+                self.changed = False
+                return True
+            return False
+
+watcher = FileWatcher()
+
 class MarkdownHTTPRequestHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
         # Decode the URL path
         path = unquote(self.path.split('?')[0])
+
+        # Handle auto-reload SSE endpoint
+        if path == '/__reload__':
+            self.send_response(200)
+            self.send_header('Content-Type', 'text/event-stream')
+            self.send_header('Cache-Control', 'no-cache')
+            self.send_header('Connection', 'keep-alive')
+            self.end_headers()
+
+            # Send periodic checks for file changes
+            try:
+                while True:
+                    if watcher.check_changes():
+                        self.wfile.write(b'data: reload\n\n')
+                        self.wfile.flush()
+                    time.sleep(0.5)
+            except (BrokenPipeError, ConnectionResetError):
+                pass
+            return
 
         # Remove leading slash and handle empty path
         if path.startswith('/'):
@@ -93,6 +159,8 @@ class MarkdownHTTPRequestHandler(SimpleHTTPRequestHandler):
 
         # Check if it's a markdown file
         if os.path.isfile(path) and path.endswith('.md'):
+            # Watch this file for changes
+            watcher.watch_file(path)
             try:
                 with open(path, 'r', encoding='utf-8') as f:
                     content = f.read()
@@ -215,6 +283,20 @@ class MarkdownHTTPRequestHandler(SimpleHTTPRequestHandler):
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
         mermaid.initialize({{ startOnLoad: true, theme: 'default' }});
+    </script>
+    <script>
+        // Auto-reload functionality
+        const eventSource = new EventSource('/__reload__');
+        eventSource.onmessage = function(event) {{
+            if (event.data === 'reload') {{
+                console.log('File changed, reloading...');
+                location.reload();
+            }}
+        }};
+        eventSource.onerror = function() {{
+            console.log('Auto-reload connection lost');
+            eventSource.close();
+        }};
     </script>
 </head>
 <body>

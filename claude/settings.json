@@ -1,0 +1,19 @@
+{
+  "alwaysThinkingEnabled": true,
+  "enabledPlugins": {
+    "superpowers@superpowers-marketplace": true
+  },
+  "hooks": {
+    "PermissionRequest": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME\"/.claude/hooks/validate-gh-readonly.py"
+          }
+        ]
+      }
+    ]
+  }
+}

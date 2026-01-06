@@ -29,6 +29,8 @@
     ~/.aider.conf.yml: aider.conf.yml
     ~/.aider.model.settings.yml: aider.model.settings.yml
     ~/.claude/CLAUDE.md: claude/CLAUDE.md
+    ~/.claude/settings.json: claude/settings.json
+    ~/.claude/hooks: claude/hooks
     ~/.cloudflared: cloudflared
     ~/.tmux.conf: tmux.conf
     ~/.vimrc: vimrc  # for legacy vim support - I use neovim by default

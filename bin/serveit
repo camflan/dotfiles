@@ -8,32 +8,38 @@ show_help() {
 Usage: serveit [options] [port]
 
 Start a local HTTP server for the current directory.
+Automatically renders .md files as HTML when python3 is available.
 
 Options:
-  -m, --markdown    Enable markdown rendering for .md files
+  --no-markdown     Disable markdown rendering
   -h, --help        Show this help message
 
 Arguments:
   port              Port to serve on (default: 8000)
 
 Examples:
-  serveit           # Serve on port 8000
-  serveit 3000      # Serve on port 3000
-  serveit -m        # Enable markdown rendering
-  serveit -m 3000   # Markdown rendering on port 3000
+  serveit           # Serve with markdown rendering on port 8000
+  serveit 3000      # Serve with markdown rendering on port 3000
+  serveit --no-markdown 8000   # Disable markdown rendering
+
+Features:
+  - Renders markdown files as styled HTML
+  - Supports Mermaid diagrams
+  - Tables, code blocks, blockquotes
+  - GitHub-flavored styling
 
 EOF
 }
 
 # Default options
 port='8000'
-markdown_mode=false
+markdown_mode=true
 
 # Parse arguments
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        -m|--markdown)
-            markdown_mode=true
+        --no-markdown)
+            markdown_mode=false
             shift
             ;;
         -h|--help)
@@ -53,14 +59,10 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Markdown rendering server (Python 3 only)
-if [[ "$markdown_mode" == true ]]; then
-    if ! hash python3 2>/dev/null; then
-        echo "Error: Markdown mode requires python3" >&2
-        exit 1
-    fi
-
+if [[ "$markdown_mode" == true ]] && hash python3 2>/dev/null; then
     echo "Starting server with markdown rendering on port $port..."
     echo "Press Ctrl+C to stop"
+    echo ""
 
     exec python3 - "$port" <<'PYTHON_EOF'
 import sys
@@ -96,6 +98,22 @@ class MarkdownHTTPRequestHandler(SimpleHTTPRequestHandler):
                     content = f.read()
 
                 if HAS_MARKDOWN:
+                    # Process mermaid diagrams before markdown rendering
+                    # Replace ```mermaid blocks with <pre class="mermaid"> tags
+                    import re
+
+                    def replace_mermaid(match):
+                        diagram_content = match.group(1)
+                        return f'<pre class="mermaid">\n{diagram_content}\n</pre>'
+
+                    # Replace mermaid code blocks
+                    content = re.sub(
+                        r'```mermaid\n(.*?)\n```',
+                        replace_mermaid,
+                        content,
+                        flags=re.DOTALL
+                    )
+
                     # Render markdown to HTML
                     html_content = markdown.markdown(
                         content,
@@ -186,7 +204,18 @@ class MarkdownHTTPRequestHandler(SimpleHTTPRequestHandler):
             max-width: 100%;
             height: auto;
         }}
+        .mermaid {{
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+            text-align: center;
+        }}
     </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({{ startOnLoad: true, theme: 'default' }});
+    </script>
 </head>
 <body>
 {html_content}

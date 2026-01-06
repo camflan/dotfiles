@@ -138,3 +138,7 @@ config/npm/npmrc
 
 cloudflared/*df401.json
 cloudflared/cert.pem
+
+config/mistral-vibe/logs/
+config/mistral-vibe/vibe.log
+config/mistral-vibe/vibehistory

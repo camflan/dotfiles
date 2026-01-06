@@ -46,7 +46,7 @@
       # the issue
       # https://github.com/anishathalye/dotbot/issues/315
       #
-      exclude: [config/asdf, config/zsh]  # handled later
+      exclude: [config/asdf, config/mistral-vibe, config/zsh]  # handled later
       glob: true
       path: config/*
       relink: true
@@ -60,6 +60,9 @@
     # XDG paths
     ~/.cache:
       path: ~/Library/Caches
+
+    ~/.vibe:
+      path: config/mistral-vibe
 
 - git:
     ~/.config/zsh/.zprezto:

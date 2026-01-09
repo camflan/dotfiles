@@ -1,8 +1,5 @@
 {
-  "alwaysThinkingEnabled": true,
-  "enabledPlugins": {
-    "superpowers@superpowers-marketplace": true
-  },
+  "model": "sonnet",
   "hooks": {
     "PermissionRequest": [
       {
@@ -15,5 +12,9 @@
         ]
       }
     ]
-  }
+  },
+  "enabledPlugins": {
+    "superpowers@superpowers-marketplace": true
+  },
+  "alwaysThinkingEnabled": true
 }

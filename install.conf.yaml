@@ -22,8 +22,8 @@
   # Claude code runs in 5 hour session windows. This starts a session early in the morning
   # so that I can fit 3 sessions in, vs 2
   # every day at 5am
-  - command: ~/.local/share/mise/shims/claude -p "hi"
-    time: 0 5 * * *
+  # - command: ~/.local/share/mise/shims/claude -p "hi"
+  #   time: 0 5 * * *
 
 - link:
     ~/.aider.conf.yml: aider.conf.yml
@@ -49,7 +49,7 @@
       # the issue
       # https://github.com/anishathalye/dotbot/issues/315
       #
-      exclude: [config/asdf, config/mistral-vibe, config/zsh]  # handled later
+      exclude: [config/asdf, config/goose, config/mistral-vibe, config/zsh]  # handled later
       glob: true
       path: config/*
       relink: true
@@ -63,6 +63,9 @@
     # XDG paths
     ~/.cache:
       path: ~/Library/Caches
+
+    ~/.config/goose/config.yaml:
+      path: config/goose/config.yaml
 
     ~/.vibe:
       path: config/mistral-vibe

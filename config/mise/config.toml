@@ -34,7 +34,7 @@ vault = "latest"
 "cargo:rep-grep" = "latest"
 
 # npm
-"npm:@anthropic-ai/claude-code" = "latest"
+"npm:@anthropic-ai/claude-code" = "2.0.61"
 "npm:@astrojs/language-server" = "latest"
 "npm:@charmland/crush" = "latest"
 "npm:@google/gemini-cli" = "latest"
@@ -61,6 +61,7 @@ vault = "latest"
 "ubi:pls-rs/pls" = "v0.0.1-beta.9"
 "ubi:sst/opencode" = "latest"
 arduino-cli = "latest"
+"npm:@kilocode/cli" = "latest"
 
 [settings]
 go_default_packages_file = "./default-go-packages"

@@ -1,0 +1,48 @@
+OPENAI_HOST: http://localhost:1234
+GOOSE_MODEL: qwen/qwen3-30b-a3b-2507
+# GOOSE_MODEL: openai/gpt-oss-20b
+GOOSE_PROVIDER: openai
+OPENAI_BASE_PATH: v1/chat/completions
+extensions:
+  autovisualiser:
+    available_tools: []
+    bundled: true
+    description: Data visualisation and UI generation tools
+    display_name: Auto Visualiser
+    enabled: true
+    name: autovisualiser
+    timeout: 300
+    type: builtin
+  developer:
+    available_tools: []
+    bundled: true
+    description: Code editing and shell access
+    display_name: Developer Tools
+    enabled: true
+    name: developer
+    timeout: 300
+    type: builtin
+  extensionmanager:
+    available_tools: []
+    bundled: true
+    description: Enable extension management tools for discovering, enabling, and disabling extensions
+    enabled: true
+    name: Extension Manager
+    type: platform
+  memory:
+    available_tools: []
+    bundled: true
+    description: Tools to save and retrieve durable memories
+    display_name: Memory
+    enabled: true
+    name: memory
+    timeout: 300
+    type: builtin
+  todo:
+    available_tools: []
+    bundled: true
+    description: Enable a todo list for Goose so it can keep track of what it is doing
+    enabled: true
+    name: todo
+    type: platform
+GOOSE_MODE: auto

@@ -1,20 +1,12 @@
 {
-    "$schema": "https://charm.land/crush.json",
-    "lsp": {
-        "elixirls": {
-            "command": "elixir-ls"
-        },
-        "typescript": {
-            "command": "typescript-language-server",
-            "args": ["--stdio"]
-        },
-        "vtsls": {
-            "command": "vtsls",
-            "args": ["--stdio"]
-        }
+  "$schema": "https://charm.land/crush.json",
+  "lsp": {
+    "elixirls": {
+      "command": "elixir-ls"
     },
-    "options": {
-        "disable_metrics": true
+    "typescript": {
+      "command": "typescript-language-server",
+      "args": ["--stdio"]
     },
     "vtsls": {
       "command": "vtsls",
@@ -31,134 +23,140 @@
     "jan": {
       "name": "Jan",
       "base_url": "http://localhost:1337/v1/",
-    "permissions": {
-        "allowed_tools": ["grep", "ls", "view"]
-    },
-    "providers": {
-        "jan": {
-            "name": "Jan",
-            "base_url": "http://localhost:1337/v1/",
-            "type": "openai",
-            "models": [
-                {
-                    "name": "Qwen 3 30B",
-                    "id": "qwen3:30b",
-                    "context_window": 256000,
-                    "default_max_tokens": 20000,
-                    "supports_attachments": true,
-                    "has_reasoning_efforts": true,
-                    "can_reason": true,
-                    "cost_per_1m_in": 0,
-                    "cost_per_1m_out": 0,
-                    "cost_per_1m_in_cached": 0,
-                    "cost_per_1m_out_cached": 0
-                },
-                {
-                    "name": "GPT OSS 20B",
-                    "id": "gpt-oss:20b",
-                    "context_window": 12500,
-                    "default_max_tokens": 20000,
-                    "supports_attachments": true,
-                    "has_reasoning_efforts": true,
-                    "can_reason": true,
-                    "cost_per_1m_in": 0,
-                    "cost_per_1m_out": 0,
-                    "cost_per_1m_in_cached": 0,
-                    "cost_per_1m_out_cached": 0
-                }
-            ]
+      "type": "openai",
+      "models": [
+        {
+          "name": "Qwen 3 30B",
+          "id": "qwen3:30b",
+          "context_window": 256000,
+          "default_max_tokens": 20000,
+          "supports_attachments": true,
+          "has_reasoning_efforts": true,
+          "can_reason": true,
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0
         },
-        "mlx": {
-            "name": "MLX",
-            "base_url": "http://localhost:1234/v1/",
-            "type": "openai",
-            "models": [
-                {
-                    "name": "GPT OSS 20b 8-bit",
-                    "id": "gpt-oss-20b-mxfp4-q8",
-                    "context_window": 256000,
-                    "default_max_tokens": 16000,
-                    "supports_attachments": true,
-                    "has_reasoning_efforts": true,
-                    "can_reason": true,
-                    "cost_per_1m_in": 0,
-                    "cost_per_1m_out": 0,
-                    "cost_per_1m_in_cached": 0,
-                    "cost_per_1m_out_cached": 0
-                },
-                {
-                    "name": "Qwen 3 Coder 30B 8-bit",
-                    "id": "qwen3-coder-30b-a3b-instruct-mlx-8bit",
-                    "context_window": 256000,
-                    "default_max_tokens": 16000,
-                    "supports_attachments": true,
-                    "has_reasoning_efforts": true,
-                    "can_reason": true,
-                    "cost_per_1m_in": 0,
-                    "cost_per_1m_out": 0,
-                    "cost_per_1m_in_cached": 0,
-                    "cost_per_1m_out_cached": 0
-                }
-            ]
-        },
-        "ollama": {
-            "name": "Ollama",
-            "base_url": "http://localhost:11434/v1/",
-            "type": "openai",
-            "models": [
-                {
-                    "name": "Qwen 3 30B",
-                    "id": "qwen3:30b",
-                    "context_window": 256000,
-                    "default_max_tokens": 20000,
-                    "supports_attachments": true,
-                    "has_reasoning_efforts": true,
-                    "can_reason": true,
-                    "cost_per_1m_in": 0,
-                    "cost_per_1m_out": 0,
-                    "cost_per_1m_in_cached": 0,
-                    "cost_per_1m_out_cached": 0
-                },
-                {
-                    "name": "Qwen 3 Coder 30B",
-                    "id": "qwen3-coder:30b",
-                    "context_window": 256000,
-                    "default_max_tokens": 20000,
-                    "supports_attachments": true,
-                    "has_reasoning_efforts": true,
-                    "can_reason": true,
-                    "cost_per_1m_in": 0,
-                    "cost_per_1m_out": 0,
-                    "cost_per_1m_in_cached": 0,
-                    "cost_per_1m_out_cached": 0
-                },
-                {
-                    "name": "Qwen 3 Coder 30B Instruct Unsloth Q3 XL",
-                    "id": "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF:Q3_K_XL",
-                    "context_window": 256000,
-                    "default_max_tokens": 20000,
-                    "supports_attachments": true,
-                    "has_reasoning_efforts": true,
-                    "can_reason": true,
-                    "cost_per_1m_in": 0,
-                    "cost_per_1m_out": 0,
-                    "cost_per_1m_in_cached": 0,
-                    "cost_per_1m_out_cached": 0
-                },
-                {
-                    "name": "Qwen 3 Coder 30B Instruct Unsloth Q8 XL",
-                    "id": "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF:Q8_K_XL",
-                    "context_window": 256000,
-                    "default_max_tokens": 20000,
-                    "supports_attachments": true,
-                    "has_reasoning_efforts": true,
-                    "can_reason": true,
-                    "cost_per_1m_in": 0,
-                    "cost_per_1m_out": 0,
-                    "cost_per_1m_in_cached": 0,
-                    "cost_per_1m_out_cached": 0
-                }
-            ]
+        {
+          "name": "GPT OSS 20B",
+          "id": "gpt-oss:20b",
+          "context_window": 12500,
+          "default_max_tokens": 20000,
+          "supports_attachments": true,
+          "has_reasoning_efforts": true,
+          "can_reason": true,
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0
         }
+      ]
+    },
+    "lm studio": {
+      "name": "LM Studio",
+      "base_url": "http://localhost:1234/v1/",
+      "type": "openai",
+      "models": [
+        {
+          "name": "GPT OSS 20b 8-bit",
+          "id": "gpt-oss-20b-mxfp4-q8",
+          "context_window": 256000,
+          "default_max_tokens": 16000,
+          "supports_attachments": true,
+          "has_reasoning_efforts": true,
+          "can_reason": true,
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0
+        },
+        {
+          "name": "Qwen 3 Coder 30B 8-bit",
+          "id": "qwen3-coder-30b-a3b-instruct-mlx-8bit",
+          "context_window": 256000,
+          "default_max_tokens": 16000,
+          "supports_attachments": true,
+          "has_reasoning_efforts": true,
+          "can_reason": true,
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0
+        },
+        {
+          "name": "Qwen 3 Coder 80B",
+          "id": "qwen/qwen3-next-80b",
+          "context_window": 256000,
+          "default_max_tokens": 16000,
+          "supports_attachments": true,
+          "has_reasoning_efforts": true,
+          "can_reason": true,
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0
+        }
+      ]
+    },
+    "ollama": {
+      "name": "Ollama",
+      "base_url": "http://localhost:11434/v1/",
+      "type": "openai",
+      "models": [
+        {
+          "name": "Qwen 3 30B",
+          "id": "qwen3:30b",
+          "context_window": 256000,
+          "default_max_tokens": 20000,
+          "supports_attachments": true,
+          "has_reasoning_efforts": true,
+          "can_reason": true,
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0
+        },
+        {
+          "name": "Qwen 3 Coder 30B",
+          "id": "qwen3-coder:30b",
+          "context_window": 256000,
+          "default_max_tokens": 20000,
+          "supports_attachments": true,
+          "has_reasoning_efforts": true,
+          "can_reason": true,
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0
+        },
+        {
+          "name": "Qwen 3 Coder 30B Instruct Unsloth Q3 XL",
+          "id": "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF:Q3_K_XL",
+          "context_window": 256000,
+          "default_max_tokens": 20000,
+          "supports_attachments": true,
+          "has_reasoning_efforts": true,
+          "can_reason": true,
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0
+        },
+        {
+          "name": "Qwen 3 Coder 30B Instruct Unsloth Q8 XL",
+          "id": "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF:Q8_K_XL",
+          "context_window": 256000,
+          "default_max_tokens": 20000,
+          "supports_attachments": true,
+          "has_reasoning_efforts": true,
+          "can_reason": true,
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0
+        }
+      ]
     }
+  }
 }

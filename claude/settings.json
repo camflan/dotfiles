@@ -1,5 +1,12 @@
 {
-  "model": "sonnet",
+  "alwaysThinkingEnabled": true,
+  "enabledPlugins": {
+    "superpowers@superpowers-marketplace": true
+  },
+  "env": {
+    "DISABLE_AUTOUPDATER": "1",
+    "CLAUDE_CODE_DISABLE_AUTO_UPDATE": "1"
+  },
   "hooks": {
     "PermissionRequest": [
       {
@@ -13,8 +20,5 @@
       }
     ]
   },
-  "enabledPlugins": {
-    "superpowers@superpowers-marketplace": true
-  },
-  "alwaysThinkingEnabled": true
+  "model": "sonnet"
 }

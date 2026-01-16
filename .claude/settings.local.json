@@ -11,7 +11,8 @@
       "Bash(git show:*)",
       "Bash(bash -x /Users/camron/dotfiles/bin/todos:*)",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(tree:*)"
     ],
     "deny": [],
     "ask": []

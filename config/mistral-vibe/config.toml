@@ -1,4 +1,4 @@
-active_model = "devstral-2-small-mlx-8bit"
+active_model = "devstral-2-small-mlx-4bit"
 vim_keybindings = false
 disable_welcome_banner_animation = false
 displayed_workdir = ""
@@ -71,7 +71,7 @@ input_price = 0.0
 output_price = 0.0
 
 [[models]]
-name = "devstral-small-2-24b-instruct-2512@4bit"
+name = "mistralai/devstral-small-2-2512"
 alias = "devstral-2-small-mlx-4bit"
 provider = "lmstudio"
 temperature = 0.2

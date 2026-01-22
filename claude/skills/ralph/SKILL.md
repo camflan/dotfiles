@@ -60,7 +60,7 @@ Then ask clarifying questions:
 
 **Each task must be completable in ONE Ralph iteration (~one context window).**
 
-Ralph spawns a fresh Amp instance per iteration with no memory of previous work. If a task is too big, the LLM runs out of context before finishing.
+Ralph spawns a fresh agent instance per iteration with no memory of previous work. If a task is too big, the LLM runs out of context before finishing.
 
 ### Right-sized tasks:
 
@@ -134,7 +134,7 @@ task_list create
 
 ### Task description format:
 
-Write descriptions that a future Ralph iteration can pick up without context:
+Write descriptions that a future Ralph iteration or developer can pick up without context:
 
 ```
 Implement category name to ID mapping for expenses.
@@ -638,7 +638,6 @@ Parent Task: [parent-task-id]
 
 ## [Date] - [Task Title]
 
-Thread: https://ampcode.com/threads/[thread-id]
 Task ID: [id]
 
 - What was implemented

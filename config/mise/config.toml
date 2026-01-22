@@ -30,11 +30,12 @@ vault = "latest"
 
 "asdf:awscli" = "latest"
 
+"cargo:git-global" = "latest"
 # interactive rg replacer
 "cargo:rep-grep" = "latest"
 
 # npm
-"npm:@anthropic-ai/claude-code" = "2.0.61"
+"npm:@anthropic-ai/claude-code" = "latest"
 "npm:@astrojs/language-server" = "latest"
 "npm:@charmland/crush" = "latest"
 "npm:@google/gemini-cli" = "latest"
@@ -62,6 +63,7 @@ vault = "latest"
 "ubi:sst/opencode" = "latest"
 arduino-cli = "latest"
 "npm:@kilocode/cli" = "latest"
+"go:github.com/steveyegge/beads/cmd/bd" = "latest"
 
 [settings]
 go_default_packages_file = "./default-go-packages"

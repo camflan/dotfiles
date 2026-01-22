@@ -18,7 +18,7 @@
 
 - clean: ['~']
 
-- crontab:
+# - crontab:
   # Claude code runs in 5 hour session windows. This starts a session early in the morning
   # so that I can fit 3 sessions in, vs 2
   # every day at 5am
@@ -26,12 +26,6 @@
   #   time: 0 5 * * *
 
 - link:
-    ~/.aider.conf.yml: aider.conf.yml
-    ~/.aider.model.settings.yml: aider.model.settings.yml
-    ~/.claude/CLAUDE.md: claude/CLAUDE.md
-    ~/.claude/settings.json: claude/settings.json
-    ~/.claude/hooks: claude/hooks
-    ~/.claude/skills: claude/skills
     ~/.cloudflared: cloudflared
     ~/.tmux.conf: tmux.conf
     ~/.vimrc: vimrc  # for legacy vim support - I use neovim by default
@@ -51,7 +45,9 @@
       #
       # All of these are handled later
       exclude: [
+        config/aider,
         config/asdf,
+        config/claude,
         config/goose,
         config/mistral-vibe,
         config/opencode,
@@ -70,6 +66,15 @@
     # XDG paths
     ~/.cache:
       path: ~/Library/Caches
+
+    ~/:
+      glob: aider*
+      path: config/aider/*
+
+    ~/.claude/:
+      glob: "*"
+      path: config/claude/*
+      relink: true
 
     ~/.config/goose/config.yaml:
       path: config/goose/config.yaml

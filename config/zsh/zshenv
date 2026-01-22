@@ -90,7 +90,9 @@ export MCFLY_INTERFACE_VIEW=BOTTOM
 
 # Fnox
 # https://fnox.jdx.dev
-export FNOX_AGE_KEY_FILE=~/.ssh/id_rsa
+# export FNOX_AGE_KEY_FILE=~/.ssh/id_rsa
+# To onboard/add/edit/etc, use this: https://fnox.jdx.dev/guide/real-world-example.html
+export FNOX_AGE_KEY=$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY")
 
 # PLS
 # https://pls.cli.rs/reference/conf/

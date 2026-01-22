@@ -1,10 +1,10 @@
-active_model = "devstral-2-small-mlx-4bit"
+active_model = "devstral-2"
 vim_keybindings = false
 disable_welcome_banner_animation = false
 displayed_workdir = ""
 auto_compact_threshold = 200000
 context_warnings = false
-textual_theme = "tokyo-night"
+textual_theme = "terminal"
 instructions = ""
 system_prompt_id = "cli"
 include_model_info = true
@@ -16,6 +16,10 @@ tool_paths = []
 mcp_servers = []
 enabled_tools = []
 disabled_tools = []
+skill_paths = [
+    "~/dotfiles/claude/skills",
+]
+
 
 [[providers]]
 name = "mistral"

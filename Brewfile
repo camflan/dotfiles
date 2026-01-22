@@ -61,7 +61,7 @@ cask "ghostty"
 
 # WezTerm - GPU-accelerated cross-platform terminal emulator
 # Highly configurable Rust-based terminal
-cask "wezterm"
+# cask "wezterm"
 
 
 # ==============================================================================
@@ -304,6 +304,9 @@ brew "mysql-client"
 # Automatic schema documentation generator
 brew "k1LoW/tap/tbls"
 
+# Redis GUI
+# https://github.com/vicanso/zedis
+cask "zedis"
 
 # ==============================================================================
 # MEDIA TOOLS

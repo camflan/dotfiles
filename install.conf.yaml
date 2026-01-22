@@ -49,7 +49,14 @@
       # the issue
       # https://github.com/anishathalye/dotbot/issues/315
       #
-      exclude: [config/asdf, config/goose, config/mistral-vibe, config/zsh]  # handled later
+      # All of these are handled later
+      exclude: [
+        config/asdf,
+        config/goose,
+        config/mistral-vibe,
+        config/opencode,
+        config/zsh
+      ]
       glob: true
       path: config/*
       relink: true
@@ -67,8 +74,17 @@
     ~/.config/goose/config.yaml:
       path: config/goose/config.yaml
 
-    ~/.vibe:
-      path: config/mistral-vibe
+    ~/.config/opencode/:
+      create: true
+      glob: "*"
+      path: config/opencode/*
+      relink: true
+
+    ~/.vibe/:
+      create: true
+      glob: "*"
+      path: config/mistral-vibe/*
+      relink: true
 
 - git:
     ~/.config/zsh/.zprezto:

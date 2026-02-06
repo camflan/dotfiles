@@ -1,17 +1,18 @@
 {
-  "alwaysThinkingEnabled": true,
-  "enabledPlugins": {
-    "superpowers@superpowers-marketplace": true
-  },
   "env": {
     "DISABLE_AUTOUPDATER": "1",
     "CLAUDE_CODE_DISABLE_AUTO_UPDATE": "1"
   },
+  "model": "opus",
   "hooks": {
     "PermissionRequest": [
       {
         "matcher": "Bash",
         "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME\"/.claude/hooks/allow-safe-bash.py"
+          },
           {
             "type": "command",
             "command": "\"$HOME\"/.claude/hooks/validate-gh-readonly.py"
@@ -20,5 +21,8 @@
       }
     ]
   },
-  "model": "sonnet"
+  "enabledPlugins": {
+    "superpowers@superpowers-marketplace": true
+  },
+  "alwaysThinkingEnabled": true
 }

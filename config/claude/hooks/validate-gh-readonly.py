@@ -17,7 +17,7 @@ if not command.strip().startswith("gh "):
     sys.exit(0)
 
 # Block write operations
-write_operations = [
+write_operations_ask = [
     r"gh\s+api\s+(POST|PUT|PATCH|DELETE)",
     r"gh\s+(issue|pr)\s+(create|edit|close|reopen|merge)",
     r"gh\s+release\s+(create|upload|edit|delete)",
@@ -26,15 +26,15 @@ write_operations = [
     r"gh\s+(secret|variable)\s+(set|delete)",
 ]
 
-for pattern in write_operations:
+for pattern in write_operations_ask:
     if re.search(pattern, command):
         output = {
             "hookSpecificOutput": {
                 "hookEventName": "PermissionRequest",
                 "decision": {
-                    "behavior": "deny",
-                    "message": "Write operations not allowed",
-                    "interrupt": False
+                    "behavior": "ask_permission",
+                    "message": "Write operations require permission. Do you want to proceed?",
+                    "interrupt": True
                 }
             }
         }

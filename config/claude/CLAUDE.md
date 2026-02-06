@@ -4,12 +4,13 @@ Be as concise as possible, even at the expense of grammar.
 
 - Do not comment self-describing code
 - Only comment complex sections of code that might be hard to revisit. Prefer to explain the purpose of the code rather than what the code is doing
+- Use ASCII art/diagrams when it helps document/describe code
 
 # Code standards
 
 - Prefer DRY code
 - Prefer file-level constants to magic numbers/strings, lift to project-level contants that load from env if needed in several places or if it's an important setting that can vary between environments
-- Use "…" instead of "..." in strings that the user will be shown
+- Use real ellipses `…` instead of `...` in ALL non-code contexts
 
 # Git
 
@@ -23,13 +24,13 @@ Be as concise as possible, even at the expense of grammar.
 - Prefer Array/iterable methods instead of declaring an array and pushing onto it
 - Prefer flatMap instead of filter + map to save iterations
 - Prefer types to interfaces where possible
-- Always export types for exported functions
-- Prefer named exports to default
-- Avoid barrel files
+- Export types for all exported functions
+- ALWAYS use named exports instead of default exports
+- NO NEW barrel files
 - Derive types from other types, schemas, etc as much as possible
 - Prefer named types to anonymous types
 - Avoid Enums and use string unions unless absolutely necessary
-- File level function declarations should use the function keyword and utility functions should be placed at the end of the file
+- Top level function declarations SHOULD ALWAYS use the function keyword. All utility functions should be placed at the end of the file and rely on hoisting
 - Avoid JSDocs when there are typescript types. Add comments to TS types instead
 - Avoid return type annotations where possible
 

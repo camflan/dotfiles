@@ -109,12 +109,15 @@ vim.lsp.config("*", {
 })
 
 vim.lsp.enable({
+    "astro",
     -- "elixirls",
     "eslint",
-    "expert",
+    "expert", -- next gen elixir lang server
     "gopls",
     "graphql",
+    "intelephense",
     "jsonls",
+    "laravel_ls",
     "tailwindcss",
     "taplo",
     "terraformls",

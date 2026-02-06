@@ -37,6 +37,9 @@
 [includeIf "gitdir:~/src/github.com/swoogo/"]
   path = config-uplift
 
+[includeIf "gitdir:~/src/github.com/LulaLife/"]
+  path = config-lulalife
+
 [includeIf "hasconfig:remote.*.url:git://git@bitbucket.org:togg_sw/*/**"]
   path = config-bitbucket
 
@@ -62,9 +65,9 @@
     stash-all = stash save --include-untracked
 
 [core]
-    attributesfile = /Users/camron/.gitattributes
+    attributesfile = ~/.config/git/attributes
     editor = nvim
-    excludesfile = /Users/camron/.gitignore_global
+    excludesfile = ~/.config/git/ignore
     hooksPath = ~/.config/git/hooks
     pager = delta
     trustctime = false

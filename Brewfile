@@ -290,6 +290,37 @@ brew "watchman"
 brew "grex"
 
 
+### LULA LIFE dependencies
+brew "bison"
+brew "caddy"
+brew "nss"
+brew "phpbrew"
+
+# PHP build dependencies
+brew "autoconf"
+brew "bison"
+brew "bzip2"
+brew "freetype"
+brew "gd"
+brew "gmp"
+brew "imagemagick"
+brew "jpeg"
+brew "libiconv"
+brew "libpng"
+brew "libsodium"
+brew "libxml2"
+brew "libxslt"
+brew "libzip"
+brew "oniguruma"
+brew "openssl@3"
+brew "pkg-config"
+brew "re2c"
+brew "zlib"
+### /LULA LIFE dependencies
+
+# skipping these, using mise instead
+# brew "fnm"
+
 # ==============================================================================
 # DATABASES
 # ==============================================================================

@@ -137,3 +137,8 @@ fi
 if [ -f "$ZDOTDIR/.zshenv.private" ] && hash op &> /dev/null; then
     eval $(op inject -i $ZDOTDIR/.zshenv.private)
 fi
+
+## LULA LIFE PHPBREW
+export PHPBREW_RC_ENABLE=1
+source /Users/camron/.phpbrew/bashrc
+_phpbrewrc_load # force eval of phpbrew after loading

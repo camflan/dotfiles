@@ -12,7 +12,11 @@
       "Bash(bash -x /Users/camron/dotfiles/bin/todos:*)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "Bash(claude plugin:*)",
+      "Bash(claude plugin list:*)",
+      "Bash(claude settings:*)",
+      "Bash(npm root:*)"
     ],
     "deny": [],
     "ask": []

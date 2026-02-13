@@ -22,7 +22,8 @@
     ]
   },
   "enabledPlugins": {
-    "superpowers@superpowers-marketplace": true
+    "superpowers@superpowers-marketplace": true,
+    "custom-lsps@custom-lsps": true
   },
   "alwaysThinkingEnabled": true
 }

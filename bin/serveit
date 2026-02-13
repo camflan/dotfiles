@@ -69,7 +69,7 @@ if [[ "$markdown_mode" == true ]] && hash python3 2>/dev/null; then
     exec python3 - "$port" <<'PYTHON_EOF'
 import sys
 import os
-from http.server import HTTPServer, SimpleHTTPRequestHandler
+from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import unquote
 import mimetypes
 import time
@@ -285,17 +285,10 @@ class MarkdownHTTPRequestHandler(SimpleHTTPRequestHandler):
         mermaid.initialize({{ startOnLoad: true, theme: 'default' }});
     </script>
     <script>
-        // Auto-reload functionality
-        const eventSource = new EventSource('/__reload__');
-        eventSource.onmessage = function(event) {{
-            if (event.data === 'reload') {{
-                console.log('File changed, reloading...');
-                location.reload();
-            }}
-        }};
-        eventSource.onerror = function() {{
-            console.log('Auto-reload connection lost');
-            eventSource.close();
+        // Auto-reload via SSE — EventSource auto-reconnects on transient errors
+        const evtSrc = new EventSource('/__reload__');
+        evtSrc.onmessage = function(event) {{
+            if (event.data === 'reload') location.reload();
         }};
     </script>
 </head>
@@ -307,6 +300,7 @@ class MarkdownHTTPRequestHandler(SimpleHTTPRequestHandler):
                 # Send response
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html; charset=utf-8')
+                self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
                 self.end_headers()
                 self.wfile.write(html.encode('utf-8'))
                 return
@@ -319,7 +313,7 @@ class MarkdownHTTPRequestHandler(SimpleHTTPRequestHandler):
 
 if __name__ == '__main__':
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
-    server = HTTPServer(('localhost', port), MarkdownHTTPRequestHandler)
+    server = ThreadingHTTPServer(('localhost', port), MarkdownHTTPRequestHandler)
     print(f'Serving HTTP on http://localhost:{port}/ ...')
     try:
         server.serve_forever()

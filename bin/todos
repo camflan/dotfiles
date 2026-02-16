@@ -164,54 +164,45 @@ fi
 # Track if we found any comments
 found_comments=false
 
-# Get list of commits in the range
-commits=$(git rev-list --reverse "$range")
-
-# Create temp file for storing results
+# Create temp files for processing
 temp_results=$(mktemp)
+temp_diff=$(mktemp)
 
-# Process each commit to find TODOs
-for commit_sha in $commits; do
-    commit_date=$(git show -s --format=%ai "$commit_sha" | cut -d' ' -f1)
-    commit_msg=$(git log -1 --format=%s "$commit_sha")
+# Combined diff shows only net-new lines, ignoring TODOs removed by later commits
+git diff "$base_branch"..."$current_head" --unified=0 > "$temp_diff"
 
-    # Get the diff for this commit and find lines with keywords
-    git show --format="" --unified=0 "$commit_sha" | \
-    grep -n "^+" | \
-    grep -v "^[0-9]*:+++" | \
-    grep -iE "$keywords:" | \
-    while IFS=: read -r line_in_diff content; do
-        # We found a match - now extract file and line info
-        # We need to find which file this is in by looking backwards in the diff
+grep -n "^+" "$temp_diff" | \
+grep -v "^[0-9]*:+++" | \
+grep -iE "$keywords:" | \
+while IFS=: read -r line_in_diff content; do
+    file_info=$(head -n "$line_in_diff" "$temp_diff" | grep "^+++" | tail -1)
 
-        # Get the full diff again to find file context
-        file_info=$(git show --format="" --unified=0 "$commit_sha" | head -n "$line_in_diff" | grep "^+++" | tail -1)
+    if [ -n "$file_info" ]; then
+        filename=$(echo "$file_info" | sed 's|^+++ b/||')
 
-        if [ -n "$file_info" ]; then
-            filename=$(echo "$file_info" | sed 's|^+++ b/||')
+        hunk_header=$(head -n "$line_in_diff" "$temp_diff" | grep "^@@" | tail -1)
+        new_line=$(echo "$hunk_header" | sed 's/.*+\([0-9]*\).*/\1/')
 
-            # Get the line number from the diff hunk header
-            hunk_header=$(git show --format="" --unified=0 "$commit_sha" | head -n "$line_in_diff" | grep "^@@" | tail -1)
+        lines_since_hunk=$(head -n "$line_in_diff" "$temp_diff" | \
+            awk -v hunk="$hunk_header" '
+                $0 == hunk { found=1; count=0; next }
+                found && /^[+]/ && !/^[+]{3}/ { count++ }
+                END { print count }
+            ')
 
-            # Extract the starting line number from the hunk header (format: @@ -old +new @@)
-            new_line=$(echo "$hunk_header" | sed 's/.*+\([0-9]*\).*/\1/')
+        actual_line=$((new_line + lines_since_hunk - 1))
 
-            # Count how many + lines we've seen since the hunk header to calculate exact line
-            lines_since_hunk=$(git show --format="" --unified=0 "$commit_sha" | \
-                head -n "$line_in_diff" | \
-                awk -v hunk="$hunk_header" '
-                    $0 == hunk { found=1; count=0; next }
-                    found && /^[+]/ && !/^[+]{3}/ { count++ }
-                    END { print count }
-                ')
+        # Attribute the TODO to its originating commit via blame
+        blame_commit=$(git blame -p -L "$actual_line,$actual_line" -- "$filename" 2>/dev/null | head -1 | awk '{print $1}')
 
-            actual_line=$((new_line + lines_since_hunk - 1))
-
-            # Store the result
-            echo "$commit_sha|$commit_date|$filename|$actual_line|$content" >> "$temp_results"
+        if [ -n "$blame_commit" ]; then
+            commit_date=$(git show -s --format=%ai "$blame_commit" 2>/dev/null | cut -d' ' -f1)
+            echo "$blame_commit|$commit_date|$filename|$actual_line|$content" >> "$temp_results"
         fi
-    done
+    fi
 done
+
+rm -f "$temp_diff"
 
 # Update found_comments flag if we have any results from commits
 commits_with_todos=0
@@ -357,17 +348,15 @@ if [ "$found_comments" = true ]; then
 
             echo "  ${GREEN}$filename:$line_num${NC}"
 
-            # Show context lines around the match
-            # First, get the file content at this commit
-            if git show "$commit_sha:$filename" >/dev/null 2>&1; then
+            # Show context from HEAD (line numbers correspond to current state)
+            if git show "HEAD:$filename" >/dev/null 2>&1; then
                 start_line=$((line_num - context_lines))
                 if [ $start_line -lt 1 ]; then
                     start_line=1
                 fi
                 end_line=$((line_num + context_lines))
 
-                # Extract and display the lines with context
-                git show "$commit_sha:$filename" | \
+                git show "HEAD:$filename" | \
                 awk -v start="$start_line" -v end="$end_line" -v target="$line_num" '
                     NR >= start && NR <= end {
                         if (NR == target) {

@@ -16,7 +16,8 @@
       "Bash(claude plugin:*)",
       "Bash(claude plugin list:*)",
       "Bash(claude settings:*)",
-      "Bash(npm root:*)"
+      "Bash(npm root:*)",
+      "WebSearch"
     ],
     "deny": [],
     "ask": []

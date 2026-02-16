@@ -36,12 +36,19 @@ SAFE_PATTERNS = [
     r"^rg\s",
     r"^fd\s",
 
+    # Runtime/package info (read-only)
+    r"^mise\s+(ls|list|current|which|where|version)(\s|$)",
+    r"^npm\s+(ls|list|root|view|explain|why)(\s|$)",
+    r"^stat\s",
+
     # System info
     r"^which\s",
     r"^type\s",
     r"^env$",
     r"^printenv(\s|$)",
     r"^uname(\s|$)",
+    r"^date(\s|$)",
+    r"^hostname(\s|$)",
 ]
 
 
@@ -92,6 +99,7 @@ def split_commands(cmd):
 
 commands = split_commands(command)
 
+# Safe because ALL segments (including pipe targets) must match a safe pattern
 if all(is_safe(cmd) for cmd in commands):
     output = {
         "hookSpecificOutput": {

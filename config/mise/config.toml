@@ -21,7 +21,7 @@ node = "lts"
 pkl = "latest"
 python = "3.12"
 rust = "stable"
-taplo = "latest"
+taplo = "latest"  # toml lsp
 terraform = "latest"
 tree-sitter = "latest"
 usage = "latest"
@@ -84,7 +84,7 @@ url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d
 [settings]
 go_default_packages_file = "./default-go-packages"
 experimental = true
-idiomatic_version_file_enable_tools = ["node"]
+idiomatic_version_file_enable_tools = ["node", "python"]
 
 [settings.node]
 gpg_verify = true

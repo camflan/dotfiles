@@ -1,1 +1,2 @@
+-- Taplo is the toml LSP
 -- vim.lsp.config("taplo", {})

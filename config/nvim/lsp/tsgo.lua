@@ -1,4 +1,4 @@
-vim.lsp.config("tsgo", {
+return {
   cmd = {
     "npx",
     "tsgo",
@@ -14,6 +14,4 @@ vim.lsp.config("tsgo", {
     "typescript.tsx",
   },
   root_markers = { "tsconfig.json" },
-})
-
-return {}
+}

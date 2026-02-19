@@ -4,7 +4,7 @@ local KUBERNETES_SCHEMA_VARIANT = "standalone-strict"
 
 local schemastore = require("schemastore")
 
-vim.lsp.config("yamlls", {
+return {
   settings = {
     redhat = { telemetry = { enabled = false } },
     yaml = {
@@ -34,4 +34,4 @@ vim.lsp.config("yamlls", {
       validate = true,
     },
   },
-})
+}

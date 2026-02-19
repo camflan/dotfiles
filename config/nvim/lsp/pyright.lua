@@ -1,4 +1,4 @@
-vim.lsp.config("pyright", {
+return {
   cmd = { "pyright-langserver", "--stdio" },
   filetypes = { "python" },
   root_markers = { "pyproject.toml", "pyrightconfig.json", "setup.py", "setup.cfg", ".git" },
@@ -11,6 +11,4 @@ vim.lsp.config("pyright", {
       },
     },
   },
-})
-
-return {}
+}

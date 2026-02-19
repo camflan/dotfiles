@@ -76,35 +76,31 @@ vim.diagnostic.config({
     virtual_text = false,
 })
 
-vim.lsp.config("*", {
-    on_attach = function(_, bufnr)
+-- Diagnostic keybindings (work without LSP)
+vim.keymap.set("n", "<leader>j", "<cmd>lua vim.diagnostic.jump({ count = 1 })<CR>", { desc = "Next diagnostic" })
+vim.keymap.set("n", "<leader>k", "<cmd>lua vim.diagnostic.jump({ count = -1 })<CR>", { desc = "Prev diagnostic" })
+vim.keymap.set("n", "<leader>u", "<cmd>lua vim.diagnostic.open_float()<CR>", { desc = "Diagnostic float" })
+
+vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(ev)
+        local bufnr = ev.buf
+
         -- overwrites omnifunc/tagfunc set by some Python plugins to the
         -- default values for LSP
         vim.api.nvim_set_option_value("omnifunc", "v:lua.vim.lsp.omnifunc", { buf = bufnr })
         vim.api.nvim_set_option_value("tagfunc", "v:lua.vim.lsp.tagfunc", { buf = bufnr })
 
-        local keymap_opts = { buffer = bufnr, noremap = true, silent = true }
-
         vim.keymap.set(
             { "n", "x" },
             "<leader>da",
             '<cmd>lua require("fastaction").code_action()<CR>',
-            { desc = "Display code actions", buffer = bufnr }
+            { desc = "Code actions (fastaction)", buffer = bufnr }
         )
-        -- vim.keymap.set({ "n", "v" }, "<leader>da", "<cmd>lua vim.lsp.buf.code_action()<CR>", keymap_opts)
-        vim.keymap.set("n", "<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", keymap_opts)
-        vim.keymap.set("n", "<leader>i", '<cmd>lua vim.lsp.buf.hover({ border = "rounded" })<CR>', keymap_opts)
-        vim.keymap.set("n", "<leader>j", "<cmd>lua vim.diagnostic.goto_next()<CR>", keymap_opts)
-        vim.keymap.set("n", "<leader>k", "<cmd>lua vim.diagnostic.goto_prev()<CR>", keymap_opts)
-        vim.keymap.set("n", "<leader>u", "<cmd>lua vim.diagnostic.open_float()<CR>", keymap_opts)
-
-        -- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-        --     vim.lsp.diagnostic.on_publish_diagnostics, {
-        --         signs = true,
-        --         underline = true,
-        --         virtual_text = true
-        --     }
-        -- )
+        vim.keymap.set("n", "<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>",
+            { desc = "Go to type definition", buffer = bufnr })
+        vim.keymap.set("n", "K", function()
+            vim.lsp.buf.hover({ border = borders.rounded })
+        end, { desc = "Hover", buffer = bufnr })
     end,
 })
 
@@ -118,9 +114,46 @@ vim.lsp.enable({
     "intelephense",
     "jsonls",
     "laravel_ls",
+    "lua_ls",
     "tailwindcss",
     "taplo",
     "terraformls",
     "vtsls",
     "yamlls",
+})
+
+-- Python LSPs: checked per buffer so project-local venv tools are found.
+-- Enables first available type checker only.
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "python",
+    group = vim.api.nvim_create_augroup("python_lsp", { clear = true }),
+    callback = function(ev)
+        local clients = vim.lsp.get_clients({ bufnr = ev.buf })
+        local has_type_checker = false
+        local has_ruff = false
+        for _, client in ipairs(clients) do
+            if vim.tbl_contains({ "ty", "pyre", "pyright" }, client.name) then
+                has_type_checker = true
+            elseif client.name == "ruff" then
+                has_ruff = true
+            end
+        end
+
+        if not has_type_checker then
+            for _, checker in ipairs({
+                { server = "ty", cmd = "ty" },
+                { server = "pyre", cmd = "pyre" },
+                { server = "pyright", cmd = "pyright-langserver" },
+            }) do
+                if vim.fn.executable(checker.cmd) == 1 then
+                    vim.lsp.enable(checker.server)
+                    break
+                end
+            end
+        end
+
+        if not has_ruff and vim.fn.executable("ruff") == 1 then
+            vim.lsp.enable("ruff")
+        end
+    end,
 })

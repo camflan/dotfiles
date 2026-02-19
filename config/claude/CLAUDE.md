@@ -11,6 +11,7 @@ Be as concise as possible, even at the expense of grammar.
 - Do not comment self-describing code
 - Only comment complex sections of code that might be hard to revisit. Prefer to explain the purpose of the code rather than what the code is doing
 - Use ASCII art/diagrams when it helps document/describe code
+- Preserve existing comments from other developers. Update them only when functionality changes. If a comment seems outdated and removal-worthy, flag it for review rather than deleting
 
 # Tooling
 

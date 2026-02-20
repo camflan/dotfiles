@@ -133,7 +133,7 @@ A task is available to work on when:
 - Its "**Blocked by:**" field is "none", OR all listed task IDs have "**Passing:** yes"
 
 Pick ONE available task — any one, your choice.
-Complete it fully.
+Complete it fully. All tests, linters, and formatters must pass before a task is considered done.
 
 After completing the task:
 1. Set its "**Passing:**" field to "yes" in ${TASKS_FILE}

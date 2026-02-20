@@ -122,12 +122,17 @@ ${learnings}
 
 Tasks use this format:
 
-## Task: <title>
+## Task [<id>]: <title>
 - **Goal:** <what this achieves>
 - **Acceptance criteria:** <how to know it's done>
+- **Blocked by:** <comma-separated task IDs, or "none">
 - **Passing:** no
 
-Pick ONE task with "**Passing:** no" — any one, your choice.
+A task is available to work on when:
+- Its "**Passing:**" field is "no"
+- Its "**Blocked by:**" field is "none", OR all listed task IDs have "**Passing:** yes"
+
+Pick ONE available task — any one, your choice.
 Complete it fully.
 
 After completing the task:
@@ -139,7 +144,7 @@ Rules:
 - Do NOT suggest or prescribe next steps for future iterations
 - Do NOT reorder or reprioritize remaining tasks
 - Do NOT edit or remove existing entries in ${PROGRESS_FILE}
-- If there are no tasks with "**Passing:** no" remaining, output exactly: <promise>NO MORE TASKS</promise>
+- If there are no available tasks remaining, output exactly: <promise>NO MORE TASKS</promise>
 PROMPT
 }
 
@@ -165,18 +170,20 @@ Your job is to collaborate with the developer to create and refine tasks in ${TA
 
 Each task MUST use this exact format:
 
-## Task: <title>
+## Task [<id>]: <title>
 
 - **Goal:** <what this achieves>
 - **Acceptance criteria:** <specific, verifiable conditions for "done">
+- **Blocked by:** <comma-separated task IDs, or "none">
 - **Passing:** no
 
 Guidelines:
+- IDs are sequential integers starting at 1
 - Each task must be completable in a SINGLE iteration by an AI agent with no human input
 - Tasks should be as small as possible — one logical change per task
 - Acceptance criteria must be specific and verifiable (not vague like "works correctly")
-- Order doesn't matter — tasks should be independent when possible
-- If tasks have hard dependencies, note them in the goal
+- Tasks should be independent when possible
+- Use "**Blocked by:**" ONLY for hard dependencies — do NOT use it to prescribe order
 - Do NOT include meta-tasks like "review code" or "clean up"
 
 Write the final task list to ${TASKS_FILE} when the developer approves.

@@ -1,0 +1,235 @@
+#!/usr/bin/env bash
+#
+# ralph — cheerfully persistent Claude harness
+# "I'm helping!" — Ralph Wiggum
+#
+# Usage:
+#   ralph init [template]   Scaffold .ralph/ in current project
+#   ralph once              Launch interactive Claude session with context
+#   ralph loop [N]          Run N non-interactive iterations (default: 5)
+#   ralph templates         List available templates
+#
+
+set -euo pipefail
+
+# Resolve the real location of this script (follows symlinks)
+RALPH_SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+RALPH_TEMPLATES_DIR="${RALPH_SCRIPT_DIR}/templates"
+
+RALPH_DIR=".ralph"
+PROMPT_FILE="${RALPH_DIR}/prompt.md"
+TASKS_FILE="${RALPH_DIR}/tasks.md"
+PROGRESS_FILE="${RALPH_DIR}/progress.md"
+LEARNINGS_FILE="${RALPH_DIR}/learnings.md"
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+BOLD='\033[1m'
+DIM='\033[2m'
+RESET='\033[0m'
+
+log()  { echo -e "${BLUE}[ralph]${RESET} $*"; }
+warn() { echo -e "${YELLOW}[ralph]${RESET} $*"; }
+err()  { echo -e "${RED}[ralph]${RESET} $*" >&2; }
+die()  { err "$@"; exit 1; }
+
+# ── Init ──────────────────────────────────────────────────────────────
+
+cmd_init() {
+    local template="${1:-default}"
+    local template_dir="${RALPH_TEMPLATES_DIR}/${template}"
+
+    if [[ ! -d "$template_dir" ]]; then
+        die "Unknown template '${template}'. Run 'ralph templates' to list available templates."
+    fi
+
+    if [[ -d "$RALPH_DIR" ]]; then
+        log ".ralph/ already exists — checking for missing files…"
+    else
+        log "Scaffolding ${RALPH_DIR}/ (template: ${template})…"
+        mkdir -p "$RALPH_DIR"
+    fi
+
+    # Copy template files only if they don't already exist
+    for f in "$template_dir"/*; do
+        local basename
+        basename="$(basename "$f")"
+        local target="${RALPH_DIR}/${basename}"
+        if [[ ! -f "$target" ]]; then
+            cp "$f" "$target"
+            log "Created ${target}"
+        fi
+    done
+
+    # Ensure progress and learnings exist (not in templates)
+    [[ -f "$PROGRESS_FILE" ]] || { touch "$PROGRESS_FILE"; log "Created ${PROGRESS_FILE}"; }
+    [[ -f "$LEARNINGS_FILE" ]] || { touch "$LEARNINGS_FILE"; log "Created ${LEARNINGS_FILE}"; }
+
+    # Add .ralph/ to .gitignore if not already present
+    if [[ -f .gitignore ]]; then
+        if ! grep -qxF '.ralph/' .gitignore 2>/dev/null; then
+            echo '.ralph/' >> .gitignore
+            log "Added .ralph/ to .gitignore"
+        fi
+    else
+        echo '.ralph/' > .gitignore
+        log "Created .gitignore with .ralph/"
+    fi
+
+    log "Done. Edit ${PROMPT_FILE} and ${TASKS_FILE} to get started."
+}
+
+# ── Templates ─────────────────────────────────────────────────────────
+
+cmd_templates() {
+    log "Available templates:"
+    for d in "$RALPH_TEMPLATES_DIR"/*/; do
+        echo "  $(basename "$d")"
+    done
+}
+
+# ── Prompt Assembly ───────────────────────────────────────────────────
+
+assemble_prompt() {
+    local prompt tasks progress learnings
+    prompt="$(cat "$PROMPT_FILE")"
+    tasks="$(cat "$TASKS_FILE")"
+    progress="$(cat "$PROGRESS_FILE")"
+    learnings="$(cat "$LEARNINGS_FILE")"
+
+    cat << PROMPT
+You are working on a project. Here are your instructions:
+
+<instructions>
+${prompt}
+</instructions>
+
+<tasks>
+${tasks}
+</tasks>
+
+<progress>
+${progress}
+</progress>
+
+<learnings>
+${learnings}
+</learnings>
+
+Pick ONE incomplete task from the tasks list — any one, your choice.
+Complete it fully.
+
+After completing the task:
+1. Check off the task in ${TASKS_FILE}
+2. Append a brief entry to ${PROGRESS_FILE} describing what you did (this file is append-only — never edit or remove existing entries)
+3. If you discovered patterns, learnings, or helpful context during implementation, add them to ${LEARNINGS_FILE} so future iterations can benefit
+
+Rules:
+- Do NOT suggest or prescribe next steps for future iterations
+- Do NOT reorder or reprioritize remaining tasks
+- Do NOT edit or remove existing entries in ${PROGRESS_FILE}
+- If there are no incomplete tasks remaining, output exactly: <promise>NO MORE TASKS</promise>
+PROMPT
+}
+
+# ── Once ──────────────────────────────────────────────────────────────
+
+cmd_once() {
+    ensure_initialized
+
+    local system_prompt
+    system_prompt="$(assemble_prompt)"
+
+    log "Launching interactive Claude session…"
+    claude --append-system-prompt "$system_prompt"
+}
+
+# ── Loop ──────────────────────────────────────────────────────────────
+
+has_incomplete_tasks() {
+    grep -qE '^\s*- \[ \]' "$TASKS_FILE"
+}
+
+cmd_loop() {
+    ensure_initialized
+
+    local max_iterations="${1:-5}"
+    local i=1
+
+    log "Starting loop (max ${max_iterations} iterations)…"
+
+    while (( i <= max_iterations )); do
+        log "${BOLD}Iteration ${i}/${max_iterations}${RESET}"
+
+        if ! has_incomplete_tasks; then
+            log "${GREEN}No incomplete tasks remain. Done!${RESET}"
+            break
+        fi
+
+        local assembled
+        assembled="$(assemble_prompt)"
+
+        local output
+        output="$(claude --dangerously-skip-permissions -p "$assembled" 2>&1)" || true
+
+        echo "$output"
+
+        if echo "$output" | grep -qF '<promise>NO MORE TASKS</promise>'; then
+            log "${GREEN}Agent reports no more tasks. Done!${RESET}"
+            break
+        fi
+
+        (( i++ ))
+    done
+
+    if (( i > max_iterations )); then
+        log "${YELLOW}Reached max iterations (${max_iterations}).${RESET}"
+    fi
+
+    log "Progress so far:"
+    echo -e "${DIM}"
+    cat "$PROGRESS_FILE"
+    echo -e "${RESET}"
+}
+
+# ── Helpers ───────────────────────────────────────────────────────────
+
+ensure_initialized() {
+    if [[ ! -d "$RALPH_DIR" ]]; then
+        log "No .ralph/ found — initializing…"
+        cmd_init
+    fi
+
+    [[ -f "$PROMPT_FILE" ]]   || die "${PROMPT_FILE} not found. Run 'ralph init' to repair."
+    [[ -f "$TASKS_FILE" ]]    || die "${TASKS_FILE} not found. Run 'ralph init' to repair."
+    [[ -f "$PROGRESS_FILE" ]] || die "${PROGRESS_FILE} not found. Run 'ralph init' to repair."
+    [[ -f "$LEARNINGS_FILE" ]] || die "${LEARNINGS_FILE} not found. Run 'ralph init' to repair."
+}
+
+usage() {
+    cat << 'EOF'
+ralph — cheerfully persistent Claude harness
+
+Usage:
+  ralph init [template]   Scaffold .ralph/ in current project (default: "default")
+  ralph once              Launch interactive Claude session with context
+  ralph loop [N]          Run N non-interactive iterations (default: 5)
+  ralph templates         List available templates
+
+"I'm helping!" — Ralph Wiggum
+EOF
+}
+
+# ── Main ──────────────────────────────────────────────────────────────
+
+case "${1:-}" in
+    init)       shift; cmd_init "$@" ;;
+    once)       cmd_once ;;
+    loop)       shift; cmd_loop "$@" ;;
+    templates)  cmd_templates ;;
+    -h|--help)  usage ;;
+    *)          usage; exit 1 ;;
+esac

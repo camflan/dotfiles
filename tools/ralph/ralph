@@ -197,7 +197,7 @@ cmd_plan() {
     system_prompt="$(assemble_plan_prompt)"
 
     log "Launching planning session…"
-    claude --append-system-prompt "$system_prompt"
+    claude --append-system-prompt "$system_prompt" "Help me break down the work into tasks. Start by reading the project instructions and any existing tasks."
 }
 
 # ── Once ──────────────────────────────────────────────────────────────
@@ -209,7 +209,7 @@ cmd_once() {
     system_prompt="$(assemble_prompt)"
 
     log "Launching interactive Claude session…"
-    claude --append-system-prompt "$system_prompt"
+    claude --append-system-prompt "$system_prompt" "Review the tasks and progress so far, then pick an available task to work on."
 }
 
 # ── Loop ──────────────────────────────────────────────────────────────

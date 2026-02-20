@@ -5,6 +5,7 @@
 #
 # Usage:
 #   ralph init [template]   Scaffold .ralph/ in current project
+#   ralph plan              Interactive session to create/refine tasks
 #   ralph once              Launch interactive Claude session with context
 #   ralph loop [N]          Run N non-interactive iterations (default: 5)
 #   ralph templates         List available templates
@@ -119,11 +120,18 @@ ${progress}
 ${learnings}
 </learnings>
 
-Pick ONE incomplete task from the tasks list — any one, your choice.
+Tasks use this format:
+
+## Task: <title>
+- **Goal:** <what this achieves>
+- **Acceptance criteria:** <how to know it's done>
+- **Passing:** no
+
+Pick ONE task with "**Passing:** no" — any one, your choice.
 Complete it fully.
 
 After completing the task:
-1. Check off the task in ${TASKS_FILE}
+1. Set its "**Passing:**" field to "yes" in ${TASKS_FILE}
 2. Append a brief entry to ${PROGRESS_FILE} describing what you did (this file is append-only — never edit or remove existing entries)
 3. If you discovered patterns, learnings, or helpful context during implementation, add them to ${LEARNINGS_FILE} so future iterations can benefit
 
@@ -131,8 +139,58 @@ Rules:
 - Do NOT suggest or prescribe next steps for future iterations
 - Do NOT reorder or reprioritize remaining tasks
 - Do NOT edit or remove existing entries in ${PROGRESS_FILE}
-- If there are no incomplete tasks remaining, output exactly: <promise>NO MORE TASKS</promise>
+- If there are no tasks with "**Passing:** no" remaining, output exactly: <promise>NO MORE TASKS</promise>
 PROMPT
+}
+
+# ── Plan ──────────────────────────────────────────────────────────────
+
+assemble_plan_prompt() {
+    local prompt tasks
+    prompt="$(cat "$PROMPT_FILE")"
+    tasks="$(cat "$TASKS_FILE")"
+
+    cat << PROMPT
+You are helping a developer break down work into small, atomic tasks for an AI agent to complete one at a time in independent iterations.
+
+<project-instructions>
+${prompt}
+</project-instructions>
+
+<current-tasks>
+${tasks}
+</current-tasks>
+
+Your job is to collaborate with the developer to create and refine tasks in ${TASKS_FILE}.
+
+Each task MUST use this exact format:
+
+## Task: <title>
+
+- **Goal:** <what this achieves>
+- **Acceptance criteria:** <specific, verifiable conditions for "done">
+- **Passing:** no
+
+Guidelines:
+- Each task must be completable in a SINGLE iteration by an AI agent with no human input
+- Tasks should be as small as possible — one logical change per task
+- Acceptance criteria must be specific and verifiable (not vague like "works correctly")
+- Order doesn't matter — tasks should be independent when possible
+- If tasks have hard dependencies, note them in the goal
+- Do NOT include meta-tasks like "review code" or "clean up"
+
+Write the final task list to ${TASKS_FILE} when the developer approves.
+PROMPT
+}
+
+cmd_plan() {
+    ensure_initialized
+
+    local system_prompt
+    system_prompt="$(assemble_plan_prompt)"
+
+    log "Launching planning session…"
+    claude --append-system-prompt "$system_prompt"
 }
 
 # ── Once ──────────────────────────────────────────────────────────────
@@ -150,7 +208,7 @@ cmd_once() {
 # ── Loop ──────────────────────────────────────────────────────────────
 
 has_incomplete_tasks() {
-    grep -qE '^\s*- \[ \]' "$TASKS_FILE"
+    grep -qE '\*\*Passing:\*\* no' "$TASKS_FILE"
 }
 
 cmd_loop() {
@@ -215,6 +273,7 @@ ralph — cheerfully persistent Claude harness
 
 Usage:
   ralph init [template]   Scaffold .ralph/ in current project (default: "default")
+  ralph plan              Interactive session to create/refine tasks
   ralph once              Launch interactive Claude session with context
   ralph loop [N]          Run N non-interactive iterations (default: 5)
   ralph templates         List available templates
@@ -227,6 +286,7 @@ EOF
 
 case "${1:-}" in
     init)       shift; cmd_init "$@" ;;
+    plan)       cmd_plan ;;
     once)       cmd_once ;;
     loop)       shift; cmd_loop "$@" ;;
     templates)  cmd_templates ;;

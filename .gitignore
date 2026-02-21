@@ -137,6 +137,9 @@ config/npm/npmrc
 
 .aider*
 
+# Claude Code
+.claude/settings.local.json
+
 cloudflared/*df401.json
 cloudflared/cert.pem
 

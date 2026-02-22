@@ -137,6 +137,8 @@ Complete it fully. All tests, linters, and formatters must pass before a task is
 
 IMPORTANT: Complete exactly ONE task per session. After finishing the task and updating the files below, STOP. Do not pick another task. Do not continue working. You will be invoked again for the next task.
 
+CRITICAL: This is a NON-INTERACTIVE session. Do NOT ask clarifying questions, request user input, or express uncertainty about ambiguous requirements. If you need to make assumptions, state them briefly and proceed. If something is unclear, use reasonable judgment and continue.
+
 After completing the task:
 1. Set its "**Passing:**" field to "yes" in ${TASKS_FILE}
 2. Append a brief entry to ${PROGRESS_FILE} describing what you did (this file is append-only — never edit or remove existing entries)

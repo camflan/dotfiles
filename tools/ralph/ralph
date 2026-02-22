@@ -135,12 +135,16 @@ A task is available to work on when:
 Pick ONE available task — any one, your choice.
 Complete it fully. All tests, linters, and formatters must pass before a task is considered done.
 
+IMPORTANT: Complete exactly ONE task per session. After finishing the task and updating the files below, STOP. Do not pick another task. Do not continue working. You will be invoked again for the next task.
+
 After completing the task:
 1. Set its "**Passing:**" field to "yes" in ${TASKS_FILE}
 2. Append a brief entry to ${PROGRESS_FILE} describing what you did (this file is append-only — never edit or remove existing entries)
 3. If you discovered patterns, learnings, or helpful context during implementation, add them to ${LEARNINGS_FILE} so future iterations can benefit
+4. Output exactly: <promise>TASK COMPLETE</promise>
 
 Rules:
+- Complete ONE task, then STOP — do not start another task in the same session
 - Do NOT suggest or prescribe next steps for future iterations
 - Do NOT reorder or reprioritize remaining tasks
 - Do NOT edit or remove existing entries in ${PROGRESS_FILE}
@@ -245,6 +249,12 @@ cmd_loop() {
         if echo "$output" | grep -qF '<promise>NO MORE TASKS</promise>'; then
             log "${GREEN}Agent reports no more tasks. Done!${RESET}"
             break
+        fi
+
+        if echo "$output" | grep -qF '<promise>TASK COMPLETE</promise>'; then
+            log "${GREEN}Task completed.${RESET}"
+        else
+            warn "Agent did not signal task completion — output may span multiple tasks."
         fi
 
         (( i++ ))

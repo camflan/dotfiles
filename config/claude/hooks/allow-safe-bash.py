@@ -27,8 +27,31 @@ SAFE_PATTERNS = [
     r"^file\s",
     r"^wc\s",
 
-    # Git read-only
-    r"^git\s+(status|log|diff|branch|show|remote)(\s|$)",
+    # Git read-only (unconditionally safe subcommands)
+    r"^git\s+("
+    # Porcelain inspection
+    r"annotate|blame|describe|diff|difftool|grep|log|range-diff"
+    r"|shortlog|show|show-branch|status|version|help|whatchanged"
+    # Plumbing interrogators
+    r"|cat-file|cherry|diff-files|diff-index|diff-tree"
+    r"|for-each-ref|get-tar-commit-id|ls-files|ls-remote|ls-tree"
+    r"|merge-base|name-rev|rev-list|rev-parse|show-index|show-ref|var"
+    # Pure computation helpers
+    r"|check-attr|check-ignore|check-mailmap|check-ref-format"
+    r"|column|fmt-merge-msg|patch-id|stripspace"
+    r")(\s|$)",
+
+    # Git subcommand-dependent (only certain sub-subcommands are read-only)
+    r"^git\s+branch\s+(-[lavr]|--list|--show-current|--contains|--merged|--no-merged)(\s|$)",
+    r"^git\s+branch$",
+    r"^git\s+tag\s+(-[lv]|--list|--contains|--merged|--no-merged|--points-at|--sort)(\s|$)",
+    r"^git\s+remote(\s*$|\s+(show|get-url)\s)",
+    r"^git\s+stash\s+(list|show)(\s|$)",
+    r"^git\s+config\s+.*(--get|--get-all|--get-regexp|--list|-l)(\s|$)",
+    r"^git\s+config\s+(list|get)(\s|$)",
+    r"^git\s+notes\s+(list|show)(\s|$)",
+    r"^git\s+reflog(\s+(show))?(\s|$)",
+    r"^git\s+bundle\s+(verify|list-heads)(\s|$)",
 
     # Search tools
     r"^find\s",

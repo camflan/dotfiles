@@ -126,17 +126,19 @@ if [ -z "$base_branch" ]; then
             elif git rev-parse --verify origin/master >/dev/null 2>&1; then
                 main_branch="master"
             else
-                echo "${RED}Error: Could not determine base branch${NC}" >&2
-                echo "Usage: todos [base_branch]" >&2
-                exit 2
+                # No remote branches exist yet (initial push) — use empty tree as base
+                base_branch=$(git hash-object -t tree /dev/null)
             fi
         fi
-        base_branch="origin/$main_branch"
+        if [ "$base_branch" != "$(git hash-object -t tree /dev/null)" ]; then
+            base_branch="origin/$main_branch"
+        fi
     fi
 fi
 
-# Verify the base branch exists
-if ! git rev-parse --verify "$base_branch" >/dev/null 2>&1; then
+# Verify the base branch exists (skip for empty tree hash)
+empty_tree=$(git hash-object -t tree /dev/null)
+if [ "$base_branch" != "$empty_tree" ] && ! git rev-parse --verify "$base_branch" >/dev/null 2>&1; then
     echo "${RED}Error: Base branch '$base_branch' not found${NC}" >&2
     exit 2
 fi
@@ -146,16 +148,26 @@ current_branch=$(git rev-parse --abbrev-ref HEAD)
 # Get the current HEAD
 current_head=$(git rev-parse HEAD)
 
+# Detect initial push (base is the empty tree)
+is_initial=false
+if [ "$base_branch" = "$empty_tree" ]; then
+    is_initial=true
+fi
+
 # Create comparison range
 range="$base_branch..$current_head"
 
 # Check if there are any commits in the range
-if ! git rev-list "$range" >/dev/null 2>&1; then
-    echo "${GREEN}✓ No commits to check${NC}"
-    exit 0
+if [ "$is_initial" = false ]; then
+    if ! git rev-list "$range" >/dev/null 2>&1; then
+        echo "${GREEN}✓ No commits to check${NC}"
+        exit 0
+    fi
+    commit_count=$(git rev-list --count "$range")
+else
+    commit_count=$(git rev-list --count HEAD)
 fi
 
-commit_count=$(git rev-list --count "$range")
 if [ "$commit_count" -eq 0 ]; then
     echo "${GREEN}✓ No new commits since $base_branch${NC}"
     exit 0
@@ -169,7 +181,12 @@ temp_results=$(mktemp)
 temp_diff=$(mktemp)
 
 # Combined diff shows only net-new lines, ignoring TODOs removed by later commits
-git diff "$base_branch"..."$current_head" --unified=0 > "$temp_diff"
+# Use two-dot diff for initial push (empty tree has no merge base for three-dot)
+if [ "$is_initial" = true ]; then
+    git diff "$base_branch".."$current_head" --unified=0 > "$temp_diff"
+else
+    git diff "$base_branch"..."$current_head" --unified=0 > "$temp_diff"
+fi
 
 grep -n "^+" "$temp_diff" | \
 grep -v "^[0-9]*:+++" | \
@@ -286,7 +303,11 @@ if [ "$found_comments" = true ]; then
         echo "${YELLOW}⚠  Found new TODO/FIXME comments in uncommitted changes:${NC}"
     fi
 
-    echo "${YELLOW}   Comparing: ${BLUE}$base_branch${YELLOW}..${BLUE}$current_branch${NC}"
+    if [ "$is_initial" = true ]; then
+        echo "${YELLOW}   Comparing: ${BLUE}(initial)${YELLOW}..${BLUE}$current_branch${NC}"
+    else
+        echo "${YELLOW}   Comparing: ${BLUE}$base_branch${YELLOW}..${BLUE}$current_branch${NC}"
+    fi
     echo "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     echo ""
 

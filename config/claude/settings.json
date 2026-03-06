@@ -1,9 +1,14 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "env": {
     "DISABLE_AUTOUPDATER": "1",
     "CLAUDE_CODE_DISABLE_AUTO_UPDATE": "1"
   },
   "model": "opus",
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.py"
+  },
   "hooks": {
     "PermissionRequest": [
       {
@@ -23,7 +28,14 @@
   },
   "enabledPlugins": {
     "superpowers@superpowers-marketplace": false,
-    "custom-lsps@custom-lsps": true
+    "custom-lsps@custom-lsps": true,
+    "claude.ai Gmail": false,
+    "claude.ai Google Calendar": false,
+    "claude.ai Slack": false
   },
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": true,
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  }
 }

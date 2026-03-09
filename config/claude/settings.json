@@ -4,11 +4,11 @@
     "DISABLE_AUTOUPDATER": "1",
     "CLAUDE_CODE_DISABLE_AUTO_UPDATE": "1"
   },
-  "model": "opus",
-  "statusLine": {
-    "type": "command",
-    "command": "~/.claude/statusline.py"
+  "attribution": {
+    "commit": "",
+    "pr": ""
   },
+  "model": "opus",
   "hooks": {
     "PermissionRequest": [
       {
@@ -26,6 +26,10 @@
       }
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.py"
+  },
   "enabledPlugins": {
     "superpowers@superpowers-marketplace": false,
     "custom-lsps@custom-lsps": true,
@@ -33,9 +37,5 @@
     "claude.ai Google Calendar": false,
     "claude.ai Slack": false
   },
-  "alwaysThinkingEnabled": true,
-  "attribution": {
-    "commit": "",
-    "pr": ""
-  }
+  "alwaysThinkingEnabled": true
 }

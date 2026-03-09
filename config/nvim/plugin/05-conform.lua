@@ -14,8 +14,7 @@ conform.setup({
         typescriptreact = { "biome", "prettier", stop_after_first = true },
         json = { "biome", "prettier", stop_after_first = true },
 
-        -- Elixir - mix format is the standard
-        elixir = { "mix" },
+        -- Elixir - handled by ElixirLS via lsp_fallback
 
         -- Python - prefer ruff (fast), fallback to traditional toolchain
         python = function(bufnr)
@@ -41,14 +40,6 @@ conform.setup({
         ["_"] = { "trim_whitespace" },
     },
 
-    formatters = {
-        mix = {
-            command = "mix",
-            args = { "format", "-" },
-            stdin = true,
-        },
-    },
-
     format_on_save = function(bufnr)
         -- Disable with a global or buffer-local variable
         if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
@@ -57,14 +48,14 @@ conform.setup({
 
         return {
             timeout_ms = 500,
-            lsp_fallback = true,
+            lsp_format = "fallback",
         }
     end,
 })
 
 -- Manual format keymap
 vim.keymap.set({ "n", "v" }, "<leader>F", function()
-    conform.format({ async = true, lsp_fallback = true })
+    conform.format({ async = true, lsp_format = "fallback" })
 end, { desc = "Format buffer/selection" })
 
 -- Toggle format-on-save commands

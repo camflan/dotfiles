@@ -4,11 +4,11 @@
 # "I'm helping!" — Ralph Wiggum
 #
 # Usage:
-#   ralph init [template]   Scaffold .ralph/ in current project
-#   ralph plan              Interactive session to create/refine tasks
-#   ralph once              Launch interactive Claude session with context
-#   ralph loop [N]          Run N non-interactive iterations (default: 5)
-#   ralph templates         List available templates
+#   ralph [-m MODEL] init [template]   Scaffold .ralph/ in current project
+#   ralph [-m MODEL] plan              Interactive session to create/refine tasks
+#   ralph [-m MODEL] once              Launch interactive Claude session with context
+#   ralph [-m MODEL] loop [N]          Run N non-interactive iterations (default: 5)
+#   ralph templates                    List available templates
 #
 
 set -euo pipefail
@@ -16,6 +16,8 @@ set -euo pipefail
 # Resolve the real location of this script (follows symlinks)
 RALPH_SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 RALPH_TEMPLATES_DIR="${RALPH_SCRIPT_DIR}/templates"
+
+MODEL=""
 
 RALPH_DIR=".ralph"
 PROMPT_FILE="${RALPH_DIR}/prompt.md"
@@ -191,6 +193,7 @@ Guidelines:
 - Tasks should be independent when possible
 - Use "**Blocked by:**" ONLY for hard dependencies — do NOT use it to prescribe order
 - Do NOT include meta-tasks like "review code" or "clean up"
+- DO NOT renumber tasks when adding new, append to the end
 
 Write the final task list to ${TASKS_FILE} when the developer approves.
 PROMPT
@@ -203,7 +206,7 @@ cmd_plan() {
     system_prompt="$(assemble_plan_prompt)"
 
     log "Launching planning session…"
-    claude --append-system-prompt "$system_prompt" "Help me break down the work into tasks. Start by reading the project instructions and any existing tasks."
+    claude ${MODEL:+--model "$MODEL"} --append-system-prompt "$system_prompt" "Help me break down the work into tasks. Start by reading the project instructions and any existing tasks."
 }
 
 # ── Once ──────────────────────────────────────────────────────────────
@@ -215,7 +218,7 @@ cmd_once() {
     system_prompt="$(assemble_prompt)"
 
     log "Launching interactive Claude session…"
-    claude --append-system-prompt "$system_prompt" "Review the tasks and progress so far, then pick an available task to work on."
+    claude ${MODEL:+--model "$MODEL"} --append-system-prompt "$system_prompt" "Review the tasks and progress so far, then pick an available task to work on."
 }
 
 # ── Loop ──────────────────────────────────────────────────────────────
@@ -244,7 +247,7 @@ cmd_loop() {
         assembled="$(assemble_prompt)"
 
         local output
-        output="$(claude --dangerously-skip-permissions -p "$assembled" 2>&1)" || true
+        output="$(claude ${MODEL:+--model "$MODEL"} --dangerously-skip-permissions -p "$assembled" 2>&1)" || true
 
         echo "$output"
 
@@ -291,11 +294,17 @@ usage() {
 ralph — cheerfully persistent Claude harness
 
 Usage:
-  ralph init [template]   Scaffold .ralph/ in current project (default: "default")
-  ralph plan              Interactive session to create/refine tasks
-  ralph once              Launch interactive Claude session with context
-  ralph loop [N]          Run N non-interactive iterations (default: 5)
-  ralph templates         List available templates
+  ralph [flags] <command> [args]
+
+Commands:
+  init [template]   Scaffold .ralph/ in current project (default: "default")
+  plan              Interactive session to create/refine tasks
+  once              Launch interactive Claude session with context
+  loop [N]          Run N non-interactive iterations (default: 5)
+  templates         List available templates
+
+Flags:
+  -m, --model MODEL   Claude model to use
 
 "I'm helping!" — Ralph Wiggum
 EOF
@@ -303,12 +312,19 @@ EOF
 
 # ── Main ──────────────────────────────────────────────────────────────
 
+while [[ "${1:-}" == -* ]]; do
+    case "$1" in
+        -m|--model) MODEL="$2"; shift 2 ;;
+        -h|--help)  usage; exit 0 ;;
+        *)          die "Unknown flag: $1" ;;
+    esac
+done
+
 case "${1:-}" in
     init)       shift; cmd_init "$@" ;;
     plan)       cmd_plan ;;
     once)       cmd_once ;;
     loop)       shift; cmd_loop "$@" ;;
     templates)  cmd_templates ;;
-    -h|--help)  usage ;;
     *)          usage; exit 1 ;;
 esac

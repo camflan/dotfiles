@@ -115,6 +115,7 @@ vim.lsp.enable({
     "jsonls",
     "laravel_ls",
     "lua_ls",
+    "openscad_lsp",
     "tailwindcss",
     "taplo",
     "terraformls",
@@ -141,8 +142,8 @@ vim.api.nvim_create_autocmd("FileType", {
 
         if not has_type_checker then
             for _, checker in ipairs({
-                { server = "ty", cmd = "ty" },
-                { server = "pyre", cmd = "pyre" },
+                { server = "ty",      cmd = "ty" },
+                { server = "pyre",    cmd = "pyre" },
                 { server = "pyright", cmd = "pyright-langserver" },
             }) do
                 if vim.fn.executable(checker.cmd) == 1 then

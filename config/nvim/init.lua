@@ -68,6 +68,10 @@ vim.keymap.set({ "n" }, "<leader>/", "<cmd>silent nohlsearch<cr>", { desc = "Tog
 vim.keymap.set({ "v" }, "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selected lines down" })
 vim.keymap.set({ "v" }, "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selected lines up" })
 
--- Vim Pack
-vim.keymap.set({ "n" }, "<leader>Pl", function () vim.pack.get() end, { desc = "Get plugins info" }) -- doesn't work?
-vim.keymap.set({ "n" }, "<leader>Pu", function () vim.pack.update() end, { desc = "Update plugins" })
+-- Plugins
+require("utils.pack").setup(require("plugins"))
+
+vim.keymap.set({ "n" }, "<leader>Pl", "<cmd>PackStatus<cr>", { desc = "Plugin status" })
+vim.keymap.set({ "n" }, "<leader>Pu", "<cmd>PackUpdate<cr>", { desc = "Update plugins" })
+vim.keymap.set({ "n" }, "<leader>Pi", "<cmd>PackInstall<cr>", { desc = "Install plugins" })
+vim.keymap.set({ "n" }, "<leader>Pp", "<cmd>PackProfile<cr>", { desc = "Plugin profile" })

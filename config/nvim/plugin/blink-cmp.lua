@@ -3,11 +3,21 @@ vim.pack.add(
         { src = "https://github.com/nvim-lua/plenary.nvim" },
         { src = "https://github.com/rafamadriz/friendly-snippets" },
         { src = "https://github.com/milanglacier/minuet-ai.nvim" },
-        { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("^1") }
+        { src = "https://github.com/saghen/blink.cmp", version = "v1" }
     },
     {
         load = true
     })
+
+-- build blink.cmp fuzzy library if not present
+local blink_info = vim.pack.get({ "blink.cmp" })[1]
+if blink_info then
+    local lib = blink_info.path .. "/target/release/libblink_cmp_fuzzy.dylib"
+    if not vim.uv.fs_stat(lib) then
+        vim.notify("blink.cmp: building fuzzy library…", vim.log.levels.INFO)
+        vim.system({ "cargo", "build", "--release" }, { cwd = blink_info.path }):wait()
+    end
+end
 
 
 ---@enum  LlmModelName

@@ -84,6 +84,7 @@ url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d
 "npm:glimpseui" = "latest"
 "npm:@let-it-cook/cli" = "latest"
 "npm:@tailwindcss/language-server" = "latest"
+"github:rtk-ai/rtk" = "latest"
 
 [settings]
 go_default_packages_file = "./default-go-packages"

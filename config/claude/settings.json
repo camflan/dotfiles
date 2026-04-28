@@ -8,6 +8,7 @@
     "commit": "",
     "pr": ""
   },
+  "model": "opus[1m]",
   "hooks": {
     "PermissionRequest": [
       {
@@ -40,5 +41,6 @@
     "claude.ai Google Calendar": false,
     "claude.ai Slack": false
   },
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high"
 }

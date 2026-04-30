@@ -55,3 +55,7 @@ Review 4 modified files, commit, rebase (2 behind), push + open PR.
 - Surface decisions the user needs to make (e.g., "still needed?", "PYR-90 or not?")
 - Keep it short — this is a checklist, not a design doc
 - Update the plan when asked to "refresh" — re-run state-of-the-world and rebuild
+
+## Optional: interactive board
+
+If the user asks for an interactive view (or says "show me in glimpse", "make it clickable", "live board"), compose with the `glimpse-board` skill. Build a `BoardSpec` from the priority list — one item per priority entry, with per-item actions like `start`, `mark_done`, plus a palette for `refresh_state` and other global actions — then launch via `glimpse-board`'s template and attach a Monitor to receive click events. See `glimpse-board/reference.md` for the recipe.

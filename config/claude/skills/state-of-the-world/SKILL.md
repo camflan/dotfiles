@@ -112,4 +112,8 @@ After the diagram, include only the tables that have data:
 - Flag anything stale (>2 weeks without update)
 - Flag CI failures that block merging
 - Always include the PR URL when referencing a PR — make it clickable
+
+## Optional: interactive board
+
+If the user asks for a clickable/live view (e.g. "show me in glimpse", "make it interactive"), compose with the `glimpse-board` skill. Build a `BoardSpec` where each item is a repo or PR — chips for branch state, CI, and behind/ahead counts; per-item actions like `rebase`, `discard_strays`, `open_pr`, `investigate`. See `glimpse-board/reference.md` for the recipe.
 - Be concise — this output feeds into plan-of-attack
